@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://df7ehbfhrxfup"]
+
+[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/glitch/glitch_area.tscn" id="2_mgpee"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya21b"]
+
+[node name="Glitch1" type="StaticBody2D" unique_id=1608676095]
+z_index = 10
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2032415155]
+scale = Vector2(0.68, 1.79)
+shape = SubResource("RectangleShape2D_ya21b")
+
+[node name="GlitchArea" parent="." unique_id=1022921014 instance=ExtResource("2_mgpee")]
+offset_left = -8.0
+offset_top = -21.0
+offset_right = 8.0
+offset_bottom = 21.0

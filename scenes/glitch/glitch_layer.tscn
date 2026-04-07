@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://brjseglgmb5bk"]
+
+[ext_resource type="Shader" uid="uid://b4vddmc87ft25" path="res://shaders/glitch.gdshader" id="1_x5wec"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bt44k"]
+shader = ExtResource("1_x5wec")
+shader_parameter/intensity = 0.02
+shader_parameter/speed = 5.0
+shader_parameter/block_size = 20.0
+shader_parameter/rgb_split_horizontal = 0.02
+shader_parameter/rgb_split_vertical = 0.02
+
+[node name="GlitchLayer" type="CanvasLayer" unique_id=107415387]
+visible = false
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=85071552]
+z_index = 11
+material = SubResource("ShaderMaterial_bt44k")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

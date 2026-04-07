@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://gimaji3ojykj"]
+
+[ext_resource type="Script" uid="uid://cwhj0m5r51bp7" path="res://scripts/bullet_default.gd" id="1_7lxke"]
+[ext_resource type="Texture2D" uid="uid://l7tvlldncxew" path="res://sprites/bullets/player/spritesheet.png" id="2_0ucct"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7lxke"]
+atlas = ExtResource("2_0ucct")
+region = Rect2(1, 32, 18, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g43bc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7lxke")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_g43bc"]
+
+[node name="BulletMachinegun" type="Area2D" unique_id=1798761570]
+z_index = 10
+scale = Vector2(0.75, 0.75)
+collision_layer = 8
+collision_mask = 68
+script = ExtResource("1_7lxke")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1905016560]
+sprite_frames = SubResource("SpriteFrames_g43bc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543303615]
+scale = Vector2(0.385, 0.385)
+shape = SubResource("CircleShape2D_g43bc")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=533304289]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

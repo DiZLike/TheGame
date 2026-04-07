@@ -1,0 +1,49 @@
+[gd_scene format=3 uid="uid://bonrigl61ebof"]
+
+[ext_resource type="Script" uid="uid://ds10j0mjgy8m" path="res://scripts/bullet_rocket.gd" id="1_oe8yj"]
+[ext_resource type="Texture2D" uid="uid://l7tvlldncxew" path="res://sprites/bullets/player/spritesheet.png" id="2_qqni8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v4ic5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_oe8yj"]
+atlas = ExtResource("2_qqni8")
+region = Rect2(2, 22, 17, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qqni8"]
+atlas = ExtResource("2_qqni8")
+region = Rect2(21, 22, 17, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_g43bc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_oe8yj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qqni8")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[node name="BulletRocket" type="Area2D" unique_id=1798761570]
+z_index = 10
+collision_layer = 8
+collision_mask = 69
+script = ExtResource("1_oe8yj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543303615]
+position = Vector2(0, -0.66)
+scale = Vector2(0.57, 0.145)
+shape = SubResource("RectangleShape2D_v4ic5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1905016560]
+sprite_frames = SubResource("SpriteFrames_g43bc")
+autoplay = "default"
+frame_progress = 0.27318013
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=533304289]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

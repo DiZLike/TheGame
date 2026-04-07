@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://cqi2vqepj10lg"]
+
+[ext_resource type="Script" uid="uid://d3ca4aphcc5sr" path="res://scenes/ui/dialogue_box.gd" id="1_xg44k"]
+[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/glitch/glitch_area.tscn" id="2_6iboe"]
+
+[sub_resource type="Gradient" id="Gradient_xg44k"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_6iboe"]
+gradient = SubResource("Gradient_xg44k")
+
+[node name="DialogueBox" type="CanvasLayer" unique_id=156704560]
+script = ExtResource("1_xg44k")
+
+[node name="Panel" type="Panel" parent="." unique_id=640121012]
+modulate = Color(3.7045925, 3.7045925, 3.7045925, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 15.0
+offset_top = 15.0
+offset_right = -600.0
+offset_bottom = -583.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Portrait" type="TextureRect" parent="Panel" unique_id=1892218321]
+layout_mode = 1
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 103.0
+offset_bottom = 103.0
+texture = SubResource("GradientTexture2D_6iboe")
+
+[node name="Glitch" parent="Panel/Portrait" unique_id=1022921014 instance=ExtResource("2_6iboe")]
+layout_mode = 0
+offset_left = -2.0
+offset_right = 85.0
+offset_bottom = 83.0
+
+[node name="NameLabel" type="Label" parent="Panel" unique_id=501913300]
+layout_mode = 1
+offset_left = 140.0
+offset_top = 8.0
+offset_right = 180.0
+offset_bottom = 31.0
+
+[node name="TextLabel" type="RichTextLabel" parent="Panel" unique_id=2065794631]
+layout_mode = 1
+offset_left = 140.0
+offset_top = 36.0
+offset_right = 651.0
+offset_bottom = 94.0
+theme_override_font_sizes/normal_font_size = 10
+scroll_active = false
+
+[node name="ContinueLabel" type="Label" parent="Panel" unique_id=1632369222]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -20.0
+offset_top = -25.85498
+offset_right = -2.5700073
+offset_bottom = -2.8549805
+grow_horizontal = 0
+grow_vertical = 0
+text = "▼"
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="Panel" unique_id=1369445152]
+max_polyphony = 16
+bus = &"UI"

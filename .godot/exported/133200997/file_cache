@@ -1,0 +1,10 @@
+res://levels/level_1.tscn::9117e727e4f98a7f0055cb0104ac898a::1775312685::res://.godot/exported/133200997/export-12535bc1b7f5d974130914d712c29d37-level_1.scn
+res://prefabs/glitch_area.tscn::a0b82be407cd343f094bb79788beb57e::1775234011::res://.godot/exported/133200997/export-d124a1a99926a77e86a250fcfbb2a641-glitch_area.scn
+res://prefabs/glitch_layer.tscn::52e71841faf90c948102a86a1a6c7bf8::1775162188::res://.godot/exported/133200997/export-b8bfdc05eaf7724fe72e93085aa2e661-glitch_layer.scn
+res://scenes/bullets/player/bullet.tscn::8f794bde1e2593c95c8c4221353083f2::1775148701::res://.godot/exported/133200997/export-e9a2bd2510d363a7a1ce5ca0ec2bca14-bullet.scn
+res://scenes/enemy/schoolboy.tscn::74877d8acf2ae9bce186ac86c624127e::1775300175::res://.godot/exported/133200997/export-2e7e0c625370a792b2e2853d4b68704f-schoolboy.scn
+res://scenes/glitch/bug.tscn::2a01adadbb68cd62417b1a22e097bb82::1775234522::res://.godot/exported/133200997/export-f909b9c1b1e0c320221b59fb762af364-bug.scn
+res://scenes/player/player.tscn::95f19bd82a7ef48109ac41d1fd678844::1775229965::res://.godot/exported/133200997/export-c2c62cb8c73458cd122faf659769dc80-player.scn
+res://scenes/triggers/dialogue_trigger.tscn::0cd7825e416ab9311e2a6bb4c7486037::1775230136::res://.godot/exported/133200997/export-c8c8ac3471f3a7cb48ab1afacf5a049c-dialogue_trigger.scn
+res://scenes/ui/dialogue_box.tscn::777624a7b9d2a3468e89926361f79170::1775313038::res://.godot/exported/133200997/export-d58b8e99c4892abd13103612897da9e2-dialogue_box.scn
+res://default_bus_layout.tres::b81d6b3679a34455b50118af213feb0f::1775305504::res://.godot/exported/133200997/export-19246414aa9fb561ced4b8dce477acec-default_bus_layout.res

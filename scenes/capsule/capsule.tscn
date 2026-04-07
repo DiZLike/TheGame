@@ -1,0 +1,58 @@
+[gd_scene format=3 uid="uid://b38o7m3cifwhd"]
+
+[ext_resource type="Script" uid="uid://bspfjixdklbps" path="res://scenes/capsule/capsule.gd" id="1_5w77x"]
+[ext_resource type="Texture2D" uid="uid://cqot6x50rh3te" path="res://sprites/capsule/spritesheet.png" id="1_rtds7"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7fnm"]
+atlas = ExtResource("1_rtds7")
+region = Rect2(2, 2, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c1wmj"]
+atlas = ExtResource("1_rtds7")
+region = Rect2(28, 2, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_2eect"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_o7fnm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_c1wmj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_5w77x"]
+radius = 11.0
+height = 33.333332
+
+[node name="Capsule" type="CharacterBody2D" unique_id=253959304]
+z_index = 10
+collision_layer = 64
+collision_mask = 0
+script = ExtResource("1_5w77x")
+speed = 150.0
+amplitude = 15.0
+frequency = 1.0
+direction = -1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1338835395]
+position = Vector2(0, 1.02)
+sprite_frames = SubResource("SpriteFrames_2eect")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=847563746]
+scale = Vector2(1, 0.36)
+shape = SubResource("CapsuleShape2D_5w77x")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=397457880]
+collision_layer = 64
+collision_mask = 8
+
+[node name="Detect" type="CollisionShape2D" parent="Area2D" unique_id=1706439250]
+scale = Vector2(1, 0.36)
+shape = SubResource("CapsuleShape2D_5w77x")
+
+[connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]

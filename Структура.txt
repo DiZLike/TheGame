@@ -1,0 +1,99 @@
+res://
+├── scenes/
+│   ├── levels/
+│   │   ├── level_1.tscn
+│   │   ├── level_2.tscn
+│   │   └── level_template.tscn
+│   ├── player/
+│   │   ├── player.tscn
+│   │   ├── player.gd
+│   │   └── player_states/           # Если используете State Machine
+│   │       ├── state.gd
+│   │       ├── idle.gd
+│   │       ├── run.gd
+│   │       ├── jump.gd
+│   │       ├── lie.gd
+│   │       └── shoot.gd
+│   ├── enemies/
+│   │   ├── enemy_template.tscn
+│   │   ├── enemy_basic.tscn
+│   │   ├── enemy_basic.gd
+│   │   ├── enemy_turret.tscn
+│   │   └── enemy_boss.tscn
+│   └── ui/
+│       ├── main_menu.tscn
+│       ├── hud.tscn
+│       ├── hud.gd
+│       ├── health_bar.tscn
+│       └── game_over.tscn
+│
+├── scripts/
+│   ├── autoload/                     # Синглтоны (AutoLoad)
+│   │   ├── game_manager.gd
+│   │   ├── audio_manager.gd
+│   │   ├── level_manager.gd
+│   │   └── save_manager.gd
+│   ├── components/                   # Переиспользуемые компоненты
+│   │   ├── health_component.gd
+│   │   ├── damage_component.gd
+│   │   ├── bullet_component.gd
+│   │   └── animation_component.gd
+│   └── utils/
+│       ├── helpers.gd
+│       ├── constants.gd
+│       └── math_utils.gd
+│
+├── assets/
+│   ├── sprites/
+│   │   ├── player/
+│   │   │   ├── player_idle.png
+│   │   │   ├── player_run.png
+│   │   │   ├── player_jump.png
+│   │   │   └── player_lie.png
+│   │   ├── enemies/
+│   │   ├── weapons/
+│   │   └── effects/
+│   ├── sounds/
+│   │   ├── sfx/
+│   │   │   ├── shoot.wav
+│   │   │   ├── jump.wav
+│   │   │   ├── hurt.wav
+│   │   │   └── explosion.wav
+│   │   └── music/
+│   │       ├── level_1.ogg
+│   │       └── boss.ogg
+│   ├── fonts/
+│   └── animations/                   # .anim файлы
+│
+├── prefabs/                          # Переиспользуемые сцены
+│   ├── bullets/
+│   │   ├── bullet_normal.tscn
+│   │   ├── bullet_normal.gd
+│   │   ├── bullet_heavy.tscn
+│   │   └── bullet_laser.tscn
+│   ├── pickups/
+│   │   ├── health_pack.tscn
+│   │   ├── ammo_pack.tscn
+│   │   └── weapon_powerup.tscn
+│   └── effects/
+│       ├── explosion.tscn
+│       ├── muzzle_flash.tscn
+│       └── hit_effect.tscn
+│
+├── shaders/
+│   ├── outline.gdshader
+│   └── flash.gdshader
+│
+├── resources/                        # .tres файлы
+│   ├── weapons/
+│   │   ├── pistol.tres
+│   │   ├── machinegun.tres
+│   │   └── spreadgun.tres
+│   ├── enemy_data/
+│   └── level_data/
+│
+├── config/
+│   ├── input_map.tres
+│   └── game_settings.tres
+│
+└── project.godot
