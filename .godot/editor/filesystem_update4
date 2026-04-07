@@ -1,11 +1,1 @@
 res://default_bus_layout.tres
-res://scenes/capsule/capsule.gd
-res://scenes/capsule/capsule.tscn
-res://shaders/glitch.gdshader
-res://scenes/bullets/player/bullet_default.tscn
-res://scenes/bullets/player/bullet_homing.tscn
-res://scenes/bullets/player/bullet_machinegun.tscn
-res://scenes/bullets/player/bullet_rocket.tscn
-res://scenes/bullets/player/bullet_spread.tscn
-res://levels/level_1.tscn
-res://scripts/bullet_spread.gd
