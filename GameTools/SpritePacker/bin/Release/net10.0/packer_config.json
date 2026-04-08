@@ -1,0 +1,12 @@
+{
+  "InputFolder": "sprites\\capsule",
+  "OutputFolder": "sprites\\capsule",
+  "OutputImage": "spritesheet.png",
+  "Columns": 0,
+  "Padding": 2,
+  "PreserveAspectRatio": false,
+  "PixelArtMode": true,
+  "UseSquareCells": false,
+  "AutoColumns": true,
+  "VerticalAlignment": "center"
+}

@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DialogEditor/DialogEditor.csproj" />
+  <Project Path="SpritePacker/SpritePacker.csproj" />
+</Solution>

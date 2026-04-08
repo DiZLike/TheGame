@@ -1,0 +1,12 @@
+{
+  "InputFolder": "sprites",
+  "OutputFolder": "sprites",
+  "OutputImage": "spritesheet.png",
+  "Columns": 0,
+  "Padding": 2,
+  "PreserveAspectRatio": true,
+  "PixelArtMode": true,
+  "UseSquareCells": false,
+  "AutoColumns": true,
+  "VerticalAlignment": "bottom"
+}

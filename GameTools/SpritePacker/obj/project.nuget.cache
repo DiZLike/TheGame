@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "ztqzCGN68z8=",
+  "success": true,
+  "projectFilePath": "F:\\!Evgeny\\src\\csharp\\GameTools\\SpritePacker\\SpritePacker.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\diz91\\.nuget\\packages\\microsoft.win32.systemevents\\10.0.5\\microsoft.win32.systemevents.10.0.5.nupkg.sha512",
+    "C:\\Users\\diz91\\.nuget\\packages\\sixlabors.imagesharp\\3.1.12\\sixlabors.imagesharp.3.1.12.nupkg.sha512",
+    "C:\\Users\\diz91\\.nuget\\packages\\system.drawing.common\\10.0.5\\system.drawing.common.10.0.5.nupkg.sha512"
+  ],
+  "logs": []
+}
