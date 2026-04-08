@@ -37,6 +37,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.DEFAULT: {
 		"name": "D - Стандартная пушка",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_default.ogg",
 		"levels": [
 			{"damage": 2, "max_bullets": 3, "shoot_delay": 0.128, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0},
 			{"damage": 2, "max_bullets": 3, "shoot_delay": 0.128, "bullet_speed": 325, "spread_count": 1, "spread_angle": 0},
@@ -52,6 +53,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.MACHINEGUN: {
 		"name": "M - Пулемёт",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_machinegun.ogg",
 		"levels": [
 			{"damage": 1, "max_bullets": 999, "shoot_delay": 0.15, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0},
 			{"damage": 1, "max_bullets": 999, "shoot_delay": 0.10, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
@@ -67,6 +69,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.SPREADGUN: {
 		"name": "S - Спредган",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_spread.ogg",
 		"levels": [
 			{"damage": 1, "max_bullets": 2, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 2, "spread_angle": 15},
 			{"damage": 1, "max_bullets": 3, "shoot_delay": 0.128, "bullet_speed": 400, "spread_count": 3, "spread_angle": 20},
@@ -82,6 +85,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.LASER: {
 		"name": "L - Лазер",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_laser.ogg",
 		"levels": [
 			{"damage": 3, "max_bullets": 1, "shoot_delay": 0.8, "bullet_speed": 0, "spread_count": 1, "spread_angle": 0, "pierce": 0, "laser_duration": 0.1},
 			{"damage": 3, "max_bullets": 1, "shoot_delay": 0.7, "bullet_speed": 0, "spread_count": 1, "spread_angle": 0, "pierce": 1, "laser_duration": 0.15},
@@ -97,6 +101,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.ROCKET: {
 		"name": "R - Ракеты",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.ogg",
 		"levels": [
 			{"damage": 3, "max_bullets": 1, "shoot_delay": 0.7, "bullet_speed": 250, "spread_count": 1, "spread_angle": 0, "explosion_radius": 12},
 			{"damage": 3, "max_bullets": 1, "shoot_delay": 0.8, "bullet_speed": 275, "spread_count": 1, "spread_angle": 0, "explosion_radius": 18},
@@ -112,11 +117,12 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.HOMING: {
 		"name": "H - Самонаводящиеся",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.ogg",
 		"levels": [
-			{"damage": 2, "max_bullets": 2, "flight_time": 3.0, "shoot_delay": 0.4, "bullet_speed": 200, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.06},
-			{"damage": 2, "max_bullets": 2, "flight_time": 3.0, "shoot_delay": 0.35, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.08},
-			{"damage": 2, "max_bullets": 3, "flight_time": 3.0, "shoot_delay": 0.3, "bullet_speed": 400, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.10},
-			{"damage": 3, "max_bullets": 4, "flight_time": 3.0, "shoot_delay": 0.3, "bullet_speed": 600, "spread_count": 1, "spread_angle": 0, "homing_strength": 1.0}
+			{"damage": 2, "max_bullets": 2, "flight_time": 2.0, "shoot_delay": 0.4, "bullet_speed": 200, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.06},
+			{"damage": 2, "max_bullets": 2, "flight_time": 2.0, "shoot_delay": 0.35, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.08},
+			{"damage": 2, "max_bullets": 3, "flight_time": 2.0, "shoot_delay": 0.3, "bullet_speed": 400, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.10},
+			{"damage": 3, "max_bullets": 4, "flight_time": 2.0, "shoot_delay": 0.3, "bullet_speed": 600, "spread_count": 1, "spread_angle": 0, "homing_strength": 1.0}
 		],
 		"description": "Самонаводящиеся снаряды",
 		"overload_name": "РОЙ"

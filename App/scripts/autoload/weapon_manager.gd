@@ -14,6 +14,7 @@ signal weapon_upgraded(weapon_type: int, new_level: int)
 var current_weapon: int = WeaponsType.WeaponType.DEFAULT
 var current_level: int = 0                        # 0-3
 var _current_weapon_data: Dictionary
+var _current_weapon_info: Dictionary
 var _current_shooter: Node2D = null
 var _can_shoot: bool = true
 var _shoot_timer: Timer = null
@@ -31,10 +32,10 @@ func _ready() -> void:
 	add_child(_shoot_timer)
 
 func _update_weapon_cache() -> void:
-	var weapon_info = WeaponsType.WEAPON_DATA[current_weapon]
-	if current_level >= weapon_info["levels"].size():
-		current_level = weapon_info["levels"].size() - 1
-	_current_weapon_data = weapon_info["levels"][current_level].duplicate()
+	_current_weapon_info = WeaponsType.WEAPON_DATA[current_weapon]
+	if current_level >= _current_weapon_info["levels"].size():
+		current_level = _current_weapon_info["levels"].size() - 1
+	_current_weapon_data = _current_weapon_info["levels"][current_level].duplicate()
 
 # ============================================
 # ОСНОВНОЙ МЕТОД СТРЕЛЬБЫ
@@ -54,8 +55,11 @@ func try_shoot(shooter: Node2D, shoot_point: Marker2D, direction: Vector2) -> bo
 
 func _shoot(shoot_point: Marker2D, direction: Vector2) -> void:
 	var weapon = _current_weapon_data
+	var sound_file: String = _current_weapon_info.get("sound")
+	var sound: AudioStream = load(sound_file)
 	var spread_count = weapon.get("spread_count", 1)
 	var spread_angle = weapon.get("spread_angle", 0.0)
+	AudioManager.play_sfx(sound)
 	
 	if spread_count <= 1 or spread_angle <= 0.0:
 		_spawn_bullet(shoot_point.global_position, direction, weapon)

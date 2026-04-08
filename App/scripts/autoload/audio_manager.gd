@@ -6,6 +6,10 @@ extends Node
 # Ссылка на музыкальный плеер
 var music_player: AudioStreamPlayer
 
+# Пул для SFX плееров
+var sfx_pool: Array[AudioStreamPlayer2D] = []
+var sfx_pool_size: int = 16  # Максимальное количество одновременных SFX
+
 # Названия шин
 const MUSIC_BUS: String = "Music"
 const SFX_BUS: String = "SFX"
@@ -31,34 +35,108 @@ var ui_volume: float = 0.8:
 		_set_bus_volume(UI_BUS, ui_volume)
 
 func _ready():
-	# ДИАГНОСТИКА: выводим структуру шин
-	print("=== AUDIO BUSES ===")
-	for i in range(AudioServer.bus_count):
-		print("%d: %s (parent: %s)" % [
-			i, 
-			AudioServer.get_bus_name(i),
-			AudioServer.get_bus_name(AudioServer.get_bus_index(AudioServer.get_bus_name(i)))
-			])
-	print("==================")
-	
 	# Создаем музыкальный плеер
 	music_player = AudioStreamPlayer.new()
 	music_player.name = "MusicPlayer"
 	music_player.bus = MUSIC_BUS
 	add_child(music_player)
 	
-	# Устанавливаем начальную громкость шин
-	#_set_bus_volume(MUSIC_BUS, music_volume)
-	_set_bus_volume(SFX_BUS, sfx_volume)
-	_set_bus_volume(UI_BUS, ui_volume)
+	# Создаем пул SFX плееров
+	_create_sfx_pool()
 	
 	# Делаем персистентным при смене сцены
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+func _create_sfx_pool():
+	for i in range(sfx_pool_size):
+		var player = AudioStreamPlayer2D.new()
+		player.name = "SFXPlayer_%d" % i
+		player.bus = SFX_BUS
+		add_child(player)
+		sfx_pool.append(player)
+
+func _get_free_sfx_player() -> AudioStreamPlayer2D:
+	# Ищем свободный плеер
+	for player in sfx_pool:
+		if not player.playing:
+			return player
+	
+	# Если все заняты, используем первый (оборвем его)
+	return sfx_pool[0]
 
 func _set_bus_volume(bus_name: String, volume_linear: float):
 	var bus_index = AudioServer.get_bus_index(bus_name)
 	if bus_index >= 0:
 		AudioServer.set_bus_volume_db(bus_index, linear_to_db(volume_linear))
+
+# ========== УПРАВЛЕНИЕ SFX ==========
+
+## Воспроизвести SFX звук
+## @param sfx: AudioStream - звуковой ресурс
+## @param volume_override: float - опциональная перезапись громкости (0.0-1.0), если -1 используется громкость шины
+## @param pitch_scale: float - изменение высоты тона (1.0 = нормально)
+## @param position: Vector2 - позиция для 2D звука (опционально)
+func play_sfx(sfx: AudioStream, volume_override: float = -1.0, pitch_scale: float = 1.0, position: Vector2 = Vector2.ZERO):
+	if not sfx:
+		return
+	
+	var player = _get_free_sfx_player()
+	if not player:
+		return
+	
+	# Останавливаем если играет
+	if player.playing:
+		player.stop()
+	
+	# Настраиваем параметры
+	player.stream = sfx
+	player.pitch_scale = pitch_scale
+	
+	# Устанавливаем громкость
+	if volume_override >= 0.0:
+		player.volume_db = linear_to_db(clamp(volume_override, 0.0, 1.0))
+	else:
+		player.volume_db = linear_to_db(sfx_volume)
+	
+	# 2D позиция
+	if player is AudioStreamPlayer2D:
+		(player as AudioStreamPlayer2D).attenuation = 0.0
+		if position != Vector2.ZERO:
+			(player as AudioStreamPlayer2D).position = position
+		else:
+			# Ставим звук туда, где слушатель
+			var listener = get_viewport().get_camera_2d()  # или ваш AudioListener2D
+			if listener:
+				(player as AudioStreamPlayer2D).position = listener.global_position
+	
+	player.play()
+
+## Воспроизвести SFX со случайным питчем (для разнообразия)
+## @param sfx: AudioStream - звуковой ресурс
+## @param pitch_min: float - минимальный питч
+## @param pitch_max: float - максимальный питч
+## @param volume_override: float - опциональная перезапись громкости
+func play_sfx_varied(sfx: AudioStream, pitch_min: float = 0.9, pitch_max: float = 1.1, volume_override: float = -1.0):
+	var pitch = randf_range(pitch_min, pitch_max)
+	play_sfx(sfx, volume_override, pitch)
+
+## Остановить все SFX звуки
+func stop_all_sfx():
+	for player in sfx_pool:
+		if player.playing:
+			player.stop()
+
+## Остановить SFX по индексу (если нужно выборочно)
+func stop_sfx_at_index(index: int):
+	if index >= 0 and index < sfx_pool.size():
+		sfx_pool[index].stop()
+
+## Проверить, играет ли какой-либо SFX
+func is_any_sfx_playing() -> bool:
+	for player in sfx_pool:
+		if player.playing:
+			return true
+	return false
 
 # ========== УПРАВЛЕНИЕ МУЗЫКОЙ ==========
 
@@ -150,6 +228,29 @@ func set_all_volumes(music: float, sfx: float, ui: float):
 	set_music_volume(music)
 	set_sfx_volume(sfx)
 	set_ui_volume(ui)
+
+# ========== UI ЗВУКИ (удобные обертки) ==========
+
+## Воспроизвести UI звук (на шину UI)
+func play_ui_sound(sfx: AudioStream, volume_override: float = -1.0):
+	if not sfx:
+		return
+	
+	var player = _get_free_sfx_player()
+	if player:
+		player.stream = sfx
+		player.bus = UI_BUS  # Временно переключаем на UI шину
+		
+		if volume_override >= 0.0:
+			player.volume_db = linear_to_db(clamp(volume_override, 0.0, 1.0))
+		else:
+			player.volume_db = linear_to_db(ui_volume)
+		
+		player.play()
+		
+		# Возвращаем обратно на SFX шину после окончания
+		await player.finished
+		player.bus = SFX_BUS
 
 # ========== РАБОТА С НАСТРОЙКАМИ ==========
 

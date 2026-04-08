@@ -107,7 +107,11 @@ func _hide_portrait_instant():
 	is_portrait_animating = false
 
 func _stop_portrait_animations():
-	if portrait_container.get_meta("tween", null):
+	if not portrait_container:
+		return
+	
+	# Проверяем наличие meta-данных перед получением
+	if portrait_container.has_meta("tween"):
 		var old_tween = portrait_container.get_meta("tween")
 		if old_tween and old_tween.is_valid():
 			old_tween.kill()

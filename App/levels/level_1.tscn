@@ -1,22 +1,20 @@
 [gd_scene format=4 uid="uid://3f6hhl2wbrpq"]
 
 [ext_resource type="Script" uid="uid://cadu8j7xxr0rj" path="res://levels/level_1.gd" id="1_bt44k"]
-[ext_resource type="AudioStream" uid="uid://c1024om7n572h" path="res://audio/music/temp/TheGame - Track 07.ogg" id="2_5ot28"]
+[ext_resource type="AudioStream" uid="uid://c1024om7n572h" path="res://data/audio/music/temp/TheGame - Track 07.ogg" id="2_5ot28"]
 [ext_resource type="PackedScene" uid="uid://bjklp0s2pk6fb" path="res://scenes/player/player.tscn" id="2_jirdo"]
 [ext_resource type="PackedScene" uid="uid://brjseglgmb5bk" path="res://scenes/glitch/glitch_layer.tscn" id="2_kx6l7"]
 [ext_resource type="PackedScene" uid="uid://cqi2vqepj10lg" path="res://scenes/ui/dialogue_box.tscn" id="2_l53as"]
 [ext_resource type="Script" uid="uid://d2em87pulur2p" path="res://scripts/mini_map.gd" id="3_btoec"]
 [ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/glitch/glitch_area.tscn" id="3_gwceb"]
+[ext_resource type="AudioStream" uid="uid://6h6vgi63gglx" path="res://data/audio/sounds/text_typing/text_typing.ogg" id="4_vjtdm"]
 [ext_resource type="PackedScene" uid="uid://bufnh426q16bo" path="res://scenes/enemy/schoolboy.tscn" id="5_btoec"]
 [ext_resource type="Texture2D" uid="uid://be64mqygo4m8g" path="res://tiles/l01.png" id="6_l53as"]
 [ext_resource type="PackedScene" uid="uid://ddqy7bpqqutd7" path="res://scenes/triggers/dialogue_trigger.tscn" id="9_3sk1a"]
 [ext_resource type="PackedScene" uid="uid://df7ehbfhrxfup" path="res://scenes/glitch/bug.tscn" id="10_08mmt"]
 [ext_resource type="PackedScene" uid="uid://crt5ycfrlgynq" path="res://scenes/markers/marker.tscn" id="13_nmsli"]
-[ext_resource type="PackedScene" uid="uid://cyq3ybcbl2ipq" path="res://scenes/pickups/pickup_h.tscn" id="14_vjtdm"]
-[ext_resource type="PackedScene" uid="uid://d3uskubnw01tj" path="res://scenes/pickups/pickup_m.tscn" id="15_bgw3c"]
-[ext_resource type="PackedScene" uid="uid://bhakknh3dqmxl" path="res://scenes/enemy/enemy_spawner.tscn" id="16_bgw3c"]
-[ext_resource type="PackedScene" uid="uid://b38o7m3cifwhd" path="res://scenes/capsule/capsule.tscn" id="16_lrvbd"]
-[ext_resource type="PackedScene" uid="uid://vmou5rls3vva" path="res://scenes/pickups/pickup_l.tscn" id="17_lrvbd"]
+[ext_resource type="PackedScene" uid="uid://ddvxjlutkaj8f" path="res://scenes/spawners/capsule_spawner.tscn" id="14_betor"]
+[ext_resource type="PackedScene" uid="uid://bhakknh3dqmxl" path="res://scenes/spawners/default_spawner.tscn" id="16_bgw3c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3sk1a"]
 texture = ExtResource("6_l53as")
@@ -556,6 +554,8 @@ left_border = NodePath("CameraBorders/LeftBorder")
 bottom_border = NodePath("CameraBorders/BottomBorder")
 
 [node name="DialogLayer" parent="." unique_id=156704560 instance=ExtResource("2_l53as")]
+typing_sound = ExtResource("4_vjtdm")
+typing_pitch_variation = 0.05
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1121407613]
 layer = 10
@@ -618,81 +618,14 @@ tile_set = SubResource("TileSet_kx6l7")
 [node name="Enemy" type="Node2D" parent="Environment" unique_id=1410418346]
 
 [node name="EnemySpawner" parent="Environment/Enemy" unique_id=146069070 instance=ExtResource("16_bgw3c")]
-position = Vector2(715, 596)
+position = Vector2(667, 619)
 enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 2
-
-[node name="EnemySpawner6" parent="Environment/Enemy" unique_id=355025897 instance=ExtResource("16_bgw3c")]
-position = Vector2(1085, 911)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 2
-
-[node name="EnemySpawner7" parent="Environment/Enemy" unique_id=2021932480 instance=ExtResource("16_bgw3c")]
-position = Vector2(788, 908)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 1
-
-[node name="EnemySpawner9" parent="Environment/Enemy" unique_id=715194059 instance=ExtResource("16_bgw3c")]
-position = Vector2(826, 744)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 1
-
-[node name="EnemySpawner10" parent="Environment/Enemy" unique_id=813447489 instance=ExtResource("16_bgw3c")]
-position = Vector2(622, 613)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 1
-
-[node name="EnemySpawner11" parent="Environment/Enemy" unique_id=708469404 instance=ExtResource("16_bgw3c")]
-position = Vector2(407, 584)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 1
-
-[node name="EnemySpawner12" parent="Environment/Enemy" unique_id=699890679 instance=ExtResource("16_bgw3c")]
-position = Vector2(290, 507)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 1
-
-[node name="EnemySpawner8" parent="Environment/Enemy" unique_id=1780363595 instance=ExtResource("16_bgw3c")]
-position = Vector2(651, 992)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 1
-
-[node name="EnemySpawner4" parent="Environment/Enemy" unique_id=378092945 instance=ExtResource("16_bgw3c")]
-position = Vector2(947, 525)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 2
-
-[node name="EnemySpawner5" parent="Environment/Enemy" unique_id=1428990455 instance=ExtResource("16_bgw3c")]
-position = Vector2(1120, 585)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 2
-
-[node name="EnemySpawner2" parent="Environment/Enemy" unique_id=1295616979 instance=ExtResource("16_bgw3c")]
-position = Vector2(432, 510)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
-allowed_direction = 2
-
-[node name="EnemySpawner3" parent="Environment/Enemy" unique_id=894168753 instance=ExtResource("16_bgw3c")]
-position = Vector2(502, 508)
-enemy_scene = ExtResource("5_btoec")
-spawn_delay = 0.0
 allowed_direction = 2
 
 [node name="Markers" type="Node2D" parent="Environment" unique_id=1629931704]
 
 [node name="Marker" parent="Environment/Markers" unique_id=1388941367 instance=ExtResource("13_nmsli")]
-position = Vector2(484, 504)
+position = Vector2(459, 508)
 
 [node name="DialogueTriggers" type="Node2D" parent="Environment" unique_id=333026503]
 
@@ -715,39 +648,6 @@ position = Vector2(615, 988)
 
 [node name="Pickups" type="Node2D" parent="Environment" unique_id=1062698118]
 
-[node name="PickupH2" parent="Environment/Pickups" unique_id=2101099414 instance=ExtResource("14_vjtdm")]
-position = Vector2(913, 526)
-
-[node name="PickupH3" parent="Environment/Pickups" unique_id=1069229921 instance=ExtResource("14_vjtdm")]
-position = Vector2(786, 880)
-
-[node name="PickupH4" parent="Environment/Pickups" unique_id=96507130 instance=ExtResource("14_vjtdm")]
-position = Vector2(684, 983)
-
-[node name="PickupL" parent="Environment/Pickups" unique_id=1855165128 instance=ExtResource("17_lrvbd")]
-position = Vector2(467, 476)
-
-[node name="PickupL2" parent="Environment/Pickups" unique_id=912860424 instance=ExtResource("17_lrvbd")]
-position = Vector2(434, 506)
-
-[node name="PickupL3" parent="Environment/Pickups" unique_id=914189567 instance=ExtResource("17_lrvbd")]
-position = Vector2(665, 542)
-
-[node name="PickupL4" parent="Environment/Pickups" unique_id=121169646 instance=ExtResource("17_lrvbd")]
-position = Vector2(549, 416)
-
-[node name="PickupM" parent="Environment/Pickups" unique_id=2065254970 instance=ExtResource("15_bgw3c")]
-position = Vector2(451, 577)
-
-[node name="PickupM2" parent="Environment/Pickups" unique_id=1004143264 instance=ExtResource("15_bgw3c")]
-position = Vector2(264, 502)
-
-[node name="PickupM3" parent="Environment/Pickups" unique_id=1205101074 instance=ExtResource("15_bgw3c")]
-position = Vector2(343, 594)
-
-[node name="PickupM4" parent="Environment/Pickups" unique_id=31509562 instance=ExtResource("15_bgw3c")]
-position = Vector2(600, 578)
-
 [node name="Player" parent="." unique_id=1043132733 instance=ExtResource("2_jirdo")]
 z_index = 10
 position = Vector2(342, 484)
@@ -760,9 +660,12 @@ position = Vector2(97, 515)
 [node name="BottomBorder" type="Node2D" parent="CameraBorders" unique_id=1706290094]
 position = Vector2(763, 1141)
 
-[node name="Schoolboy" parent="." unique_id=1310015897 instance=ExtResource("5_btoec")]
-position = Vector2(546, 577)
+[node name="CapsuleSpawner" parent="." unique_id=570355106 instance=ExtResource("14_betor")]
+position = Vector2(605, 501)
+allowed_direction = 2
+weapon_type = 4
 
-[node name="CharacterBody2D" parent="." unique_id=253959304 instance=ExtResource("16_lrvbd")]
-position = Vector2(395, 535)
-speed = 0.0
+[node name="CapsuleSpawner2" parent="." unique_id=618652288 instance=ExtResource("14_betor")]
+position = Vector2(720, 566)
+allowed_direction = 2
+weapon_type = 5

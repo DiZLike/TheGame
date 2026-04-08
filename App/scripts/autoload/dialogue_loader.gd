@@ -2,7 +2,7 @@
 extends Node
 
 # Константы
-const DIALOGUES_PATH = "res://dialogues/"
+const DIALOGUES_PATH = "res://data/dialogues/"
 var dialogues_cache = {}
 
 # Структура одной реплики

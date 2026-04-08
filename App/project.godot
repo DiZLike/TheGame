@@ -21,10 +21,10 @@ buses/default_bus_layout="uid://cvph1shkc3og5"
 
 [autoload]
 
-BulletManager="*uid://cuhm472yb2ydh"
 WeaponManager="*uid://cg1q8mrvoc8xd"
 DialogueLoader="*uid://dawjopqo4gpvm"
 AudioManager="*uid://bougi501l3reb"
+GameManager="*uid://clu8nd0tgm2c5"
 
 [display]
 
@@ -43,6 +43,7 @@ terrain=""
 player=""
 camera=""
 pickup=""
+capsules=""
 
 [input]
 
@@ -90,6 +91,7 @@ shoot={
 [physics]
 
 3d/physics_engine="Jolt Physics"
+2d/default_gravity=700.0
 
 [rendering]
 

@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\capsule",
-  "OutputFolder": "sprites\\capsule",
+  "InputFolder": "sprites\\arrow",
+  "OutputFolder": "sprites\\arrow",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,

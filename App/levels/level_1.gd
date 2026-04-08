@@ -20,6 +20,7 @@ func _ready() -> void:
 	AudioManager.set_music(level_music)
 	#AudioManager.resume_music()
 
+@warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
 	pass
 
