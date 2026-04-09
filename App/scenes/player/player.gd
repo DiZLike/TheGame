@@ -1,558 +1,363 @@
 extends CharacterBody2D
 
-# ============================================
 # Сигналы
-# ============================================
 signal player_respawned(new_position: Vector2)
 
-# ============================================
-# Константы движения
-# ============================================
+# Константы настроек игрока
 const SPEED: float = 100.0
 const GRAVITY: float = 700.0
-const JUMP_VELOCITY: float = -325.0
+const JUMP_VELOCITY: float = -325.0  # Начальная скорость прыжка (отрицательная = вверх)
+const RESPAWN_DELAY: float = 1.5     # Задержка перед возрождением (сек)
+const INVINCIBILITY_DURATION: float = 2.0  # Длительность неуязвимости после возрождения
+const BLINK_INTERVAL: float = 0.1    # Интервал мигания при неуязвимости
 
-# ============================================
-# Константы респауна
-# ============================================
-const RESPAWN_SEARCH_STEP: float = 15.0      # Шаг поиска по X (пиксели)
-const RESPAWN_RAY_LENGTH: float = 150.0      # Длина луча вниз
-const RESPAWN_DELAY: float = 1.5             # Задержка перед респауном
-const INVINCIBILITY_DURATION: float = 2.0    # Длительность неуязвимости после респауна
-const BLINK_INTERVAL: float = 0.1            # Интервал мигания
-
-# ============================================
 # Ссылки на узлы
-# ============================================
-@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
-@onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var damage_collision: CollisionShape2D = $DamageDetector/CollisionShape2D
-@onready var damage_detector: Area2D = $DamageDetector
-@onready var shoot_point: Marker2D = $ShootPoint
-@onready var respawn_ray: RayCast2D = $RespawnRayCast
+@onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D          # Анимации персонажа
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D          # Основной коллайдер
+@onready var damage_collision: CollisionShape2D = $DamageDetector/CollisionShape2D  # Коллайдер для получения урона
+@onready var shoot_point: Marker2D = $ShootPoint                            # Точка вылета пули
 
-# Предзагружаем сцену взрыва
-var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
-var explosion_force: float = 150.0
-
-# ============================================
-# Состояния персонажа
-# ============================================
-var is_jumping: bool = false
-var is_crouching: bool = false
-var is_shooting: bool = false
-
-# ============================================
-# Состояния диалога и безопасности
-# ============================================
-var can_move: bool = true           # Может ли игрок двигаться
-var is_invincible: bool = false     # Неуязвим ли игрок
+# Флаги состояния персонажа
+var is_jumping: bool = false        # Находится ли в прыжке
+var is_crouching: bool = false      # Приседает ли
+var is_shooting: bool = false       # Выполняет ли выстрел
+var can_move: bool = true           # Может ли двигаться
+var is_invincible: bool = false     # Режим неуязвимости
+var is_respawning: bool = false     # Идёт процесс возрождения
+var blink_tween: Tween = null       # Анимация мигания (для отмены)
 var shield_effect: Node2D = null    # Визуальный эффект щита
-var original_modulate: Color        # Оригинальный цвет спрайта
+var original_modulate: Color        # Исходный цвет спрайта (для восстановления)
 
-# ============================================
-# Состояния респауна
-# ============================================
-var is_respawning: bool = false      # Идёт ли процесс респауна
-var blink_tween: Tween = null        # Tween для мигания
+# Настройки коллайдера в разных позах
+@onready var default_collider_pos: Vector2 = collision_shape.position      # Стандартная позиция коллайдера
+@onready var default_collider_scale: Vector2 = collision_shape.scale       # Стандартный размер коллайдера
+const CROUCH_COLLIDER = {"pos": Vector2(0, 16), "scale": Vector2(1.7, 0.35)}  # При приседании (ниже и шире)
+const JUMP_COLLIDER = {"pos": Vector2(0, 14), "scale": Vector2(0, 0.5)}        # В прыжке
 
-# ============================================
-# Параметры коллайдера
-# ============================================
-@onready var default_collider_pos: Vector2 = collision_shape.position
-@onready var default_collider_scale: Vector2 = collision_shape.scale
+# Позиции точки выстрела в зависимости от направления и состояния
+const SHOOT_POS = {
+	"jump": {   # В прыжке
+		Vector2(1,-1): Vector2(10,3),   # вправо-вверх
+		Vector2(-1,-1): Vector2(-10,3), # влево-вверх
+		Vector2(1,1): Vector2(10,22),   # вправо-вниз
+		Vector2(-1,1): Vector2(-10,22), # влево-вниз
+		Vector2(0,-1): Vector2(0,3),    # строго вверх
+		Vector2(0,1): Vector2(0,22)     # строго вниз
+	},
+	"move": {   # При движении по земле
+		Vector2(1,-1): Vector2(14,-12),  # вправо-вверх
+		Vector2(-1,-1): Vector2(-14,-12),# влево-вверх
+		Vector2(1,1): Vector2(14,9),    # вправо-вниз
+		Vector2(-1,1): Vector2(-14,9)   # влево-вниз
+	}
+}
 
-const CROUCH_COLLIDER_POS: Vector2 = Vector2(0, 16)
-const CROUCH_COLLIDER_SCALE: Vector2 = Vector2(1.7, 0.35)
-const JUMP_COLLIDER_POS: Vector2 = Vector2(0, 14)
-const JUMP_COLLIDER_SCALE: Vector2 = Vector2(0, 0.5)
-
-const LEFT_BULLET_POS: Vector2 = Vector2(-14, 1)
-const RIGHT_BULLET_POS: Vector2 = Vector2(14, 1)
-const TOP1_BULLET_POS: Vector2 = Vector2(2, -23)
-const TOP2_BULLET_POS: Vector2 = Vector2(-2, -23)
-const TOP_LEFT_BULLET_POS: Vector2 = Vector2(-14, -12)
-const TOP_RIGHT_BULLET_POS: Vector2 = Vector2(14, -12)
-const BOTTOM_LEFT_BULLET_POS: Vector2 = Vector2(-14, 9)
-const BOTTOM_RIGHT_BULLET_POS: Vector2 = Vector2(14, 9)
-
-const LEFT_CROUCH_BULLET_POS: Vector2 = Vector2(-15, 14)
-const RIGHT_CROUCH_BULLET_POS: Vector2 = Vector2(15, 14)
-
-const LEFT_JUMP_BULLET_POS: Vector2 = Vector2(-9, 11)
-const LEFT_TOP_JUMP_BULLET_POS: Vector2 = Vector2(-10, 3)
-const LEFT_DOWN_JUMP_BULLET_POS: Vector2 = Vector2(-10, 22)
-const RIGHT_JUMP_BULLET_POS: Vector2 = Vector2(9, 11)
-const RIGHT_TOP_JUMP_BULLET_POS: Vector2 = Vector2(10, 3)
-const RIGHT_DOWN_JUMP_BULLET_POS: Vector2 = Vector2(10, 22)
-const TOP_JUMP_BULLET_POS: Vector2 = Vector2(0, 3)
-const BOTTOM_JUMP_BULLET_POS: Vector2 = Vector2(0, 22)
+# Ресурсы и эффекты
+var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")  # Сцена взрыва пикселями
+var explosion_force: float = 200.0   # Сила разброса пикселей при взрыве
 
 func _ready():
+	# Сохраняем исходный цвет спрайта для последующего восстановления
 	original_modulate = modulate
-	# Настраиваем RayCast для поиска платформ
-	respawn_ray.target_position = Vector2(0, RESPAWN_RAY_LENGTH)
-	respawn_ray.enabled = false
 
-# ============================================
-# Управление диалогом и безопасностью
-# ============================================
-# Забрать управление и сделать неуязвимым
-func take_control_away(use_shield: bool = false):
-	can_move = false
-	is_invincible = true
-	
-	if use_shield:
-		create_shield_effect()
-	else:
-		# Визуальный эффект без щита (мигание)
-		modulate = Color(0.7, 0.7, 1.0, 1.0)
-
-# Вернуть управление и снять неуязвимость
-func restore_control():
-	can_move = true
-	is_invincible = false
-	
-	# Убираем визуальные эффекты
-	if shield_effect:
-		if shield_effect.has_method("fade_out"):
-			shield_effect.fade_out()
-		else:
-			shield_effect.queue_free()
-		shield_effect = null
-	
-	modulate = original_modulate
-
-# Создать визуальный эффект щита
-func create_shield_effect():
-	# Удаляем старый щит, если есть
-	if shield_effect:
-		shield_effect.queue_free()
-	
-	shield_effect = Node2D.new()
-	
-	# Основной круг щита
-	var shield_sprite = Sprite2D.new()
-	shield_sprite.texture = _create_shield_texture()
-	shield_sprite.modulate = Color(0.3, 0.5, 1.0, 0.4)
-	shield_sprite.scale = Vector2(0.5, 0.5)
-	
-	# Добавляем свечение (опционально)
-	var glow = Sprite2D.new()
-	glow.texture = _create_glow_texture()
-	glow.modulate = Color(0.067, 0.178, 0.403, 0.945)
-	glow.scale = Vector2(1.2, 1.2)
-	shield_sprite.add_child(glow)
-	
-	shield_effect.add_child(shield_sprite)
-	
-	# Запускаем пульсацию с помощью рекурсивного вызова
-	_pulse_shield(shield_sprite)
-	
-	add_child(shield_effect)
-
-# Рекурсивная пульсация щита
-func _pulse_shield(shield_sprite: Sprite2D, scale_up: bool = true):
-	if not shield_sprite or not is_instance_valid(shield_sprite):
-		return
-	
-	var tween = create_tween()
-	var target_scale = Vector2(1, 1) if scale_up else Vector2(0.5, 0.5)
-	tween.tween_property(shield_sprite, "scale", target_scale, 0.5)
-	
-	await tween.finished
-	
-	# Продолжаем пульсацию только если щит всё ещё существует
-	if shield_sprite and is_instance_valid(shield_sprite):
-		_pulse_shield(shield_sprite, not scale_up)
-
-# Создать текстуру щита программно
-func _create_shield_texture() -> Texture2D:
-	var image = Image.create(64, 64, false, Image.FORMAT_RGBA8)
-	image.fill(Color.TRANSPARENT)
-	
-	var center = Vector2(32, 32)
-	var radius = 28
-	
-	for x in range(64):
-		for y in range(64):
-			var pos = Vector2(x, y)
-			var dist = center.distance_to(pos)
-			var alpha = 0.0
-			
-			if dist < radius and dist > radius - 4:
-				alpha = 0.8
-			elif dist < radius - 2 and dist > radius - 6:
-				alpha = 0.3
-			elif dist < radius - 6:
-				alpha = 0.1
-			
-			if alpha > 0:
-				image.set_pixel(x, y, Color(0.3, 0.5, 1.0, alpha))
-	
-	return ImageTexture.create_from_image(image)
-
-# Создать текстуру свечения
-func _create_glow_texture() -> Texture2D:
-	var image = Image.create(64, 64, false, Image.FORMAT_RGBA8)
-	image.fill(Color.TRANSPARENT)
-	
-	var center = Vector2(32, 32)
-	
-	for x in range(64):
-		for y in range(64):
-			var dist = center.distance_to(Vector2(x, y))
-			if dist < 35 and dist > 28:
-				var alpha = 0.4 * (1.0 - (dist - 28) / 7.0)
-				image.set_pixel(x, y, Color(0.5, 0.7, 1.0, alpha))
-	
-	return ImageTexture.create_from_image(image)
-
-# ============================================
-# Основной цикл физики
-# ============================================
 func _physics_process(delta: float) -> void:
-	if is_respawning:
-		return  # Игнорируем физику во время респауна
+	# Если идёт возрождение - не обрабатываем физику
+	if is_respawning: return
 	
-	_apply_gravity(delta)
-	_handle_crouch_input()
-	_handle_jump_input()
-	_handle_movement()
-	_handle_shoot_input()
-	_update_animation_and_sprite()
-	move_and_slide()
-	_reset_jump_flag()
+	_apply_gravity(delta)   # Применяем гравитацию
+	_handle_input()         # Обрабатываем ввод с клавиатуры
+	_update_animation()     # Обновляем анимацию в зависимости от состояния
+	move_and_slide()        # Выполняем движение с учётом коллизий
+	_reset_jump_flag()      # Сбрасываем флаг прыжка, если стоим на земле
 
 func _apply_gravity(delta: float) -> void:
-	if not is_on_floor():
+	# Если не на полу - ускоряемся вниз
+	if not is_on_floor(): 
 		velocity.y += GRAVITY * delta
 
-func _handle_crouch_input() -> void:
-	# Блокируем приседание во время диалога
-	if not can_move:
+func _handle_input() -> void:
+	# Если управление заблокировано - останавливаем движение по горизонтали
+	if not can_move: 
+		velocity.x = move_toward(velocity.x, 0, SPEED)
 		return
 	
-	var is_crouch_pressed: bool = Input.is_action_pressed("move_down") and Input.get_axis("move_left", "move_right") == 0
+	# Считываем направления
+	var dir_x = Input.get_axis("move_left", "move_right")
 	
-	if is_crouch_pressed and is_on_floor() and not is_jumping:
-		if not is_crouching:
-			_start_crouch()
+	# --- Приседание (только на земле, не в прыжке, без горизонтального движения) ---
+	var crouch = Input.is_action_pressed("move_down") and dir_x == 0
+	if crouch and is_on_floor() and not is_jumping:
+		if not is_crouching: 
+			_set_collider(CROUCH_COLLIDER["pos"], CROUCH_COLLIDER["scale"])
+			is_crouching = true
 	elif is_crouching:
-		_stop_crouch()
-
-func _handle_jump_input() -> void:
-	# Блокируем прыжок во время диалога
-	if not can_move:
-		return
+		_reset_collider()
+		is_crouching = false
 	
+	# --- Прыжок ---
 	if Input.is_action_just_pressed("jump") and is_on_floor() and not is_crouching:
 		velocity.y = JUMP_VELOCITY
 		is_jumping = true
-
-func _handle_movement() -> void:
-	# Блокируем движение во время диалога
-	if not can_move:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		return
 	
-	var direction: float = Input.get_axis("move_left", "move_right")
-	
-	if not is_crouching and direction != 0:
-		velocity.x = direction * SPEED
+	# --- Горизонтальное движение ---
+	if not is_crouching and dir_x != 0:
+		velocity.x = dir_x * SPEED
+		animated_sprite.flip_h = dir_x < 0  # Разворачиваем спрайт в сторону движения
 	else:
+		# Плавная остановка
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 	
-	if direction != 0:
-		animated_sprite.flip_h = direction < 0
-
-func _handle_shoot_input() -> void:
-	if not can_move:
-		return
-	
+	# --- Стрельба ---
 	if Input.is_action_pressed("shoot") and not is_shooting:
 		is_shooting = true
 		
-		var shoot_direction = _get_shoot_direction()
-		_update_shoot_point_position()
+		# Получаем направление ввода с учётом всех осей
+		var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
+		if is_crouching: 
+			input_dir.y = 0  # В приседе нельзя стрелять вверх/вниз
 		
-		# Вызов WeaponManager
-		WeaponManager.try_shoot(self, shoot_point, shoot_direction)
+		# Нормализуем направление, если есть ввод, иначе стреляем по умолчанию
+		var dir = input_dir.normalized() if input_dir != Vector2.ZERO else (Vector2.RIGHT if not animated_sprite.flip_h else Vector2.LEFT)
 		
+		_update_shoot_point(input_dir)  # Корректируем точку выстрела
+		WeaponManager.try_shoot(self, shoot_point, dir)  # Пытаемся выстрелить через менеджер оружия
+		
+		# Небольшая задержка, чтобы не стрелять слишком часто
 		await get_tree().create_timer(0.05).timeout
 		is_shooting = false
 
-func _get_shoot_direction() -> Vector2:
-	var input_dir = Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	if (is_crouching):
-		input_dir.y = 0
-	# Если есть движение по клавишам
-	if input_dir != Vector2.ZERO:
-		return input_dir.normalized()
-	
-	# Иначе стреляем по горизонтали в сторону взгляда
-	return Vector2.RIGHT if not animated_sprite.flip_h else Vector2.LEFT
-
-func _update_shoot_point_position() -> void:
-	var input_dir := Input.get_vector("move_left", "move_right", "move_up", "move_down")
-	var is_flipped := animated_sprite.flip_h
-	var dir_key := Vector2(sign(input_dir.x), sign(input_dir.y))
-	
-	const JUMP_POSITIONS := {
-		Vector2(1, -1): RIGHT_TOP_JUMP_BULLET_POS,
-		Vector2(-1, -1): LEFT_TOP_JUMP_BULLET_POS,
-		Vector2(1, 1): RIGHT_DOWN_JUMP_BULLET_POS,
-		Vector2(-1, 1): LEFT_DOWN_JUMP_BULLET_POS,
-		Vector2(0, -1): TOP_JUMP_BULLET_POS,
-		Vector2(0, 1): BOTTOM_JUMP_BULLET_POS,
-	}
-	
-	const MOVE_POSITIONS := {
-		Vector2(1, -1): TOP_RIGHT_BULLET_POS,
-		Vector2(-1, -1): TOP_LEFT_BULLET_POS,
-		Vector2(1, 1): BOTTOM_RIGHT_BULLET_POS,
-		Vector2(-1, 1): BOTTOM_LEFT_BULLET_POS,
-	}
-	
-	var shoot_pos: Vector2
+func _update_shoot_point(input_dir: Vector2) -> void:
+	# Обновляет позицию точки выстрела в зависимости от позы и направления
+	var flip = animated_sprite.flip_h
+	var key = Vector2(sign(input_dir.x), sign(input_dir.y))
 	
 	if is_crouching:
-		shoot_pos = RIGHT_CROUCH_BULLET_POS if not is_flipped else LEFT_CROUCH_BULLET_POS
+		# При приседании - выстрел из фиксированной позиции
+		shoot_point.position = Vector2(15, 14) if not flip else Vector2(-15, 14)
 	elif not is_jumping:
-		if MOVE_POSITIONS.has(dir_key):
-			shoot_pos = MOVE_POSITIONS[dir_key]
-		elif input_dir.y < 0:
-			shoot_pos = TOP1_BULLET_POS if not is_flipped else TOP2_BULLET_POS
-		else:
-			shoot_pos = RIGHT_BULLET_POS if not is_flipped else LEFT_BULLET_POS
+		# На земле
+		shoot_point.position = SHOOT_POS["move"].get(key, Vector2(14 if not flip else -14, 1) if input_dir.y >= 0 else Vector2(2 if not flip else -2, -23))
 	else:
-		if JUMP_POSITIONS.has(dir_key):
-			shoot_pos = JUMP_POSITIONS[dir_key]
-		else:
-			shoot_pos = RIGHT_JUMP_BULLET_POS if not is_flipped else LEFT_JUMP_BULLET_POS
-	
-	shoot_point.position = shoot_pos
+		# В прыжке
+		shoot_point.position = SHOOT_POS["jump"].get(key, Vector2(9 if not flip else -9, 11))
 
-# ============================================
-# Управление анимациями
-# ============================================
-func _update_animation_and_sprite() -> void:
-	if not can_move:
-		animated_sprite.play("idle")
+func _update_animation() -> void:
+	# Выбирает и воспроизводит нужную анимацию в зависимости от состояния
+	
+	# Приседание или обездвиженность
+	if not can_move or is_crouching:
+		animated_sprite.play("down" if is_crouching else "idle")
 		return
-	if is_crouching:
-		animated_sprite.play("down")
-		return
+	
+	var dir_x = Input.get_axis("move_left", "move_right")
+	var dir_y = Input.get_axis("move_down", "move_up")
 	
 	if is_on_floor():
-		_handle_ground_animation()
-	else:
-		_handle_air_animation()
-
-func _handle_ground_animation() -> void:
-	if not can_move:
-		animated_sprite.play("idle")
-		return
-	var direction_x: float = Input.get_axis("move_left", "move_right")
-	var direction_y: float = Input.get_axis("move_down", "move_up")
-	_reset_collider()
-	
-	if direction_y > 0 and  direction_x == 0:
-		animated_sprite.play("up")
-		return
-	elif direction_y > 0 and direction_x != 0:
-		animated_sprite.play("shootUp")
-		return
-	elif direction_y < 0 and direction_x != 0:
-		animated_sprite.play("shootDown")
-		return
-		
-	if is_shooting:
-		if direction_x != 0 and direction_y == 0:
-			animated_sprite.play("shootLine")
-		else:
-			animated_sprite.play("shoot")
-		return
-	if not is_shooting:
-		animated_sprite.play("move" if direction_x != 0 else "idle")
-
-func _handle_air_animation() -> void:
-	if is_jumping:
-		animated_sprite.play("jump")
-		_update_collider(JUMP_COLLIDER_POS, JUMP_COLLIDER_SCALE)
-	else:
-		animated_sprite.play("fall")
+		# На земле - сбрасываем коллайдер к стандартному
 		_reset_collider()
+		
+		if dir_y > 0 and dir_x == 0:
+			animated_sprite.play("up")              # Смотрим вверх
+		elif dir_y > 0 and dir_x != 0:
+			animated_sprite.play("shootUp")         # Бежим вверх-вбок
+		elif dir_y < 0 and dir_x != 0:
+			animated_sprite.play("shootDown")       # Бежим вниз-вбок
+		elif is_shooting:
+			# Анимация выстрела зависит от направления
+			animated_sprite.play("shootLine" if dir_x != 0 and dir_y == 0 else "shoot")
+		else:
+			animated_sprite.play("move" if dir_x != 0 else "idle")  # Ходьба или покой
+	else:
+		# В воздухе
+		if is_jumping:
+			animated_sprite.play("jump")
+			_set_collider(JUMP_COLLIDER["pos"], JUMP_COLLIDER["scale"])  # Уменьшаем коллайдер в прыжке
+		else:
+			animated_sprite.play("fall")
+			_reset_collider()
 
-# ============================================
-# Управление коллайдером
-# ============================================
-func _start_crouch() -> void:
-	is_crouching = true
-	_update_collider(CROUCH_COLLIDER_POS, CROUCH_COLLIDER_SCALE)
-
-func _stop_crouch() -> void:
-	is_crouching = false
-	_reset_collider()
-
-func _update_collider(pos: Vector2, scl: Vector2) -> void:
-	if scl.x != 0:
+func _set_collider(pos: Vector2, scl: Vector2) -> void:
+	# Изменяет размер и положение коллайдера (основного и для урона)
+	if scl.x: 
 		collision_shape.scale.x = scl.x
 		damage_collision.scale.x = scl.x
-	if scl.y != 0:
+	if scl.y: 
 		collision_shape.scale.y = scl.y
 		damage_collision.scale.y = scl.y
-	if pos.x != 0:
+	if pos.x: 
 		collision_shape.position.x = pos.x
 		damage_collision.position.x = pos.x
-	if pos.y != 0:
+	if pos.y: 
 		collision_shape.position.y = pos.y
 		damage_collision.position.y = pos.y
 
 func _reset_collider() -> void:
+	# Возвращает коллайдеры в стандартное состояние
 	collision_shape.position = default_collider_pos
 	collision_shape.scale = default_collider_scale
 	damage_collision.position = default_collider_pos
 	damage_collision.scale = default_collider_scale
 
 func _reset_jump_flag() -> void:
-	if is_on_floor() and is_jumping:
+	# Если коснулись земли - выходим из состояния прыжка
+	if is_on_floor(): 
 		is_jumping = false
 
-# ============================================
-# Обработка урона и респаун
-# ============================================
-func _on_area_2d_body_entered(body: Node2D) -> void:
-	print("Игрок столкнулся с телом: ", body.name)
+func take_control_away(use_shield: bool = false):
+	# Временно отключает управление и делает игрока неуязвимым
+	can_move = false
+	is_invincible = true
+	if use_shield:
+		_create_shield()          # Если нужен щит - создаём визуальный эффект
+	else:
+		modulate = Color(0.7, 0.7, 1.0)  # Иначе просто меняем цвет (эффект "заморозки")
+
+func restore_control():
+	# Возвращает управление и отключает неуязвимость
+	can_move = true
+	is_invincible = false
+	if shield_effect:
+		shield_effect.queue_free()
+		shield_effect = null
+	modulate = original_modulate
+
+func _create_shield():
+	# Создаёт пульсирующий полупрозрачный круг вокруг игрока (эффект щита)
+	if shield_effect:
+		shield_effect.queue_free()
 	
+	shield_effect = Node2D.new()
+	var s = Sprite2D.new()
+	s.texture = _circle_texture(28, 4, Color(0.3, 0.5, 1.0))
+	s.modulate.a = 0.4
+	s.scale = Vector2(0.5, 0.5)
+	shield_effect.add_child(s)
+	add_child(shield_effect)
+	_pulse(s)  # Запускаем анимацию пульсации
+
+func _pulse(sprite: Sprite2D, up: bool = true):
+	# Анимирует пульсацию щита (увеличение/уменьшение)
+	if not sprite:
+		return
+	var t = create_tween()
+	t.tween_property(sprite, "scale", Vector2(1, 1) if up else Vector2(0.5, 0.5), 0.5)
+	await t.finished
+	if sprite:
+		_pulse(sprite, not up)  # Бесконечный цикл пульсации
+
+func _circle_texture(r: int, w: int, c: Color) -> Texture2D:
+	# Генерирует текстуру в виде кольца (окружности) заданного радиуса и толщины
+	var img = Image.create(64, 64, false, Image.FORMAT_RGBA8)
+	img.fill(Color.TRANSPARENT)
+	for x in 64:
+		for y in 64:
+			var d = Vector2(32, 32).distance_to(Vector2(x, y))
+			if d < r and d > r - w:
+				img.set_pixel(x, y, c)
+	return ImageTexture.create_from_image(img)
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	# Обработчик столкновения с врагами
 	if body.is_in_group("enemy") or body.is_in_group("immortal_enemy"):
-		if is_invincible or is_respawning:
-			print("Урон заблокирован (режим диалога или респаун)")
-			return
-		take_damage()
+		if not is_invincible and not is_respawning:
+			take_damage()
 
 func take_damage():
+	# Наносит урон: уменьшает жизни и запускает возрождение, если жизни ещё есть
 	GameManager.sub_lives()
-	var lives = GameManager.get_lives()
-	print("Жизней осталось: ", lives)
-	
-	if lives <= 0:
-		# Если жизни закончились - игра окончена
-		pass
-	else:
-		# Иначе респаун
+	if GameManager.get_lives() >= 0:
 		start_respawn()
 
 func start_respawn():
+	# Запускает процесс возрождения
 	if is_respawning:
 		return
 	
 	is_respawning = true
 	can_move = false
 	
-	# Создаем эффект взрыва
+	# Взрываем персонажа на пиксели
 	call_deferred("pixel_explode")
 	
-	# Ждем задержку перед респауном
+	# Ждём задержку
 	await get_tree().create_timer(RESPAWN_DELAY).timeout
 	
-	# Ищем и перемещаем на новую позицию
-	var respawn_pos = find_respawn_point()
-	global_position = respawn_pos
-	
-	# Сбрасываем скорость и состояние
+	# Перемещаем на точку возрождения
+	global_position = _find_spawn()
 	velocity = Vector2.ZERO
 	is_jumping = false
 	is_crouching = false
 	_reset_collider()
 	
-	# Восстанавливаем игрока
+	# Снова делаем видимым и активным
 	visible = true
 	damage_collision.disabled = false
 	can_move = true
 	
-	# Активируем неуязвимость и мигание
-	activate_invincibility_with_blink()
+	# Включаем мигание (неуязвимость)
+	_activate_blink()
 	
 	is_respawning = false
 
 func pixel_explode():
-	# Создаем сцену взрыва
-	var explosion = pixel_explosion_scene.instantiate()
-	get_tree().root.add_child(explosion)
+	# Создаёт эффект взрыва персонажа на пиксели
+	var e = pixel_explosion_scene.instantiate()
+	get_tree().root.add_child(e)
+	e.explode_from_animated_sprite(animated_sprite, global_position, explosion_force)
 	
-	# Запускаем взрыв от текущего спрайта
-	explosion.explode_from_animated_sprite(animated_sprite, global_position, explosion_force)
-	
-	# Скрываем оригинального персонажа
+	# Прячем персонажа во время возрождения
 	visible = false
 	damage_collision.disabled = true
 
-# Поиск ближайшего активного спавн-поинта
-func find_respawn_point() -> Vector2:
-	var spawn_points_parent = $"../Environment/SpawnPoints"
-	if not spawn_points_parent:
-		print("Ошибка: не найдена папка Environment/SpawnPoints")
+func _find_spawn() -> Vector2:
+	# Ищет ближайшую точку возрождения (SpawnPoint)
+	var spawn_points = $"../Environment/SpawnPoints"
+	if not spawn_points:
 		return Vector2.ZERO
 	
-	var nearest_point: Node2D = null
-	var min_distance: float = INF
-	var current_position := global_position
+	var nearest = null
+	var min_distance = INF
 	
-	for child in spawn_points_parent.get_children():
-		if child is Node2D and child.has_method("is_active"):  # Если есть система активации
-			if not child.is_active():
-				continue
-		
-		var distance = current_position.distance_to(child.global_position)
-		if distance < min_distance:
-			min_distance = distance
-			nearest_point = child
+	for child in spawn_points.get_children():
+		if child is Node2D:
+			var dist = global_position.distance_to(child.global_position)
+			if dist < min_distance:
+				min_distance = dist
+				nearest = child
 	
-	if nearest_point:
-		return nearest_point.global_position
-	
-	print("Нет доступных точек спавна")
-	return Vector2.ZERO
+	return nearest.global_position if nearest else Vector2.ZERO
 
-# Активация неуязвимости с миганием
-func activate_invincibility_with_blink():
+func _activate_blink():
+	# Включает режим неуязвимости с миганием спрайта
 	is_invincible = true
 	
-	# Останавливаем предыдущее мигание, если оно есть
-	if blink_tween and blink_tween.is_valid():
+	# Убиваем старую анимацию, если есть
+	if blink_tween:
 		blink_tween.kill()
 	
-	# Создаем мигание
-	blink_tween = create_tween()
-	blink_tween.set_loops()
-	
-	# Анимируем прозрачность для мигания
+	# Запускаем бесконечное мигание (меняем прозрачность)
+	blink_tween = create_tween().set_loops()
 	blink_tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 0.3), BLINK_INTERVAL / 2)
 	blink_tween.tween_property(animated_sprite, "modulate", Color(1, 1, 1, 1.0), BLINK_INTERVAL / 2)
 	
 	# Через время неуязвимости отключаем мигание
 	await get_tree().create_timer(INVINCIBILITY_DURATION).timeout
 	
-	if blink_tween and blink_tween.is_valid():
+	if blink_tween:
 		blink_tween.kill()
 	
-	# Восстанавливаем нормальный цвет
-	animated_sprite.modulate = Color(1, 1, 1, 1.0)
+	animated_sprite.modulate = Color.WHITE
 	modulate = original_modulate
 	is_invincible = false
 	
-	# Отправляем сигнал о завершении респауна
+	# Сигнализируем о завершении возрождения
 	player_respawned.emit(global_position)
 
-# ============================================
-# Вспомогательные функции
-# ============================================
-# Получить, идет ли процесс респауна
+# Вспомогательные методы для внешнего использования
 func is_respawning_now() -> bool:
 	return is_respawning
 
-# Принудительный респаун извне (например, если упал в пропасть)
 func force_respawn():
+	# Принудительно запускает возрождение (например, при падении в пропасть)
 	if not is_respawning:
 		start_respawn()

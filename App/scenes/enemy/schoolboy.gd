@@ -15,6 +15,7 @@ enum Direction { LEFT, RIGHT }
 @onready var wall_check_area: Area2D = $WallCheckArea
 @onready var visible_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
+var score: int = 100
 var health = 1
 
 # Предзагружаем сцену взрыва
@@ -72,6 +73,7 @@ func on_hit(damage: int, bullet: String) -> void:
 		return
 	if _is_exploding:
 		return
+	ScoreManager.add_score(score)
 	
 	# Устанавливаем силу взрыва в зависимости от типа пули
 	match bullet:

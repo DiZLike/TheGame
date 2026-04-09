@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://p0rrfwntal0y"]
+
+[ext_resource type="Texture2D" uid="uid://c3b7abt8bh38f" path="res://sprites/medal/spritesheet.png" id="1_u8vn0"]
+[ext_resource type="Script" uid="uid://md6c3netxqaf" path="res://scenes/ui/lives_panel.gd" id="1_vuihs"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vuihs"]
+atlas = ExtResource("1_u8vn0")
+region = Rect2(12, 2, 8, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7blt7"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vuihs")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="LivesPanel" type="CanvasLayer" unique_id=809935474]
+script = ExtResource("1_vuihs")
+
+[node name="ScorePanel" type="Panel" parent="." unique_id=179004737]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 15.0
+offset_top = 15.0
+offset_right = 155.0
+offset_bottom = 65.0
+
+[node name="ScoreLabel" type="Label" parent="ScorePanel" unique_id=1438118109]
+layout_mode = 0
+offset_left = 8.0
+offset_right = 128.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 30
+text = "0000000"
+
+[node name="LivesPanel" type="Panel" parent="." unique_id=1415495372]
+self_modulate = Color(1, 1, 1, 0)
+offset_left = 15.0
+offset_top = 80.0
+offset_right = 155.0
+offset_bottom = 130.0
+
+[node name="Medal1" type="AnimatedSprite2D" parent="LivesPanel" unique_id=418715799]
+position = Vector2(15, 25)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_7blt7")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Medal2" type="AnimatedSprite2D" parent="LivesPanel" unique_id=605916660]
+position = Vector2(52, 25)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_7blt7")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Medal3" type="AnimatedSprite2D" parent="LivesPanel" unique_id=2019119541]
+position = Vector2(89.00001, 25)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_7blt7")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Medal4" type="AnimatedSprite2D" parent="LivesPanel" unique_id=1667949977]
+position = Vector2(125, 25)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_7blt7")
+animation = &"idle"
+autoplay = "idle"

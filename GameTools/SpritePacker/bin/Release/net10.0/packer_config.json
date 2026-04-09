@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\arrow",
-  "OutputFolder": "sprites\\arrow",
+  "InputFolder": "sprites\\bullets_enemy",
+  "OutputFolder": "sprites\\bullets_enemy",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,

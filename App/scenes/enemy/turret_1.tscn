@@ -1,0 +1,65 @@
+[gd_scene format=3 uid="uid://cian5tvvwppb6"]
+
+[ext_resource type="Texture2D" uid="uid://biulgct53ddq6" path="res://sprites/turret_1/spritesheet.png" id="1_ccnvd"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fqly3"]
+atlas = ExtResource("1_ccnvd")
+region = Rect2(2, 2, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_gjqmo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fqly3")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6j7cn"]
+atlas = ExtResource("1_ccnvd")
+region = Rect2(2, 36, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_p8kjy"]
+atlas = ExtResource("1_ccnvd")
+region = Rect2(37, 36, 33, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6bm3e"]
+atlas = ExtResource("1_ccnvd")
+region = Rect2(72, 36, 33, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_jhdpd"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6j7cn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p8kjy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6bm3e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_p8kjy")
+}],
+"loop": true,
+"name": &"blink",
+"speed": 5.0
+}]
+
+[node name="Turret 1" type="Node2D" unique_id=1752871372]
+z_index = 10
+
+[node name="Base" type="AnimatedSprite2D" parent="." unique_id=187323018]
+sprite_frames = SubResource("SpriteFrames_gjqmo")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="Turret" type="AnimatedSprite2D" parent="." unique_id=590849485]
+position = Vector2(0, 0.5)
+sprite_frames = SubResource("SpriteFrames_jhdpd")
+animation = &"blink"
+autoplay = "blink"
+frame_progress = 0.7870655

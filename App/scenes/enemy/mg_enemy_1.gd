@@ -15,7 +15,9 @@ const GRAVITY: float = 700.0
 @onready var visible_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var player_detection_area: Area2D = $PlayerDetectionArea  # Зона обнаружения игрока
 
+var score: int = 200
 var health: int = 10
+
 var _is_throwing: bool = false
 var _is_currently_throwing: bool = false
 var _is_exploding: bool = false
@@ -163,6 +165,7 @@ func on_hit(damage: int, bullet: String) -> void:
 		return
 	if _is_exploding:
 		return
+	ScoreManager.add_score(score)
 	
 	_is_exploding = true
 	_stop_throwing()  # Останавливаем броски при смерти
