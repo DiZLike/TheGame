@@ -35,9 +35,6 @@ animations = [{
 "speed": 8.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7jd2x"]
-size = Vector2(11, 30)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4pbkp"]
 size = Vector2(20, 17.286184)
 
@@ -57,12 +54,6 @@ animation = &"move"
 autoplay = "move"
 frame_progress = 0.71357363
 
-[node name="Area2D" type="Area2D" parent="." unique_id=309325318]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1473482996]
-position = Vector2(-0.5, -1)
-shape = SubResource("RectangleShape2D_7jd2x")
-
 [node name="GroundCheck" type="RayCast2D" parent="." unique_id=874451421]
 target_position = Vector2(0, 20.74)
 hit_from_inside = true
@@ -78,6 +69,5 @@ position = Vector2(0, -3.1375003)
 scale = Vector2(0.7, 1.52)
 shape = SubResource("RectangleShape2D_4pbkp")
 
-[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]

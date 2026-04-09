@@ -1,25 +1,25 @@
-[gd_scene format=3 uid="uid://bhakknh3dqmxl"]
+[gd_scene format=3 uid="uid://dwhniglt2wh2"]
 
-[ext_resource type="Script" uid="uid://twf158ps0ja2" path="res://scenes/spawners/default_spawner.gd" id="1_s18fs"]
-[ext_resource type="Texture2D" uid="uid://b8c6y86mhqu7" path="res://sprites/enemy/megaman 2/fire_1/spritesheet.png" id="2_1c5mt"]
-[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_q2wkd"]
+[ext_resource type="Script" uid="uid://ctx0002q1012k" path="res://scenes/spawners/mgenemy_1_spawner.gd" id="1_gt7u5"]
+[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/enemy_1/spritesheet.png" id="2_gt7u5"]
+[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_e5se8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_f77uy"]
-atlas = ExtResource("2_1c5mt")
-region = Rect2(2, 2, 17, 18)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0b40b"]
+atlas = ExtResource("2_gt7u5")
+region = Rect2(2, 40, 44, 36)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_vab1o"]
-atlas = ExtResource("2_1c5mt")
-region = Rect2(21, 2, 17, 18)
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5se8"]
+atlas = ExtResource("2_gt7u5")
+region = Rect2(48, 40, 44, 36)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rs7wp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_f77uy")
+"texture": SubResource("AtlasTexture_0b40b")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_vab1o")
+"texture": SubResource("AtlasTexture_e5se8")
 }],
 "loop": true,
 "name": &"default",
@@ -27,7 +27,7 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mkwvi"]
-atlas = ExtResource("3_q2wkd")
+atlas = ExtResource("3_e5se8")
 region = Rect2(2, 2, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x28r6"]
@@ -41,8 +41,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="EnemySpawner" type="Node2D" unique_id=146069070]
-script = ExtResource("1_s18fs")
+[node name="MGEnemy 01 Spawner" type="Node2D" unique_id=146069070]
+script = ExtResource("1_gt7u5")
 spawn_delay = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]
@@ -54,6 +54,7 @@ frame_progress = 0.8387944
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=741628321]
 
 [node name="Arrow" type="AnimatedSprite2D" parent="." unique_id=438452896]
+z_index = 10
 sprite_frames = SubResource("SpriteFrames_x28r6")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

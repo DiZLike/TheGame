@@ -1,7 +1,7 @@
 extends Node
 
 var player_data: Dictionary = {
-	"lives": 3
+	"lives": 30
 }
 
 # Жизни персонажа

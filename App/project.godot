@@ -44,6 +44,7 @@ player=""
 camera=""
 pickup=""
 capsules=""
+immortal_enemy=""
 
 [input]
 

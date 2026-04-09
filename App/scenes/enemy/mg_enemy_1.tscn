@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://bx1q1xd1k27dd"]
+
+[ext_resource type="Script" uid="uid://b33a20obljtn7" path="res://scenes/enemy/mg_enemy_1.gd" id="1_hh53n"]
+[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/enemy_1/spritesheet.png" id="1_xn6gf"]
+[ext_resource type="PackedScene" uid="uid://cq16vqlyyur3s" path="res://scenes/enemy/mg_fire_1.tscn" id="2_lf7g2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hh53n"]
+atlas = ExtResource("1_xn6gf")
+region = Rect2(2, 2, 44, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lf7g2"]
+atlas = ExtResource("1_xn6gf")
+region = Rect2(48, 2, 44, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ypqlx"]
+atlas = ExtResource("1_xn6gf")
+region = Rect2(2, 40, 44, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aja2q"]
+atlas = ExtResource("1_xn6gf")
+region = Rect2(48, 40, 44, 36)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_sms7k"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hh53n")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lf7g2")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ypqlx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aja2q")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_y0han"]
+size = Vector2(23, 29)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pxlmb"]
+radius = 22.003633
+
+[node name="MGEnemy 1" type="CharacterBody2D" unique_id=1539012725 groups=["enemy"]]
+z_index = 10
+collision_layer = 4
+script = ExtResource("1_hh53n")
+fireball_scene = ExtResource("2_lf7g2")
+min_throw_force = 250.0
+max_throw_force = 400.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=20130838]
+sprite_frames = SubResource("SpriteFrames_sms7k")
+animation = &"attack"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1073732697]
+position = Vector2(1.5, 3.5)
+shape = SubResource("RectangleShape2D_y0han")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=746235550]
+
+[node name="PlayerDetectionArea" type="Area2D" parent="." unique_id=2007607465]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" unique_id=1334182557]
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_pxlmb")

@@ -381,6 +381,6 @@ script = ExtResource("3_gmlin")
 position = Vector2(14, 0)
 
 [node name="RespawnRayCast" type="RayCast2D" parent="." unique_id=736997860]
-target_position = Vector2(0, 150)
+target_position = Vector2(0, 200)
 
 [connection signal="body_entered" from="DamageDetector" to="." method="_on_area_2d_body_entered"]

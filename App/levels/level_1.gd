@@ -10,7 +10,7 @@ extends Node2D
 
 @onready var glitch_layer = $UI/GlitchLayer
 @onready var tile_gnd = $"Environment/Tiles/TileGND"
-@onready var dialogue_box = $DialogLayer
+@onready var dialogue_box = $UI/DialogLayer
 
 func _ready() -> void:
 	if dialogue_box:

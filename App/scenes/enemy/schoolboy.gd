@@ -15,6 +15,8 @@ enum Direction { LEFT, RIGHT }
 @onready var wall_check_area: Area2D = $WallCheckArea
 @onready var visible_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
+var health = 1
+
 # Предзагружаем сцену взрыва
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
 
@@ -65,6 +67,9 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 func on_hit(damage: int, bullet: String) -> void:
+	health -= damage
+	if health > 0:
+		return
 	if _is_exploding:
 		return
 	

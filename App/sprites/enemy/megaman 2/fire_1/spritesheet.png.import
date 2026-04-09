@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b8c6y86mhqu7"
-path="res://.godot/imported/spritesheet.png-03ca5c70fa9396b8115e72be0558ef2b.ctex"
+path="res://.godot/imported/spritesheet.png-8c7919f1402e3cbc8192924006c831e4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/enemy/megaman 2/enemy_1_mob/spritesheet.png"
-dest_files=["res://.godot/imported/spritesheet.png-03ca5c70fa9396b8115e72be0558ef2b.ctex"]
+source_file="res://sprites/enemy/megaman 2/fire_1/spritesheet.png"
+dest_files=["res://.godot/imported/spritesheet.png-8c7919f1402e3cbc8192924006c831e4.ctex"]
 
 [params]
 

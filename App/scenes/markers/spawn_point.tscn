@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://bxsiywf6a7trt"]
+
+[ext_resource type="Script" uid="uid://dnw1fjdffhndl" path="res://scenes/markers/spawn_point.gd" id="1_1500a"]
+[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="1_dqgi8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1500a"]
+atlas = ExtResource("1_dqgi8")
+region = Rect2(104, 2, 32, 34)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_5kfk6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1500a")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SpawnPoint" type="Node2D" unique_id=577425369]
+script = ExtResource("1_1500a")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=441193734]
+modulate = Color(0, 0, 1, 1)
+sprite_frames = SubResource("SpriteFrames_5kfk6")
+autoplay = "default"
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1745518966]
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="screen_entered"]

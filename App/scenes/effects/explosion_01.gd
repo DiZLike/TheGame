@@ -10,7 +10,7 @@ var shooter: Node2D = null
 @onready var animation: AnimatedSprite2D = $ExplosionAnimation
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
-@onready var sound: AudioStream = preload("res://data/audio/sounds/player_weapon/rocket_exp.ogg")
+@onready var sound: AudioStream = preload("res://data/audio/sounds/explosions/rocket_explosion.ogg")
 
 func _ready() -> void:
 	AudioManager.play_sfx(sound, 1, 1.0, global_position)

@@ -17,7 +17,6 @@ const JUMP_VELOCITY: float = -300.0
 # ============================================
 const RESPAWN_SEARCH_STEP: float = 15.0      # Шаг поиска по X (пиксели)
 const RESPAWN_RAY_LENGTH: float = 150.0      # Длина луча вниз
-const RESPAWN_MAX_OFFSET_Y: float = 50.0     # Максимальная высота над платформой
 const RESPAWN_DELAY: float = 1.5             # Задержка перед респауном
 const INVINCIBILITY_DURATION: float = 2.0    # Длительность неуязвимости после респауна
 const BLINK_INTERVAL: float = 0.1            # Интервал мигания
@@ -426,7 +425,7 @@ func _reset_jump_flag() -> void:
 func _on_area_2d_body_entered(body: Node2D) -> void:
 	print("Игрок столкнулся с телом: ", body.name)
 	
-	if body.is_in_group("enemy"):
+	if body.is_in_group("enemy") or body.is_in_group("immortal_enemy"):
 		if is_invincible or is_respawning:
 			print("Урон заблокирован (режим диалога или респаун)")
 			return
@@ -489,51 +488,32 @@ func pixel_explode():
 	visible = false
 	damage_collision.disabled = true
 
-# Поиск подходящей платформы для респауна
+# Поиск ближайшего активного спавн-поинта
 func find_respawn_point() -> Vector2:
-	var camera := get_viewport().get_camera_2d()
-	if not camera:
-		# Если камеры нет - респаун в центре (0,0)
+	var spawn_points_parent = $"../Environment/SpawnPoints"
+	if not spawn_points_parent:
+		print("Ошибка: не найдена папка Environment/SpawnPoints")
 		return Vector2.ZERO
 	
-	var camera_center := camera.global_position
-	var screen_size := get_viewport().get_visible_rect().size
-	var left_limit := camera_center.x - screen_size.x / 2
-	var right_limit := camera_center.x + screen_size.x / 2
+	var nearest_point: Node2D = null
+	var min_distance: float = INF
+	var current_position := global_position
 	
-	# Начинаем поиск от левого края экрана
-	var check_x := left_limit
-	var check_y := camera_center.y - 20  # Немного выше центра камеры
-	
-	# Включаем RayCast для поиска
-	respawn_ray.enabled = true
-	
-	while check_x <= right_limit:
-		# Проверяем точку над потенциальной платформой
-		var ray_start := Vector2(check_x, check_y - RESPAWN_MAX_OFFSET_Y)
-		respawn_ray.global_position = ray_start
-		respawn_ray.force_raycast_update()
+	for child in spawn_points_parent.get_children():
+		if child is Node2D and child.has_method("is_active"):  # Если есть система активации
+			if not child.is_active():
+				continue
 		
-		if respawn_ray.is_colliding():
-			var hit_point := respawn_ray.get_collision_point()
-			# Вычисляем позицию игрока (ноги на платформе)
-			var player_height = collision_shape.shape.get_rect().size.y * collision_shape.scale.y
-			var respawn_y: float = hit_point.y - player_height + 5  # +5 для небольшого зазора
-			
-			# Проверяем, что позиция не выше камеры слишком сильно
-			if respawn_y < camera_center.y - screen_size.y / 2 + 50:
-				respawn_y = camera_center.y - screen_size.y / 2 + 50
-			
-			respawn_ray.enabled = false
-			return Vector2(check_x, respawn_y)
-		
-		check_x += RESPAWN_SEARCH_STEP
+		var distance = current_position.distance_to(child.global_position)
+		if distance < min_distance:
+			min_distance = distance
+			nearest_point = child
 	
-	respawn_ray.enabled = false
+	if nearest_point:
+		return nearest_point.global_position
 	
-	# Если не нашли платформу - респаун в центре камеры, на уровне земли
-	var fallback_y = camera_center.y + screen_size.y / 4
-	return Vector2(camera_center.x, fallback_y)
+	print("Нет доступных точек спавна")
+	return Vector2.ZERO
 
 # Активация неуязвимости с миганием
 func activate_invincibility_with_blink():
