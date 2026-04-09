@@ -10,7 +10,7 @@ signal player_respawned(new_position: Vector2)
 # ============================================
 const SPEED: float = 100.0
 const GRAVITY: float = 700.0
-const JUMP_VELOCITY: float = -300.0
+const JUMP_VELOCITY: float = -325.0
 
 # ============================================
 # Константы респауна
