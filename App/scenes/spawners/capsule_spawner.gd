@@ -141,9 +141,9 @@ func get_enemy_direction(side: String):
 		"right":
 			return "left"   # Справа - бежит налево
 		"top":
-			return "right"  # Сверху - бежит направо (или можно random)
+			return "bottom"  # Сверху - бежит направо (или можно random)
 		"bottom":
-			return "right"  # Снизу - бежит направо
+			return "top"  # Снизу - бежит направо
 		_:
 			return "right"
 
@@ -177,8 +177,8 @@ func spawn_enemy():
 	cap.move_direction = {
 		"left": cap.Direction.LEFT,
 		"right": cap.Direction.RIGHT,
-		"up": cap.Direction.UP,
-		"down": cap.Direction.DOWN,
+		"top": cap.Direction.UP,
+		"bottom": cap.Direction.DOWN,
 	}.get(direction, cap.Direction.RIGHT)
 	
 	var spawn_position = global_position

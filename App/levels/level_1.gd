@@ -52,3 +52,8 @@ func _01_create_glitch_enemy():
 	enemy.global_position = pos.global_position
 	enemy.set_move_direction("left")
 	get_tree().current_scene.add_child(enemy)
+
+# Методы активации триггеров
+func _01_2_activate():
+	var trig: DialogueTrigger = $Environment/DialogueTriggers/DTrig2
+	trig.activate()

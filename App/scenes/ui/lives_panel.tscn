@@ -2,6 +2,8 @@
 
 [ext_resource type="Texture2D" uid="uid://c3b7abt8bh38f" path="res://sprites/medal/spritesheet.png" id="1_u8vn0"]
 [ext_resource type="Script" uid="uid://md6c3netxqaf" path="res://scenes/ui/lives_panel.gd" id="1_vuihs"]
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="2_7blt7"]
+[ext_resource type="Texture2D" uid="uid://c4qnetcug02dm" path="res://sprites/pickups/spritesheet.png" id="4_t4qmp"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_vuihs"]
 atlas = ExtResource("1_u8vn0")
@@ -15,6 +17,21 @@ animations = [{
 }],
 "loop": false,
 "name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ob1c6"]
+atlas = ExtResource("4_t4qmp")
+region = Rect2(28, 2, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_7e0os"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ob1c6")
+}],
+"loop": true,
+"name": &"default",
 "speed": 5.0
 }]
 
@@ -33,15 +50,18 @@ layout_mode = 0
 offset_left = 8.0
 offset_right = 128.0
 offset_bottom = 42.0
-theme_override_font_sizes/font_size = 30
+theme_override_fonts/font = ExtResource("2_7blt7")
+theme_override_font_sizes/font_size = 25
 text = "0000000"
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="LivesPanel" type="Panel" parent="." unique_id=1415495372]
 self_modulate = Color(1, 1, 1, 0)
-offset_left = 15.0
-offset_top = 80.0
-offset_right = 155.0
-offset_bottom = 130.0
+offset_left = 24.0
+offset_top = 48.0
+offset_right = 164.0
+offset_bottom = 98.0
 
 [node name="Medal1" type="AnimatedSprite2D" parent="LivesPanel" unique_id=418715799]
 position = Vector2(15, 25)
@@ -70,3 +90,64 @@ scale = Vector2(2.75, 2.75)
 sprite_frames = SubResource("SpriteFrames_7blt7")
 animation = &"idle"
 autoplay = "idle"
+
+[node name="WeaponPanel" type="Panel" parent="." unique_id=865313352]
+self_modulate = Color(1, 1, 1, 0.47058824)
+offset_left = 30.0
+offset_top = 104.0
+offset_right = 170.0
+offset_bottom = 154.0
+
+[node name="CurrentWeapon" type="AnimatedSprite2D" parent="WeaponPanel" unique_id=1349379836]
+position = Vector2(30.999998, 16.999998)
+scale = Vector2(2.75, 2.75)
+sprite_frames = SubResource("SpriteFrames_7e0os")
+
+[node name="CurrentLevel" type="Label" parent="WeaponPanel" unique_id=1343434597]
+layout_mode = 0
+offset_left = 49.0
+offset_top = 24.0
+offset_right = 69.0
+offset_bottom = 43.0
+theme_override_colors/font_color = Color(0, 0.4117647, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_7blt7")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CurrentAmmo" type="Label" parent="WeaponPanel" unique_id=135032458]
+layout_mode = 0
+offset_left = 68.0
+offset_top = 3.0
+offset_right = 88.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0.4117647, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_7blt7")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Slash" type="Label" parent="WeaponPanel" unique_id=554628564]
+layout_mode = 0
+offset_left = 86.0
+offset_top = 3.0
+offset_right = 106.0
+offset_bottom = 38.0
+theme_override_colors/font_color = Color(0, 0.4117647, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_7blt7")
+text = "\\
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MagazineSize" type="Label" parent="WeaponPanel" unique_id=314453884]
+layout_mode = 0
+offset_left = 103.0
+offset_top = 3.0
+offset_right = 123.0
+offset_bottom = 22.0
+theme_override_colors/font_color = Color(0, 0.4117647, 0.6627451, 1)
+theme_override_fonts/font = ExtResource("2_7blt7")
+text = "3"
+horizontal_alignment = 1
+vertical_alignment = 1

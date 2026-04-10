@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://cian5tvvwppb6"]
 
 [ext_resource type="Texture2D" uid="uid://biulgct53ddq6" path="res://sprites/turret_1/spritesheet.png" id="1_ccnvd"]
+[ext_resource type="Script" uid="uid://bcshirt5r8jx7" path="res://scenes/enemy/turret_1.gd" id="1_fqly3"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ccnvd"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fqly3"]
 atlas = ExtResource("1_ccnvd")
@@ -49,17 +52,41 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="Turret 1" type="Node2D" unique_id=1752871372]
+[sub_resource type="CircleShape2D" id="CircleShape2D_ccnvd"]
+radius = 22.003633
+
+[node name="Turret 1" type="CharacterBody2D" unique_id=1852494293 groups=["enemy"]]
 z_index = 10
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_fqly3")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=362881033]
+scale = Vector2(0.645, 0.645)
+shape = SubResource("CapsuleShape2D_ccnvd")
 
 [node name="Base" type="AnimatedSprite2D" parent="." unique_id=187323018]
 sprite_frames = SubResource("SpriteFrames_gjqmo")
 animation = &"idle"
 autoplay = "idle"
 
-[node name="Turret" type="AnimatedSprite2D" parent="." unique_id=590849485]
+[node name="Turret" type="Node2D" parent="." unique_id=1884733923]
+
+[node name="TurretSprite" type="AnimatedSprite2D" parent="Turret" unique_id=590849485]
 position = Vector2(0, 0.5)
 sprite_frames = SubResource("SpriteFrames_jhdpd")
 animation = &"blink"
 autoplay = "blink"
-frame_progress = 0.7870655
+frame_progress = 0.20009607
+
+[node name="ShootingPoint" type="Marker2D" parent="Turret" unique_id=334438945]
+position = Vector2(0, -11)
+
+[node name="PlayerDetectionArea" type="Area2D" parent="." unique_id=1778353992]
+visible = false
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" unique_id=2096209335]
+scale = Vector2(10, 10)
+shape = SubResource("CircleShape2D_ccnvd")

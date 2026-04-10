@@ -1,0 +1,286 @@
+{
+  "Dialogues": [
+	{
+	  "Id": "d1",
+	  "Speaker": "Алекс",
+	  "Text": "О. Пикап. Хоть что-то работает как надо.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d2",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d2",
+	  "Speaker": "Null",
+	  "Text": "Это система усиления. Хочешь совет — удели минуту. Оружие здесь работает не совсем так, как в оригинальной Contra.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d3",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d3",
+	  "Speaker": "Алекс",
+	  "Text": "О, это снова ты. А я уж думал, ты дремлешь в моей голове.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d4",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d4",
+	  "Speaker": "Null",
+	  "Text": "Дремлю. Но иногда открываю один глаз. Слушай.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d5",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d5",
+	  "Speaker": "Алекс",
+	  "Text": "Ну давай. Просвети меня, о великий голос из ниоткуда.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d6",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d6",
+	  "Speaker": "Null",
+	  "Text": "Пожалуйста. D — Дефолтное. Надёжное. Скучное. Стреляет медленно, но хотя бы не придумывает ничего лишнего. Если найдёшь ещё одну — скорость пули станет выше. На третьей копии… ну, лучше не зацикливайся. Ищи другое оружие.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d7",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d7",
+	  "Speaker": "Алекс",
+	  "Text": "Какое, например?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d8",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d8",
+	  "Speaker": "Null",
+	  "Text": "M — пулемёт. Глитч его обожает. Стреляет очень быстро. Но урон… скажем так, враги будут умирать скорее от смеха, чем от пуль. На втором уровне становится терпимо. На третьем — почти как нормальное оружие. Почти.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d9",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d9",
+	  "Speaker": "Алекс",
+	  "Text": "Почти?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d10",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d10",
+	  "Speaker": "Null",
+	  "Text": "Почти. Дальше. S — спредган. Веером. Чем больше подбираешь, тем больше пуль. Глитч его не любит — слишком предсказуемо. А вот игроки обычно любят. Справедливо, кстати.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d11",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d11",
+	  "Speaker": "Алекс",
+	  "Text": "Наконец-то что-то нормальное.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d12",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d12",
+	  "Speaker": "Null",
+	  "Text": "L — лазер. Пробивает врагов. На хорошей прокачке — двоих, троих. Заряжается дольше, зато урон приятный. Для тех, кто не торопится.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d13",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d13",
+	  "Speaker": "Алекс",
+	  "Text": "Я больше по вееру, но ладно.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d14",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d14",
+	  "Speaker": "Null",
+	  "Text": "R — ракеты. Взрываются. Радиус растёт с каждым уровнем. На третьем уровне лучше не стоять рядом — стены могут исчезнуть. Глитч до сих пор не понял, как это исправить. Мне кажется, ему даже нравится.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d15",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d15",
+	  "Speaker": "Алекс",
+	  "Text": "Самонаводящиеся есть?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d16",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d16",
+	  "Speaker": "Null",
+	  "Text": "H — самонаводящиеся. Ракеты, которые летят туда, куда нужно, даже если ты не знаешь куда стрелять. На третьем уровне они поворачивают почти мгновенно. Очень удобно, если ты… как бы это сказать… торопишься.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d17",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d17",
+	  "Speaker": "Алекс",
+	  "Text": "Ну и какое оружие лучше?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d18",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d18",
+	  "Speaker": "Null",
+	  "Text": "То, которое ты не бросишь, когда Глитч начнёт ломать управление. А теперь плохие новости: есть ещё гличное оружие. Оно не прокачивается. Оно просто… странное. Например, пуля, которая летит зигзагом, потому что прямая линия — это скучно. Или третья пуля в очереди, которая зависает и думает о жизни.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d19",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d19",
+	  "Speaker": "Алекс",
+	  "Text": "И что с ним делать?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d20",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d20",
+	  "Speaker": "Null",
+	  "Text": "Менять на нормальное. Или смеяться. Глитч называет это \"стратегическим планированием\". Я называю это \"поводом учиться уклоняться\".",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d21",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d21",
+	  "Speaker": "Алекс",
+	  "Text": "Ну хоть что-то. А если я соберу три одинаковых? Дальше есть что-то?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d22",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d22",
+	  "Speaker": "Null",
+	  "Text": "Код устроен так, что третья ступень — последняя. Дальше просто… ничего. Нет смысла искать четвёртую. Её не существует... Поверь мне.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d23",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d23",
+	  "Speaker": "Алекс",
+	  "Text": "Почему ты так уверенно это говоришь?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d24",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d24",
+	  "Speaker": "Null",
+	  "Text": "Потому что я Null. Я знаю, где ничего нет. Продолжай. Оружие само покажет себя. А я пока… посмотрю.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d25",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d25",
+	  "Speaker": "Алекс",
+	  "Text": "Ладно. Спасибо за лекцию. Погнали дальше, пока Глитч не придумал новый баг.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "end",
+	  "GlitchEnabled": false
+	}
+  ],
+  "Metadata": {
+	"Chapter": 1,
+	"Level": "1-1",
+	"Title": "Corrupted Jungle",
+	"Background": "res://assets/backgrounds/jungle_01.png",
+	"Music": "res://assets/music/tutorial.ogg"
+  }
+}

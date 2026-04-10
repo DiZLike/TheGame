@@ -12,7 +12,7 @@ gradient = SubResource("Gradient_xg44k")
 script = ExtResource("1_xg44k")
 
 [node name="Panel" type="Panel" parent="." unique_id=640121012]
-modulate = Color(3.7045925, 3.7045925, 3.7045925, 1)
+self_modulate = Color(0, 0.5058824, 0.92156863, 1)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

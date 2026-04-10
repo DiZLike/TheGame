@@ -7,21 +7,25 @@ extends Node
 const WeaponsType = preload("res://scripts/weapon_types.gd")
 
 # Сигналы для UI
-signal weapon_changed(weapon_type: int, level: int)
-signal weapon_upgraded(weapon_type: int, new_level: int)
+signal weapon_changed(weapon_type: WeaponsType.WeaponType, level: int)
+signal weapon_upgraded(weapon_type: WeaponsType.WeaponType, new_level: int)
+signal ammo_changed(current_ammo: int, max_ammo: int)
+signal reload_started(reload_time: float)
+signal reload_finished()
 
 # Текущее состояние
-var current_weapon: int = WeaponsType.WeaponType.DEFAULT
+var current_weapon: WeaponsType.WeaponType = WeaponsType.WeaponType.DEFAULT
 var current_level: int = 0                        # 0-3
 var _current_weapon_data: Dictionary
 var _current_weapon_info: Dictionary
 var _current_shooter: Node2D = null
-var _can_shoot: bool = true
-var _shoot_timer: Timer = null
 
-# Лимит пуль на экране
-var _active_bullets: Array = []
-var _bullet_count: int = 0
+# Система стрельбы и перезарядки
+var _can_shoot: bool = true
+var _is_reloading: bool = false
+var _current_ammo: int = 0
+var _shoot_timer: Timer = null
+var _reload_timer: Timer = null
 
 func _ready() -> void:
 	_update_weapon_cache()
@@ -30,6 +34,15 @@ func _ready() -> void:
 	_shoot_timer.one_shot = true
 	_shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 	add_child(_shoot_timer)
+	
+	_reload_timer = Timer.new()
+	_reload_timer.one_shot = true
+	_reload_timer.timeout.connect(_on_reload_timer_timeout)
+	add_child(_reload_timer)
+	
+	# Инициализируем патроны
+	_current_ammo = _current_weapon_data.get("magazine_size", 3)
+	ammo_changed.emit(_current_ammo, _current_weapon_data.get("magazine_size", 3))
 
 func _update_weapon_cache() -> void:
 	_current_weapon_info = WeaponsType.WEAPON_DATA[current_weapon]
@@ -41,16 +54,25 @@ func _update_weapon_cache() -> void:
 # ОСНОВНОЙ МЕТОД СТРЕЛЬБЫ
 # ============================================
 func try_shoot(shooter: Node2D, shoot_point: Marker2D, direction: Vector2) -> bool:
-	if not _can_shoot:
+	if not _can_shoot or _is_reloading:
 		return false
 	
-	var max_bullets = _current_weapon_data["max_bullets"]
-	if max_bullets != 999 and _bullet_count >= max_bullets:
+	if _current_ammo <= 0:
+		_start_reload()
 		return false
 	
 	_current_shooter = shooter
 	_shoot(shoot_point, direction)
+	
+	_current_ammo -= 1
+	ammo_changed.emit(_current_ammo, _current_weapon_data.get("magazine_size", 3))
+	
 	_start_shoot_cooldown()
+	
+	# Автоматическая перезарядка если патроны кончились
+	if _current_ammo <= 0:
+		_start_reload()
+	
 	return true
 
 func _shoot(shoot_point: Marker2D, direction: Vector2) -> void:
@@ -102,14 +124,7 @@ func _spawn_bullet(origin: Vector2, direction: Vector2, weapon: Dictionary) -> v
 	if weapon.has("laser_duration"):
 		bullet.laser_duration = weapon["laser_duration"]
 	
-	# Отслеживание лимита пуль
-	_bullet_count += 1
-	
 	get_tree().current_scene.add_child(bullet)
-
-func remove_bullet() -> void:
-	_bullet_count -= 1
-	print("Пуля удалена: " + str(_bullet_count))
 
 func _start_shoot_cooldown() -> void:
 	_can_shoot = false
@@ -120,13 +135,52 @@ func _on_shoot_timer_timeout() -> void:
 	_can_shoot = true
 
 # ============================================
+# СИСТЕМА ПЕРЕЗАРЯДКИ
+# ============================================
+func _start_reload() -> void:
+	if _is_reloading:
+		return
+	
+	_is_reloading = true
+	_can_shoot = false
+	
+	var reload_time = _current_weapon_data.get("reload_time", 1.0)
+	_reload_timer.wait_time = reload_time
+	_reload_timer.start()
+	
+	reload_started.emit(reload_time)
+
+func _on_reload_timer_timeout() -> void:
+	_current_ammo = _current_weapon_data.get("magazine_size", 3)
+	_is_reloading = false
+	_can_shoot = true
+	
+	ammo_changed.emit(_current_ammo, _current_weapon_data.get("magazine_size", 3))
+	reload_finished.emit()
+
+func reload() -> void:
+	"""Принудительная перезарядка (по нажатию кнопки)"""
+	if not _is_reloading and _current_ammo < _current_weapon_data.get("magazine_size", 3):
+		_start_reload()
+
+# ============================================
 # ПУБЛИЧНЫЕ МЕТОДЫ
 # ============================================
 func change_weapon(weapon_type: int) -> void:
 	current_weapon = weapon_type
 	current_level = 0
 	_update_weapon_cache()
+	
+	# Сброс состояния при смене оружия
+	_is_reloading = false
+	_reload_timer.stop()
+	_shoot_timer.stop()
+	_can_shoot = true
+	
+	_current_ammo = _current_weapon_data.get("magazine_size", 3)
+	
 	weapon_changed.emit(current_weapon, current_level)
+	ammo_changed.emit(_current_ammo, _current_weapon_data.get("magazine_size", 3))
 
 func upgrade_weapon() -> bool:
 	var weapon_info = WeaponsType.WEAPON_DATA[current_weapon]
@@ -135,6 +189,11 @@ func upgrade_weapon() -> bool:
 	if current_level < max_level:
 		current_level += 1
 		_update_weapon_cache()
+		
+		# При улучшении пополняем патроны
+		_current_ammo = _current_weapon_data.get("magazine_size", 3)
+		ammo_changed.emit(_current_ammo, _current_weapon_data.get("magazine_size", 3))
+		
 		weapon_upgraded.emit(current_weapon, current_level)
 		return true
 	return false
@@ -142,8 +201,20 @@ func upgrade_weapon() -> bool:
 func get_current_weapon_data() -> Dictionary:
 	return _current_weapon_data.duplicate()
 
+func get_current_weapon() -> WeaponsType.WeaponType:
+	return current_weapon
+
 func get_current_level() -> int:
 	return current_level
+
+func get_current_ammo() -> int:
+	return _current_ammo
+
+func get_max_ammo() -> int:
+	return _current_weapon_data.get("magazine_size", 3)
+
+func is_reloading() -> bool:
+	return _is_reloading
 
 func is_overloaded() -> bool:
 	var weapon_info = WeaponsType.WEAPON_DATA[current_weapon]

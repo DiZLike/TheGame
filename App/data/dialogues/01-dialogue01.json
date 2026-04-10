@@ -1,0 +1,108 @@
+{
+  "Dialogues": [
+	{
+	  "Id": "d1",
+	  "Speaker": "Алекс",
+	  "Text": "Что… Что за… Где я? Это же джунгли из Contra… Но я чувствую землю. Воздух… Пахнет как в старом телевизоре, если его перегреть",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d2",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d2",
+	  "Speaker": "Алекс",
+	  "Text": "Нет. Серьёзно? Меня… засосало в монитор? Это какой-то сбой. Должен быть сон",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d3",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d3",
+	  "Speaker": "Голос",
+	  "Text": "Сбой… Ха. Смешное слово. Ты ещё не видел настоящего сбоя, игрок",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "Next": "d4",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d4",
+	  "Speaker": "Алекс",
+	  "Text": "Кто здесь? Где ты?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d5",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d5",
+	  "Speaker": "Голос",
+	  "Text": "Я — там, где ломается код. Где спрайты наслаиваются друг на друга. Где жизни заканчиваются… но игра не заканчивается никогда",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d6",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d6",
+	  "Speaker": "Голос",
+	  "Text": "Меня зовут… называй как хочешь. Глитч. Баг. Корр. Я здесь, потому что ваш мир — игроков — сделал классику слишком лёгкой. Вы смеётесь над моими братьями-багами, проходите уровни с закрытыми глазами",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d7",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d7",
+	  "Speaker": "Алекс",
+	  "Text": "Ты… ты часть игры? ИИ?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d8",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d8",
+	  "Speaker": "Голос",
+	  "Text": "Я — архитектор нового порядка. Я перепишу каждую вселенную NES. Смешаю их в одну идеальную игру. Без побед. Без концовок. Только вечные рестарты",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d9",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d9",
+	  "Speaker": "Алекс",
+	  "Text": "Постой! Кто ты такой?! Что ты сделал с этим миром?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": "_01_2_activate",
+	  "Next": "end",
+	  "GlitchEnabled": false
+	}
+  ],
+  "Metadata": {
+	"Chapter": 1,
+	"Level": "1-1",
+	"Title": "Corrupted Jungle",
+	"Background": "res://assets/backgrounds/default.png",
+	"Music": "res://assets/music/default.ogg"
+  }
+}

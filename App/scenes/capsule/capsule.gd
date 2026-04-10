@@ -3,7 +3,7 @@ extends CharacterBody2D
 const WeaponsType = preload("res://scripts/weapon_types.gd")
 
 @export var speed: float = 200.0
-@export var amplitude: float = 50.0
+@export var amplitude: float = 75.0
 @export var frequency: float = 2.0
 @export var move_direction: Direction = Direction.RIGHT
 @export var weapon_type: WeaponsType.WeaponType = WeaponsType.WeaponType.DEFAULT
@@ -12,6 +12,7 @@ enum Direction { LEFT, RIGHT, UP, DOWN }
 var pickup: PackedScene
 var time: float = 0.0
 var base_y: float
+var base_x: float
 var direction: Vector2:
 	get:
 		return {
@@ -35,18 +36,19 @@ func _ready():
 	elif weapon_type == WeaponsType.WeaponType.HOMING:
 		pickup = preload("res://scenes/pickups/h_pickup.tscn")
 	base_y = position.y
+	base_x = position.x
 
 func _physics_process(delta):
 	time += delta
 	
-	# Устанавливаем velocity сразу как Vector2
-	velocity = Vector2(speed * direction.x, 0)
-	
+	if move_direction == Direction.LEFT or move_direction == Direction.RIGHT:
+		velocity = Vector2(speed * direction.x, 0)
+		position.y = base_y + sin(time * frequency * TAU) * amplitude
+	elif move_direction == Direction.UP or move_direction == Direction.DOWN:
+		velocity = Vector2(0, speed * direction.y)  # Исправлено: скорость должна идти в компоненту Y
+		position.x = base_x + sin(time * frequency * TAU) * amplitude
 	# Перемещаем объект
 	move_and_slide()
-	
-	# Применяем синусоидальное смещение по Y
-	position.y = base_y + sin(time * frequency * TAU) * amplitude
 	
 @warning_ignore("unused_parameter")
 func on_hit(damage: int, bullet: String):

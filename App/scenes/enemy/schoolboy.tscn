@@ -39,10 +39,9 @@ animations = [{
 size = Vector2(20, 17.286184)
 
 [node name="Schoolboy" type="CharacterBody2D" unique_id=408180171 groups=["enemy"]]
-z_index = 1
+z_index = 10
 collision_layer = 4
 script = ExtResource("1_4pbkp")
-explosion_force = 200.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2136999294]
 position = Vector2(-0.5, -1)

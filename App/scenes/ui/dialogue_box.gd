@@ -92,6 +92,8 @@ func _ready():
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	current_scene = get_tree().current_scene
+	
+	GameManager.register_dialogue_box(self)
 
 # ============ ПОРТРЕТЫ ============
 
@@ -468,16 +470,17 @@ func _play_typing_sound():
 	if not typing_sound or not audio_player:
 		return
 	
-	var temp_player = AudioStreamPlayer2D.new()
-	temp_player.stream = typing_sound
-	temp_player.pitch_scale = 1.0 + randf_range(-typing_pitch_variation, typing_pitch_variation)
-	temp_player.volume_db = audio_player.volume_db
-	add_child(temp_player)
-	temp_player.play()
+	#var temp_player = AudioStreamPlayer2D.new()
+	#temp_player.stream = typing_sound
+	#temp_player.pitch_scale = 1.0 + randf_range(-typing_pitch_variation, typing_pitch_variation)
+	#temp_player.volume_db = audio_player.volume_db
+	#add_child(temp_player)
+	#temp_player.play()
 	
-	await temp_player.finished
-	if temp_player and is_instance_valid(temp_player):
-		temp_player.queue_free()
+	#await temp_player.finished
+	#if temp_player and is_instance_valid(temp_player):
+	#	temp_player.queue_free()
+	AudioManager.play_ui_sound(typing_sound)
 
 func _typing_finished():
 	is_typing = false
@@ -516,12 +519,12 @@ func _advance_dialogue():
 	if is_hiding or not panel.visible:
 		return
 	
+	# Предотвращаем повторный вызов во время завершения диалога
+	if current_index >= current_dialogue.size():
+		return
+	
 	if auto_advance_timer and not auto_advance_timer.is_stopped():
 		auto_advance_timer.stop()
-	
-	if current_index >= current_dialogue.size():
-		_end_dialogue()
-		return
 	
 	var current_line = current_dialogue[current_index]
 	_execute_methods(current_line.on_end_methods, false)
@@ -545,6 +548,9 @@ func _advance_dialogue():
 		current_index = next_index
 		_show_current_line()
 	else:
+		# Важно: сначала увеличиваем индекс за пределы массива,
+		# чтобы предотвратить повторный вызов _end_dialogue()
+		current_index = current_dialogue.size()
 		_end_dialogue()
 
 func _show_choices(choices: Array):
@@ -564,6 +570,11 @@ func jump_to_dialogue_by_id(dialogue_id: String):
 
 func _end_dialogue():
 	if is_hiding or not panel.visible:
+		return
+	
+	# Дополнительная защита от повторного вызова
+	if current_index < current_dialogue.size():
+		# Диалог еще не должен заканчиваться
 		return
 	
 	await _stop_continue_label_animation()
@@ -598,7 +609,11 @@ func _input(event):
 	if not panel.visible or is_showing or is_hiding:
 		return
 	
-	if event.is_action_pressed("jump"):
+	# Игнорируем ввод, если диалог уже завершается
+	if current_index >= current_dialogue.size():
+		return
+	
+	if event.is_action_pressed("jump") and not event.is_echo():
 		if is_typing:
 			_skip_typing()
 		else:

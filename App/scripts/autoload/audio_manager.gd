@@ -149,6 +149,7 @@ func set_music(music: AudioStream, fade_in_time: float = 0.0):
 		return
 	
 	current_music = music
+	music.set_loop(true)
 	
 	# Убеждаемся, что плеер использует правильную шину
 	music_player.bus = MUSIC_BUS

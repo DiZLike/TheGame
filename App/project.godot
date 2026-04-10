@@ -46,6 +46,8 @@ camera=""
 pickup=""
 capsules=""
 immortal_enemy=""
+enemy_bullet=""
+weapon_pickup=""
 
 [input]
 

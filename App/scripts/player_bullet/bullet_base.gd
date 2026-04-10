@@ -45,7 +45,6 @@ func _move(delta: float) -> void:
 # ============================================
 # ТАЙМЕР ЖИЗНИ
 # ============================================
-# bullet_base.gd
 func _setup_life_timer() -> void:
 	if life_time > 0:
 		await get_tree().create_timer(life_time).timeout
@@ -92,7 +91,7 @@ func _queue_free() -> void:
 		return
 	
 	_is_queued_for_deletion = true
-	WeaponManager.remove_bullet()
+	# Убираем вызов WeaponManager.remove_bullet() так как теперь нет лимита на экране
 	queue_free()
 
 # ============================================

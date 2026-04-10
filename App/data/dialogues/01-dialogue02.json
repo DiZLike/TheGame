@@ -1,0 +1,242 @@
+{
+	"Dialogues": [
+		{
+			"Id": "d1",
+			"Speaker": "Алекс",
+			"Text": "А… что? Это не… не голос снаружи",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d2",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d2",
+			"Speaker": "Голос в голове",
+			"Text": "Ты слышишь меня. Хорошо. Значит, связь устойчива. Не пугайся. Я не он",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d3",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d3",
+			"Speaker": "Алекс",
+			"Text": "Кто… кто это? У меня галлюцинации? Или этот Глитч залез мне в голову?",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d4",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d4",
+			"Speaker": "Голос в голове",
+			"Text": "Нет. Я не часть искажения. Называй меня Null. Я… остаток исходного кода. Тот, кто помнит, как всё должно работать",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d5",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d5",
+			"Speaker": "Алекс",
+			"Text": "Null? Пустота?",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d6",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d6",
+			"Speaker": "Null",
+			"Text": "Именно. Потому что от меня почти ничего не осталось. Только голос. И память. Этого достаточно, чтобы предупреждать",
+			"Portrait": "res://sprites/portraits/null/null_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d7",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d7",
+			"Speaker": "Алекс",
+			"Text": "Предупреждать о чём?",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d8",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d8",
+			"Speaker": "Null",
+			"Text": "О том, что Глитч не просто ломает миры. Он переписывает их. Каждый уровень теперь содержит ошибки. Разрывы в логике игры. Если их не исправить — искажение будет расти. Сначала враги, потом ландшафт, потом… ты",
+			"Portrait": "res://sprites/portraits/null/null_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d9",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d9",
+			"Speaker": "Алекс",
+			"Text": "Исправить? Как? У меня нет никакого \"инструмента исправления багов\"",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d10",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d10",
+			"Speaker": "Null",
+			"Text": "Это я и пытаюсь понять. Мой код не содержит инструкции. Ты должен будешь сам найти способ. Я вижу только признаки поломки. А как их убрать — загадка даже для меня",
+			"Portrait": "res://sprites/portraits/null/null_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d11",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d11",
+			"Speaker": "Алекс",
+			"Text": "Отлично. У меня в голове сидит Null, который ничего не умеет, Глитч, который хочет меня перезаписать, и какой-то Архитектор с бреднями про идеальную игру. И я должен чинить то, что даже ты не понимаешь?",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d12",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d12",
+			"Speaker": "Null",
+			"Text": "Да. Потому что ты помнишь, как должно быть. Это уже больше, чем есть у кого-либо здесь",
+			"Portrait": "res://sprites/portraits/null/null_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d13",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d13",
+			"Speaker": "Алекс",
+			"Text": "Null значит Null. Никакой помощи. Ладно. Где эти твои… забагованные места? И как я их вообще распознаю?",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d14",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d14",
+			"Speaker": "Null",
+			"Text": "Ты почувствуешь. Или увидишь. Мир начнёт \"заикаться\". Повторяющиеся текстуры, мерцание, невозможная геометрия. Я буду подсвечивать их… внутренним чутьём. А что делать дальше — придётся решать тебе",
+			"Portrait": "res://sprites/portraits/null/null_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d15",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d15",
+			"Speaker": "Алекс",
+			"Text": "Решать мне. В игре, где правила меняются каждую секунду. Null, ты хоть иногда говоришь что-то полезное?",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d16",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d16",
+			"Speaker": "Null",
+			"Text": "Я сказал, что у тебя есть шанс. Это уже полезно",
+			"Portrait": "res://sprites/portraits/null/null_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d17",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d17",
+			"Speaker": "Алекс",
+			"Text": "Ну да. Шанс. Ладно, погнали",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d18",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d18",
+			"Speaker": "NAME_NOT_FOUND",
+			"Text": "EXTERMINATE",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": "_01_create_glitch_enemy",
+			"OnEndMethods": null,
+			"Next": "d19",
+			"GlitchEnabled": true
+		},
+		{
+			"Id": "d19",
+			"Speaker": "Алекс",
+			"Text": "Этот парень… он не должен так выглядеть. И не должен быть здесь. Значит, тот голос… он действительно ломает игры. Переписывает их",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d20",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d20",
+			"Speaker": "Алекс",
+			"Text": "Ладно. Не знаю, кто этот \"архитектор\". Но если я единственный, кто помнит, как всё должно выглядеть на самом деле… значит, мне и чинить",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "d21",
+			"GlitchEnabled": false
+		},
+		{
+			"Id": "d21",
+			"Speaker": "Алекс",
+			"Text": "Разберёмся на месте. Контру я проходил сотни раз",
+			"Portrait": "res://sprites/portraits/hero/hero_01.png",
+			"Sound": "",
+			"OnStartMethods": null,
+			"OnEndMethods": null,
+			"Next": "",
+			"GlitchEnabled": false
+		}
+	],
+	"Metadata": {
+		"Chapter": 1.0,
+		"Level": "1-1",
+		"Title": "Corrupted Jungle — Part 2",
+		"Background": "res://assets/backgrounds/default.png",
+		"Music": "res://assets/music/default.ogg"
+	}
+}

@@ -66,6 +66,7 @@ func _on_body_entered(body: Node2D) -> void:
 		return
 	
 	_picked = true
+	body.weapon_picked()
 	
 	# Находим менеджер оружия
 	var weapon_manager = get_node("/root/WeaponManager")
@@ -77,12 +78,10 @@ func _on_body_entered(body: Node2D) -> void:
 	# Логика подбора
 	if weapon_manager.current_weapon == weapon_type:
 		# То же оружие - улучшаем
-		if weapon_manager.upgrade_weapon():
-			print("Оружие улучшено до уровня ", weapon_manager.get_current_level() + 1)
+		weapon_manager.upgrade_weapon()
 	else:
 		# Новое оружие
 		weapon_manager.change_weapon(weapon_type)
-		print("Оружие сменено на тип ", weapon_type)
 	
 	# Эффект подбора
 	var tween = create_tween()

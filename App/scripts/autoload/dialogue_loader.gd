@@ -29,21 +29,13 @@ class DialogueLine:
 		glitch_enabled = data.get("GlitchEnabled", false)
 		
 		# Поддерживаем два формата: строка или массив строк
-		var start_methods = data.get("OnStartMethods", [])
-		if start_methods == null:
-			return
+		var start_methods = data.get("OnStartMethods", "")
 		if typeof(start_methods) == TYPE_STRING:
 			on_start_methods = [start_methods] if not start_methods.is_empty() else []
-		else:
-			on_start_methods = start_methods
 		
-		var end_methods = data.get("OnEndMethods", [])
-		if end_methods == null:
-			return
+		var end_methods = data.get("OnEndMethods", "")
 		if typeof(end_methods) == TYPE_STRING:
 			on_end_methods = [end_methods] if not end_methods.is_empty() else []
-		else:
-			on_end_methods = end_methods
 
 # Загрузка всего диалога из JSON файла
 func load_dialogue(filename: String) -> Array:

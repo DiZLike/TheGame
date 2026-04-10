@@ -1,7 +1,9 @@
 extends CharacterBody2D
+class_name Player
 
 # Сигналы
 signal player_respawned(new_position: Vector2)
+signal weapon_picked_up()
 
 # Константы настроек игрока
 const SPEED: float = 100.0
@@ -57,6 +59,7 @@ var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_exp
 var explosion_force: float = 200.0   # Сила разброса пикселей при взрыве
 
 func _ready():
+	GameManager.register_player(self)
 	# Сохраняем исходный цвет спрайта для последующего восстановления
 	original_modulate = modulate
 
@@ -261,11 +264,16 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") or body.is_in_group("immortal_enemy"):
 		if not is_invincible and not is_respawning:
 			take_damage()
+func _on_area_entered(area: Area2D) -> void:
+	if area.is_in_group("enemy_bullet"):
+		if not is_invincible and not is_respawning:
+			take_damage()
 
 func take_damage():
 	# Наносит урон: уменьшает жизни и запускает возрождение, если жизни ещё есть
 	GameManager.sub_lives()
 	if GameManager.get_lives() >= 0:
+		WeaponManager.change_weapon(0)
 		start_respawn()
 
 func start_respawn():
@@ -352,6 +360,9 @@ func _activate_blink():
 	
 	# Сигнализируем о завершении возрождения
 	player_respawned.emit(global_position)
+
+func weapon_picked():
+	weapon_picked_up.emit()
 
 # Вспомогательные методы для внешнего использования
 func is_respawning_now() -> bool:

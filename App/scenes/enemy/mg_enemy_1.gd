@@ -16,12 +16,12 @@ const GRAVITY: float = 700.0
 @onready var player_detection_area: Area2D = $PlayerDetectionArea  # Зона обнаружения игрока
 
 var score: int = 200
-var health: int = 10
+var health: int = 100
+var explosion_force: float = 50.0
 
 var _is_throwing: bool = false
 var _is_currently_throwing: bool = false
 var _is_exploding: bool = false
-var _is_remove_canceled: bool = true
 var _player: Node2D = null
 var throw_timer: Timer
 
@@ -159,12 +159,18 @@ func _throw_single_fireball() -> void:
 	# Применяем физику
 	fireball.apply_force(throw_vector)
 
-func on_hit(damage: int, bullet: String) -> void:
+func on_hit(damage: int, bullet_type: String) -> void:
 	health -= damage
 	if health > 0:
 		return
 	if _is_exploding:
 		return
+	match bullet_type:
+		"rocket":
+			explosion_force = 800
+		"homing":
+			explosion_force = 500
+		
 	ScoreManager.add_score(score)
 	
 	_is_exploding = true

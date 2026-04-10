@@ -349,10 +349,11 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D" unique_id=1043132733 groups=["player"]]
+z_index = 11
 collision_layer = 2
 script = ExtResource("1_dovo2")
 
-[node name="DamageDetector" type="Area2D" parent="." unique_id=1476261527]
+[node name="DamageDetector" type="Area2D" parent="." unique_id=1476261527 groups=["player"]]
 collision_layer = 0
 collision_mask = 12
 
@@ -380,4 +381,5 @@ script = ExtResource("3_gmlin")
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1899347454]
 position = Vector2(14, 0)
 
+[connection signal="area_entered" from="DamageDetector" to="." method="_on_area_entered"]
 [connection signal="body_entered" from="DamageDetector" to="." method="_on_area_2d_body_entered"]

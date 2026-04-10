@@ -42,6 +42,7 @@ animations = [{
 }]
 
 [node name="CapsuleSpawner" type="Node2D" unique_id=146069070]
+z_index = 100
 script = ExtResource("1_4vgw3")
 on_shot = true
 spawn_delay = 0.0

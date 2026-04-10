@@ -7,7 +7,6 @@ const JUMP_VELOCITY: float = -175.0
 enum Direction { LEFT, RIGHT }
 
 @export var move_direction: Direction = Direction.RIGHT
-@export var explosion_force: float = 50.0
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -17,6 +16,7 @@ enum Direction { LEFT, RIGHT }
 
 var score: int = 100
 var health = 1
+var explosion_force: float = 50.0
 
 # Предзагружаем сцену взрыва
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")

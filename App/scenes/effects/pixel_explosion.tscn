@@ -3,4 +3,5 @@
 [ext_resource type="Script" uid="uid://braorqap7sqlf" path="res://scenes/effects/pixel_explosion.gd" id="1_ihbsk"]
 
 [node name="PixelExplosion" type="Node2D" unique_id=213160378]
+z_index = 15
 script = ExtResource("1_ihbsk")
