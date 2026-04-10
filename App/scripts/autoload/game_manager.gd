@@ -51,8 +51,9 @@ func get_training_weapon_completed() -> bool:
 func set_training_weapon_completed() -> void:
 	player_data["game"]["weaponTrainingCompleted"] = true
 	
-# Диалогиыыыыыыыыыыыыы
+# Диалоги
 func ShowTrainingWeaponDialog() -> void:
+	return
 	if get_training_weapon_completed():
 		return
 	if dialogue_box:

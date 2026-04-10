@@ -820,7 +820,7 @@ position = Vector2(652, 988)
 position = Vector2(561, 591)
 
 [node name="Turret 2" parent="Environment/Enemy" unique_id=136938526 instance=ExtResource("17_lrvbd")]
-position = Vector2(1091, 672)
+position = Vector2(1095, 770)
 
 [node name="Turret 3" parent="Environment/Enemy" unique_id=2125897736 instance=ExtResource("17_lrvbd")]
 position = Vector2(1344, 594)
