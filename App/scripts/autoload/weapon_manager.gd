@@ -168,6 +168,19 @@ func reload() -> void:
 # ============================================
 func change_weapon(weapon_type: int) -> void:
 	current_weapon = weapon_type
+	if current_weapon == WeaponsType.WeaponType.DEFAULT:
+		InventoryManager.add_item_by_id("weapon_d")
+	if current_weapon == WeaponsType.WeaponType.MACHINEGUN:
+		InventoryManager.add_item_by_id("weapon_m")
+	if current_weapon == WeaponsType.WeaponType.SPREADGUN:
+		InventoryManager.add_item_by_id("weapon_s")
+	if current_weapon == WeaponsType.WeaponType.ROCKET:
+		InventoryManager.add_item_by_id("weapon_r")
+	if current_weapon == WeaponsType.WeaponType.HOMING:
+		InventoryManager.add_item_by_id("weapon_h")
+	if current_weapon == WeaponsType.WeaponType.LASER:
+		InventoryManager.add_item_by_id("weapon_l")
+	
 	current_level = 0
 	_update_weapon_cache()
 	

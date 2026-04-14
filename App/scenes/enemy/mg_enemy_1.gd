@@ -5,10 +5,10 @@ const GRAVITY: float = 700.0
 @export var fireball_scene: PackedScene  # Сцена огня
 @export var min_fireballs: int = 1      # Минимум огней за бросок
 @export var max_fireballs: int = 3      # Максимум огней за бросок
-@export var min_throw_force: float = 100.0   # Минимальная сила броска
+@export var min_throw_force: float = 250.0   # Минимальная сила броска
 @export var max_throw_force: float = 300.0   # Максимальная сила броска
-@export var throw_interval: float = 2.0      # Интервал между бросками
-@export var throw_delay: float = 0.2         # Задержка между огнями при множественном броске
+@export var throw_interval: float = 2.5      # Интервал между бросками
+@export var throw_delay: float = 0.4         # Задержка между огнями при множественном броске
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -138,7 +138,7 @@ func _throw_single_fireball() -> void:
 	var throw_force = randf_range(min_throw_force, max_throw_force)
 	
 	# Добавляем вертикальную силу (подброс вверх)
-	var vertical_force = randf_range(-350.0, -100.0)  # Отрицательное значение = вверх
+	var vertical_force = randf_range(-250.0, -100.0)  # Отрицательное значение = вверх
 	
 	# Комбинируем горизонтальную и вертикальную силы
 	var throw_vector = Vector2(direction_to_player.x * throw_force, vertical_force)

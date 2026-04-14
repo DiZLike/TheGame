@@ -53,8 +53,6 @@ z_index = 10
 collision_layer = 4
 script = ExtResource("1_hh53n")
 fireball_scene = ExtResource("2_lf7g2")
-min_throw_force = 250.0
-max_throw_force = 350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=20130838]
 sprite_frames = SubResource("SpriteFrames_sms7k")

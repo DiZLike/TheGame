@@ -25,6 +25,7 @@ WeaponManager="*uid://cg1q8mrvoc8xd"
 DialogueLoader="*uid://dawjopqo4gpvm"
 AudioManager="*uid://bougi501l3reb"
 ScoreManager="*uid://b8cwsirgsb3f2"
+InventoryManager="*uid://cgfl38e2rquta"
 GameManager="*uid://clu8nd0tgm2c5"
 
 [display]

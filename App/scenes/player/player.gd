@@ -79,6 +79,8 @@ func _apply_gravity(delta: float) -> void:
 		velocity.y += GRAVITY * delta
 
 func _handle_input() -> void:
+	if GameManager.is_paused:
+		return
 	# Если управление заблокировано - останавливаем движение по горизонтали
 	if not can_move: 
 		velocity.x = move_toward(velocity.x, 0, SPEED)
@@ -273,7 +275,6 @@ func take_damage():
 	# Наносит урон: уменьшает жизни и запускает возрождение, если жизни ещё есть
 	GameManager.sub_lives()
 	if GameManager.get_lives() >= 0:
-		WeaponManager.change_weapon(0)
 		start_respawn()
 
 func start_respawn():
@@ -306,6 +307,7 @@ func start_respawn():
 	_activate_blink()
 	
 	is_respawning = false
+	WeaponManager.change_weapon(0)
 
 func pixel_explode():
 	# Создаёт эффект взрыва персонажа на пиксели

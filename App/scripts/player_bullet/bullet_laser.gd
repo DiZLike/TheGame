@@ -116,7 +116,7 @@ func _check_new_hits() -> void:
 		
 		var query = PhysicsRayQueryParameters2D.create(start, end)
 		query.exclude = [shooter]
-		query.collision_mask = 5
+		query.collision_mask = 69
 		
 		var result = space_state.intersect_ray(query)
 		

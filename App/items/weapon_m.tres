@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://bfpxohxef8nal"]
+
+[ext_resource type="Texture2D" uid="uid://c4qnetcug02dm" path="res://sprites/pickups/spritesheet.png" id="1_5tsoc"]
+[ext_resource type="Script" uid="uid://pwl265ihdcol" path="res://scripts/inventory/item.gd" id="2_s4ctm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x417x"]
+atlas = ExtResource("1_5tsoc")
+region = Rect2(28, 56, 24, 16)
+
+[resource]
+script = ExtResource("2_s4ctm")
+id = "weapon_m"
+name = "M"
+description = "Проверка"
+icon = SubResource("AtlasTexture_x417x")
+max_stack = 1
+item_type = 0
+metadata/_custom_type_script = "uid://pwl265ihdcol"

@@ -375,7 +375,8 @@ autoplay = "idle"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1173401302 groups=["camera"]]
 zoom = Vector2(2.65, 2.65)
 position_smoothing_enabled = true
-drag_vertical_offset = 0.29
+drag_vertical_enabled = true
+drag_top_margin = 0.6
 script = ExtResource("3_gmlin")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1899347454]

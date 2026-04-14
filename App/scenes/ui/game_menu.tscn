@@ -109,15 +109,40 @@ layout_mode = 2
 layout_mode = 2
 text = "Инвентарь"
 
-[node name="SlotsGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=511351715]
+[node name="WeaponSection" type="VBoxContainer" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=1578660966]
+layout_mode = 2
+
+[node name="WeaponLabel" type="Label" parent="CenterContainer/MainLayout/InventoryPanel/WeaponSection" unique_id=1580077548]
+layout_mode = 2
+text = "Оружие"
+
+[node name="WeaponGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel/WeaponSection" unique_id=29315334]
+layout_mode = 2
+columns = 5
+
+[node name="ItemsSection" type="VBoxContainer" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=1710336120]
+layout_mode = 2
+
+[node name="ItemsLabel" type="Label" parent="CenterContainer/MainLayout/InventoryPanel/ItemsSection" unique_id=1207215331]
+layout_mode = 2
+text = "Прочее"
+
+[node name="ItemsGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel/ItemsSection" unique_id=19909802]
 layout_mode = 2
 columns = 5
 
 [node name="ItemInfoPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=6215123]
+custom_minimum_size = Vector2(600, 0)
 layout_mode = 2
 
 [node name="ItemNameLabel" type="Label" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=1485347907]
 layout_mode = 2
 
-[node name="ItemDescription" type="Label" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=38777832]
+[node name="ItemDescription" type="RichTextLabel" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=158269810]
 layout_mode = 2
+theme_override_font_sizes/normal_font_size = 12
+bbcode_enabled = true
+text = "text"
+fit_content = true
+scroll_active = false
+tab_size = 5
