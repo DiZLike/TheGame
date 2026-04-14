@@ -1,0 +1,123 @@
+[gd_scene format=3 uid="uid://474070rkqdn4"]
+
+[ext_resource type="Script" uid="uid://ckm4islcy7n28" path="res://scenes/ui/game_menu.gd" id="1_tup5k"]
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="3_6jy2e"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jy2e"]
+bg_color = Color(0.6, 0.6, 0.6, 0.8235294)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6jy2e"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vtvlb"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g8oa6"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rbob"]
+
+[node name="GameMenu" type="Panel" unique_id=1045441974]
+process_mode = 2
+self_modulate = Color(0, 0, 0, 1)
+offset_right = 1287.0
+offset_bottom = 729.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_6jy2e")
+script = ExtResource("1_tup5k")
+
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=559508103]
+layout_mode = 0
+offset_left = 26.0
+offset_top = 26.0
+offset_right = 304.0
+offset_bottom = 203.0
+
+[node name="MainLayout" type="HBoxContainer" parent="CenterContainer" unique_id=2012148502]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="LeftPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=633512512]
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="CenterContainer/MainLayout/LeftPanel" unique_id=723053725]
+layout_mode = 2
+text = "Меню"
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/MainLayout/LeftPanel" unique_id=1121647746]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Resume" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=1177590492]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_6jy2e")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
+text = "Продолжить"
+alignment = 0
+
+[node name="Button2" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=1475543426]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_6jy2e")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
+text = "Загрузить"
+alignment = 0
+
+[node name="Button3" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=415404320]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_6jy2e")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
+text = "Настройки"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=1882699750]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("3_6jy2e")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
+text = "Выход"
+alignment = 0
+
+[node name="Spacer" type="Control" parent="CenterContainer/MainLayout/LeftPanel" unique_id=1378154688]
+layout_mode = 2
+
+[node name="Separator" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=2047315010]
+layout_mode = 2
+
+[node name="Line2D" type="Line2D" parent="CenterContainer/MainLayout/Separator" unique_id=380264992]
+points = PackedVector2Array(0, 0, 0, 185.245)
+width = 2.0
+
+[node name="InventoryPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=1396100175]
+layout_mode = 2
+
+[node name="InventoryTitle" type="Label" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=1290152811]
+layout_mode = 2
+text = "Инвентарь"
+
+[node name="SlotsGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=511351715]
+layout_mode = 2
+columns = 5
+
+[node name="ItemInfoPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=6215123]
+layout_mode = 2
+
+[node name="ItemNameLabel" type="Label" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=1485347907]
+layout_mode = 2
+
+[node name="ItemDescription" type="Label" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=38777832]
+layout_mode = 2

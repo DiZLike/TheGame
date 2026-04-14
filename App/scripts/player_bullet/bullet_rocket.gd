@@ -9,7 +9,6 @@ var _has_exploded: bool = false
 func _ready() -> void:
 	bullet_type = "rocket"
 	speed = 200.0
-	damage = 3
 	super()
 	# Принудительно обновляем поворот после инициализации
 	_update_visual_rotation()

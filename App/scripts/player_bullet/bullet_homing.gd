@@ -13,7 +13,6 @@ var _has_exploded: bool = false
 
 func _ready() -> void:
 	bullet_type = "homing"
-	damage = 2
 	life_time = flight_time
 	auto_delete_on_exit = false  # Самоуничтожится по таймеру
 	

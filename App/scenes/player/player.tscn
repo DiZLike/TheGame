@@ -355,7 +355,7 @@ script = ExtResource("1_dovo2")
 
 [node name="DamageDetector" type="Area2D" parent="." unique_id=1476261527 groups=["player"]]
 collision_layer = 0
-collision_mask = 12
+collision_mask = 268
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DamageDetector" unique_id=618954841]
 position = Vector2(0, 6.5)

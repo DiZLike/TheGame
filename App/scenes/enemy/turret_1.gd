@@ -10,7 +10,7 @@ extends CharacterBody2D
 @onready var turret_node: Node2D = $Turret
 @onready var animated_sprite: AnimatedSprite2D = $Turret/TurretSprite
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
-@onready var player_detection_area: Area2D = $PlayerDetectionArea
+@onready var visible_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 @onready var shooting_point: Marker2D = $Turret/ShootingPoint
 
 var score: int = 150
@@ -25,17 +25,16 @@ var shoot_timer: Timer
 
 var bullet_scene: PackedScene = preload("res://scenes/bullets/enemy/enemy_bullet_default.tscn")
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
+# Звуки
+var hit_sound: AudioStream = preload("res://data/audio/sounds/enemy_hit/enemy_hit.mp3")
 
 
 func _ready() -> void:
-	_setup_detection_area()
+	var players = get_tree().get_nodes_in_group("player")
+	if not players.is_empty():
+		_player = players[0]
+	
 	_setup_timer()
-
-
-func _setup_detection_area() -> void:
-	if player_detection_area:
-		player_detection_area.body_entered.connect(_on_player_entered)
-		player_detection_area.body_exited.connect(_on_player_exited)
 
 
 func _setup_timer() -> void:
@@ -71,17 +70,6 @@ func _rotate_towards_player(delta: float) -> void:
 	# Плавно интерполируем текущий угол к целевому
 	turret_node.rotation = lerp_angle(turret_node.rotation, target_angle, rotation_speed * delta)
 
-
-func _on_player_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		_player = body
-		_start_shooting()
-
-
-func _on_player_exited(body: Node2D) -> void:
-	if body == _player:
-		_player = null
-		_stop_shooting()
 
 func _start_shooting() -> void:
 	if not _is_shooting and not _is_exploding:
@@ -143,6 +131,7 @@ func _spawn_bullet() -> void:
 func on_hit(damage: int, bullet_type: String) -> void:
 	health -= damage
 	if health > 0:
+		AudioManager.play_sfx(hit_sound, 1, 1.0, global_position)
 		return
 	if _is_exploding:
 		return
@@ -176,3 +165,10 @@ func _explode() -> void:
 	# Удаляем персонажа после небольшой задержки
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
+
+
+func screen_entered() -> void:
+	_start_shooting()
+
+func screen_exited() -> void:
+	_stop_shooting()

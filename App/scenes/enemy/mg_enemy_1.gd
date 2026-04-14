@@ -13,7 +13,6 @@ const GRAVITY: float = 700.0
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var visible_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
-@onready var player_detection_area: Area2D = $PlayerDetectionArea  # Зона обнаружения игрока
 
 var score: int = 200
 var health: int = 100
@@ -28,19 +27,20 @@ var throw_timer: Timer
 # Предзагружаем сцену взрыва
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
 
+# Звуки
+var hit_sound: AudioStream = preload("res://data/audio/sounds/enemy_hit/enemy_hit.mp3")
+
 func _ready() -> void:
+	var players = get_tree().get_nodes_in_group("player")
+	if not players.is_empty():
+		_player = players[0]
+	
 	_setup_sprite()
-	_setup_detection_area()
 	_setup_timer()
 
 func _setup_sprite() -> void:
 	if animated_sprite:
 		animated_sprite.play("idle")  # Стоит на месте, анимация ожидания
-
-func _setup_detection_area() -> void:
-	if player_detection_area:
-		player_detection_area.body_entered.connect(_on_player_entered)
-		player_detection_area.body_exited.connect(_on_player_exited)
 
 func _setup_timer() -> void:
 	throw_timer = Timer.new()
@@ -73,19 +73,6 @@ func _face_player() -> void:
 		animated_sprite.flip_h = true   # Смотрим вправо
 	else:
 		animated_sprite.flip_h = false  # Смотрим влево
-
-func _on_player_entered(body: Node2D) -> void:
-	if body.is_in_group("player"):
-		_player = body
-		_start_throwing()
-
-func _on_player_exited(body: Node2D) -> void:
-	if body == _player:
-		_player = null
-		_stop_throwing()
-		# Возвращаем анимацию, только если не взрываемся
-		if not _is_exploding and animated_sprite:
-			animated_sprite.play("idle")
 
 func _start_throwing() -> void:
 	if not _is_throwing and not _is_exploding:
@@ -162,6 +149,7 @@ func _throw_single_fireball() -> void:
 func on_hit(damage: int, bullet_type: String) -> void:
 	health -= damage
 	if health > 0:
+		AudioManager.play_sfx(hit_sound, 1, 1.0, global_position)
 		return
 	if _is_exploding:
 		return
@@ -193,3 +181,13 @@ func _explode() -> void:
 	# Удаляем персонажа после небольшой задержки
 	await get_tree().create_timer(0.5).timeout
 	queue_free()
+
+
+func screen_entered() -> void:
+	_start_throwing()
+
+func screen_exited() -> void:
+	_stop_throwing()
+	# Возвращаем анимацию, только если не взрываемся
+	if not _is_exploding and animated_sprite:
+		animated_sprite.play("idle")

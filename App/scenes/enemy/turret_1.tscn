@@ -52,9 +52,6 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_ccnvd"]
-radius = 22.003633
-
 [node name="Turret 1" type="CharacterBody2D" unique_id=1852494293 groups=["enemy"]]
 z_index = 10
 collision_layer = 4
@@ -82,11 +79,7 @@ frame_progress = 0.20009607
 [node name="ShootingPoint" type="Marker2D" parent="Turret" unique_id=334438945]
 position = Vector2(0, -11)
 
-[node name="PlayerDetectionArea" type="Area2D" parent="." unique_id=1778353992]
-visible = false
-collision_layer = 0
-collision_mask = 2
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1240442695]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" unique_id=2096209335]
-scale = Vector2(10, 10)
-shape = SubResource("CircleShape2D_ccnvd")
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="screen_exited"]

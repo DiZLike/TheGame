@@ -11,6 +11,7 @@ extends Node2D
 @onready var glitch_layer = $UI/GlitchLayer
 @onready var tile_gnd = $"Environment/Tiles/TileGND"
 @onready var dialogue_box = $UI/DialogLayer
+@onready var game_menu : Panel = $UI/GameMenu
 
 func _ready() -> void:
 	if dialogue_box:
@@ -23,6 +24,15 @@ func _ready() -> void:
 @warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
 	pass
+	
+# Меню
+func _input(event: InputEvent) -> void:
+	if GameManager.is_paused:
+		return
+	if event.is_action_pressed("menu"):
+		get_tree().paused = true
+		GameManager.is_paused = true
+		game_menu.visible = true
 
 func show_glitch(time: float):
 	if glitch_layer:

@@ -48,16 +48,13 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y0han"]
 size = Vector2(23, 29)
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_pxlmb"]
-radius = 22.003633
-
 [node name="MGEnemy 1" type="CharacterBody2D" unique_id=1539012725 groups=["enemy"]]
 z_index = 10
 collision_layer = 4
 script = ExtResource("1_hh53n")
 fireball_scene = ExtResource("2_lf7g2")
 min_throw_force = 250.0
-max_throw_force = 400.0
+max_throw_force = 350.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=20130838]
 sprite_frames = SubResource("SpriteFrames_sms7k")
@@ -70,11 +67,5 @@ shape = SubResource("RectangleShape2D_y0han")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=746235550]
 
-[node name="PlayerDetectionArea" type="Area2D" parent="." unique_id=2007607465]
-visible = false
-collision_layer = 0
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerDetectionArea" unique_id=1334182557]
-scale = Vector2(10, 10)
-shape = SubResource("CircleShape2D_pxlmb")
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="screen_exited"]

@@ -15,7 +15,6 @@ var _hit_check_timer: Timer = null
 
 func _ready() -> void:
 	bullet_type = "laser"
-	damage = 3
 	auto_delete_on_exit = false  # Лазер управляется таймером
 	
 	_setup_laser_visuals()
