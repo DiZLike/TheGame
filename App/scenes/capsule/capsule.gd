@@ -21,6 +21,8 @@ var direction: Vector2:
 			Direction.UP: Vector2.UP,
 			Direction.DOWN: Vector2.DOWN,
 		}.get(move_direction, Vector2.ZERO)
+		
+var _on_hit: bool = false
 
 func _ready():
 	if weapon_type == WeaponsType.WeaponType.DEFAULT:
@@ -56,6 +58,9 @@ func on_hit(damage: int, bullet: String):
 	queue_free()
 
 func pickup_spawn():
+	if _on_hit:
+		return
+	_on_hit = true
 	var pic = pickup.instantiate() as CharacterBody2D
 	pic.global_position = global_position
 	pic.velocity.y = -200

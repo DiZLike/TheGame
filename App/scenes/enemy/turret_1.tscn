@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cian5tvvwppb6"]
 
 [ext_resource type="Texture2D" uid="uid://biulgct53ddq6" path="res://sprites/turret_1/spritesheet.png" id="1_ccnvd"]
-[ext_resource type="Script" uid="uid://bcshirt5r8jx7" path="res://scenes/enemy/turret_1.gd" id="1_fqly3"]
+[ext_resource type="Script" uid="uid://le8v2alnfad3" path="res://scripts/enemies/turret_1.gd" id="2_fqly3"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ccnvd"]
 
@@ -48,7 +48,7 @@ animations = [{
 "texture": SubResource("AtlasTexture_p8kjy")
 }],
 "loop": true,
-"name": &"blink",
+"name": &"idle",
 "speed": 5.0
 }]
 
@@ -56,7 +56,7 @@ animations = [{
 z_index = 10
 collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_fqly3")
+script = ExtResource("2_fqly3")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=362881033]
 scale = Vector2(0.645, 0.645)
@@ -72,14 +72,10 @@ autoplay = "idle"
 [node name="TurretSprite" type="AnimatedSprite2D" parent="Turret" unique_id=590849485]
 position = Vector2(0, 0.5)
 sprite_frames = SubResource("SpriteFrames_jhdpd")
-animation = &"blink"
-autoplay = "blink"
-frame_progress = 0.20009607
+animation = &"idle"
+autoplay = "idle"
 
 [node name="ShootingPoint" type="Marker2D" parent="Turret" unique_id=334438945]
 position = Vector2(0, -11)
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1240442695]
-
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="screen_exited"]

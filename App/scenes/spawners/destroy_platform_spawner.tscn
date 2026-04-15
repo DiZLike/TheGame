@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://by0xnynw17f8m"]
+
+[ext_resource type="Script" uid="uid://v07p0gaftjbd" path="res://scenes/spawners/destroy_platform_spawner.gd" id="1_32142"]
+[ext_resource type="Texture2D" uid="uid://cm5va56ps0grk" path="res://sprites/platforms/mario_platform.png" id="2_egbet"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cq7bj"]
+atlas = ExtResource("2_egbet")
+region = Rect2(0, 0, 48, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rs7wp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cq7bj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="DestroyPlatform Spawner" type="Node2D" unique_id=146069070]
+script = ExtResource("1_32142")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]
+self_modulate = Color(0.1882353, 1, 1, 1)
+z_index = 10
+sprite_frames = SubResource("SpriteFrames_rs7wp")
+autoplay = "default"
+frame_progress = 0.8387944
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=741628321]
+rect = Rect2(-24, -4, 48, 8)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

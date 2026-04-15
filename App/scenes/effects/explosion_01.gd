@@ -5,6 +5,7 @@ class_name Explosion
 var damage: int = 3
 var explosion_radius: float = 50.0
 var shooter: Node2D = null
+var excluded_target: Node2D = null
 
 @onready var _original_radius: float = 12.0
 @onready var animation: AnimatedSprite2D = $ExplosionAnimation
@@ -25,7 +26,8 @@ func _ready() -> void:
 		animation.play("explode")
 
 func _on_body_entered(body: Node2D) -> void:
-	if body == shooter or not body.is_in_group("enemy"):
+	# Исключаем исключённую цель
+	if body == shooter or body == excluded_target or not body.is_in_group("enemy"):
 		return
 	
 	if body.has_method("on_hit"):

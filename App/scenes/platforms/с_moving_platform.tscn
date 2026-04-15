@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://ce425mldiovry"]
+
+[ext_resource type="Script" uid="uid://cvcp3gedwnbw1" path="res://scripts/platforms/circular_moving_platform.gd" id="1_8p3v7"]
+[ext_resource type="Texture2D" uid="uid://cm5va56ps0grk" path="res://sprites/platforms/mario_platform.png" id="2_fdu3a"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vu010"]
+size = Vector2(48, 7)
+
+[node name="СMovingPlatform" type="CharacterBody2D" unique_id=1496857222]
+z_index = 10
+collision_mask = 0
+script = ExtResource("1_8p3v7")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1877667844]
+texture = ExtResource("2_fdu3a")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2053267668]
+shape = SubResource("RectangleShape2D_vu010")
+
+[node name="TopLimit" type="Node2D" parent="." unique_id=1824889343]
+position = Vector2(0, -75)
+
+[node name="BottomLimit" type="Node2D" parent="." unique_id=1417211984]
+position = Vector2(0, 75)
+
+[node name="LeftLimit" type="Node2D" parent="." unique_id=564329520]
+position = Vector2(-75, 0)
+
+[node name="RightLimit" type="Node2D" parent="." unique_id=630634611]
+position = Vector2(75, 0)

@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://0sqfsokr4pat"]
+
+[ext_resource type="Script" uid="uid://cgjd02c0v2r1w" path="res://scripts/platforms/exploding_platform.gd" id="1_hk0pp"]
+[ext_resource type="Texture2D" uid="uid://cm5va56ps0grk" path="res://sprites/platforms/mario_platform.png" id="2_nfhb4"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vu010"]
+size = Vector2(48, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hk0pp"]
+size = Vector2(48, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hk0pp"]
+atlas = ExtResource("2_nfhb4")
+region = Rect2(0, 0, 48, 7)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nfhb4"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hk0pp")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="DestroyPlatform" type="CharacterBody2D" unique_id=1496857222]
+z_index = 10
+collision_mask = 0
+script = ExtResource("1_hk0pp")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2053267668]
+shape = SubResource("RectangleShape2D_vu010")
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=630419633]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1112157915]
+shape = SubResource("RectangleShape2D_hk0pp")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1230772118]
+sprite_frames = SubResource("SpriteFrames_nfhb4")
+autoplay = "default"

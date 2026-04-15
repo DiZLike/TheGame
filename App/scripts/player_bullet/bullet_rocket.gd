@@ -3,6 +3,7 @@ class_name BulletRocket
 
 var explosion_radius: float = 50.0
 var _has_exploded: bool = false
+var _hit_enemy: Node2D = null
 
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
@@ -19,6 +20,7 @@ func _update_visual_rotation() -> void:
 
 @warning_ignore("unused_parameter")
 func _on_hit_enemy(enemy: Node2D) -> void:
+	_hit_enemy = enemy
 	call_deferred("_explode")
 
 @warning_ignore("unused_parameter")
@@ -38,9 +40,10 @@ func _explode() -> void:
 	var explosion = explosion_scene.instantiate() as Explosion
 	
 	explosion.global_position = global_position
-	explosion.damage = damage
+	explosion.damage = 1
 	explosion.explosion_radius = explosion_radius
 	explosion.shooter = shooter
+	explosion.excluded_target = _hit_enemy
 	
 	get_tree().current_scene.add_child(explosion)
 	_queue_free()

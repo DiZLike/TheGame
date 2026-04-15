@@ -1,0 +1,24 @@
+[gd_scene format=3 uid="uid://gsson12meqrx"]
+
+[ext_resource type="Script" uid="uid://citk1tteqtuxq" path="res://scripts/platforms/vertical_moving_platform.gd" id="1_8qu81"]
+[ext_resource type="Texture2D" uid="uid://cm5va56ps0grk" path="res://sprites/platforms/mario_platform.png" id="2_gh2gh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vu010"]
+size = Vector2(48, 7)
+
+[node name="VMovingPlatform" type="CharacterBody2D" unique_id=1496857222]
+z_index = 10
+collision_mask = 0
+script = ExtResource("1_8qu81")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1877667844]
+texture = ExtResource("2_gh2gh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2053267668]
+shape = SubResource("RectangleShape2D_vu010")
+
+[node name="TopLimit" type="Node2D" parent="." unique_id=1824889343]
+position = Vector2(0, -75)
+
+[node name="BottomLimit" type="Node2D" parent="." unique_id=1417211984]
+position = Vector2(0, 75)

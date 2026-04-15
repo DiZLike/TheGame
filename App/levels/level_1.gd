@@ -2,12 +2,6 @@ extends Node2D
 
 @export var level_music: AudioStream
 
-@export var left_border: Node2D
-@export var right_border: Node2D
-@export var top_border: Node2D
-@export var bottom_border: Node2D
-
-
 @onready var glitch_layer = $UI/GlitchLayer
 @onready var tile_gnd = $"Environment/Tiles/TileGND"
 @onready var dialogue_box = $UI/DialogLayer
@@ -19,7 +13,6 @@ func _ready() -> void:
 		dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 	# Запускаем музыку уровня
 	AudioManager.set_music(level_music)
-	#AudioManager.resume_music()
 
 @warning_ignore("unused_parameter")
 func _process(delta: float) -> void:

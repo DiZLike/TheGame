@@ -68,7 +68,6 @@ func set_training_weapon_completed() -> void:
 # ============ ИНВЕНТАРЬ ============
 func save_inventory_to_data() -> void:
 	player_data["inventory"] = InventoryManager.save_inventory()
-	print("Inventory saved to player_data")
 
 func load_inventory_from_data() -> void:
 	if player_data.has("inventory") and not player_data["inventory"].is_empty():
@@ -95,7 +94,6 @@ func _load_inventory_from_save() -> void:
 func _on_inventory_updated(slot_index: int) -> void:
 	# Автоматически сохраняем инвентарь при любом изменении
 	save_inventory_to_data()
-	print("Inventory auto-saved (slot: ", slot_index, ")")
 
 # Очистка инвентаря (например, при новой игре)
 func clear_inventory() -> void:

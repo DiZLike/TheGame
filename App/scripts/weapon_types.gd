@@ -39,9 +39,9 @@ const WEAPON_DATA = {
 		"name": "D - Стандартная пушка",
 		"sound": "res://data/audio/sounds/player_weapon/weapon_default.ogg",
 		"levels": [
-			{"damage": 20, "magazine_size": 3, "reload_time": 0.8, "shoot_delay": 0.128, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0},
-			{"damage": 20, "magazine_size": 3, "reload_time": 0.6, "shoot_delay": 0.128, "bullet_speed": 325, "spread_count": 1, "spread_angle": 0},
-			{"damage": 20, "magazine_size": 4, "reload_time": 0.45, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
+			{"damage": 20, "magazine_size": 3, "reload_time": 0.8, "shoot_delay": 0.128, "bullet_speed": 325, "spread_count": 1, "spread_angle": 0},
+			{"damage": 20, "magazine_size": 3, "reload_time": 0.6, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
+			{"damage": 20, "magazine_size": 4, "reload_time": 0.45, "shoot_delay": 0.128, "bullet_speed": 375, "spread_count": 1, "spread_angle": 0},
 			{"damage": 30, "magazine_size": 4, "reload_time": 0.4, "shoot_delay": 0.128, "bullet_speed": 1200, "spread_count": 1, "spread_angle": 0}
 		],
 		"description": "Стандартная пушка",
@@ -71,10 +71,10 @@ const WEAPON_DATA = {
 		"name": "S - Спредган",
 		"sound": "res://data/audio/sounds/player_weapon/weapon_spread.ogg",
 		"levels": [
-			{"damage": 10, "magazine_size": 2, "reload_time": 0.6, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 2, "spread_angle": 15},
-			{"damage": 10, "magazine_size": 3, "reload_time": 0.55, "shoot_delay": 0.128, "bullet_speed": 400, "spread_count": 3, "spread_angle": 20},
-			{"damage": 10, "magazine_size": 5, "reload_time": 0.5, "shoot_delay": 0.128, "bullet_speed": 425, "spread_count": 5, "spread_angle": 25},
-			{"damage": 10, "magazine_size": 7, "reload_time": 0.4, "shoot_delay": 0.05, "bullet_speed": 450, "spread_count": 7, "spread_angle": 30}
+			{"damage": 10, "magazine_size": 1, "reload_time": 0.6, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 3, "spread_angle": 15},
+			{"damage": 10, "magazine_size": 2, "reload_time": 0.55, "shoot_delay": 0.128, "bullet_speed": 400, "spread_count": 3, "spread_angle": 20},
+			{"damage": 10, "magazine_size": 2, "reload_time": 0.5, "shoot_delay": 0.128, "bullet_speed": 425, "spread_count": 5, "spread_angle": 25},
+			{"damage": 10, "magazine_size": 3, "reload_time": 0.4, "shoot_delay": 0.05, "bullet_speed": 450, "spread_count": 7, "spread_angle": 30}
 		],
 		"description": "Веерная стрельба",
 		"overload_name": "ФАНТОМНЫЙ ВЕЕР"

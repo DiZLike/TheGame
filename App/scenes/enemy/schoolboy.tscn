@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://bufnh426q16bo"]
 
-[ext_resource type="Script" uid="uid://uhigj34lue8x" path="res://scenes/enemy/schoolboy.gd" id="1_4pbkp"]
+[ext_resource type="Script" uid="uid://dg81v7urr1ne8" path="res://scripts/enemies/schoolboy.gd" id="1_4pbkp"]
 [ext_resource type="Texture2D" uid="uid://q0opryxorcm0" path="res://sprites/enemy/contra/schoolboy/spritesheet.png" id="2_cel5s"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bux5x"]
@@ -47,7 +47,7 @@ script = ExtResource("1_4pbkp")
 position = Vector2(-0.5, -1)
 shape = SubResource("RectangleShape2D_bux5x")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=592048465]
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=592048465]
 sprite_frames = SubResource("SpriteFrames_u4ju2")
 animation = &"move"
 autoplay = "move"
@@ -67,6 +67,3 @@ collision_layer = 0
 position = Vector2(0, -3.1375003)
 scale = Vector2(0.7, 1.52)
 shape = SubResource("RectangleShape2D_4pbkp")
-
-[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_entered"]
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_screen_exited"]

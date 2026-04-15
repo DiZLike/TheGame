@@ -13,7 +13,6 @@
 [ext_resource type="Texture2D" uid="uid://be64mqygo4m8g" path="res://tiles/l01.png" id="6_l53as"]
 [ext_resource type="PackedScene" uid="uid://ddqy7bpqqutd7" path="res://scenes/triggers/dialogue_trigger.tscn" id="9_3sk1a"]
 [ext_resource type="PackedScene" uid="uid://df7ehbfhrxfup" path="res://scenes/glitch/bug.tscn" id="10_08mmt"]
-[ext_resource type="PackedScene" uid="uid://bx1q1xd1k27dd" path="res://scenes/enemy/mg_enemy_1.tscn" id="12_bgw3c"]
 [ext_resource type="PackedScene" uid="uid://bhakknh3dqmxl" path="res://scenes/spawners/schoolboy_spawner.tscn" id="13_jkxa6"]
 [ext_resource type="PackedScene" uid="uid://crt5ycfrlgynq" path="res://scenes/markers/marker.tscn" id="13_nmsli"]
 [ext_resource type="PackedScene" uid="uid://bxsiywf6a7trt" path="res://scenes/markers/spawn_point.tscn" id="14_bgw3c"]
@@ -21,7 +20,8 @@
 [ext_resource type="PackedScene" uid="uid://dwhniglt2wh2" path="res://scenes/spawners/mgenemy_1_spawner.tscn" id="16_lrvbd"]
 [ext_resource type="PackedScene" uid="uid://cian5tvvwppb6" path="res://scenes/enemy/turret_1.tscn" id="17_lrvbd"]
 [ext_resource type="PackedScene" uid="uid://ddvxjlutkaj8f" path="res://scenes/spawners/capsule_spawner.tscn" id="17_oqlok"]
-[ext_resource type="PackedScene" uid="uid://vmou5rls3vva" path="res://scenes/pickups/l_pickup.tscn" id="22_udfhf"]
+[ext_resource type="PackedScene" uid="uid://cpeakm326wwu1" path="res://scenes/pickups/r_pickup.tscn" id="22_i6od7"]
+[ext_resource type="PackedScene" uid="uid://by0xnynw17f8m" path="res://scenes/spawners/destroy_platform_spawner.tscn" id="22_udfhf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3sk1a"]
 texture = ExtResource("6_l53as")
@@ -764,11 +764,9 @@ texture = ExtResource("6_l53as")
 physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_08mmt")
 
-[node name="Level1" type="Node2D" unique_id=871521492 node_paths=PackedStringArray("left_border", "bottom_border")]
+[node name="Level1" type="Node2D" unique_id=871521492]
 script = ExtResource("1_bt44k")
 level_music = ExtResource("2_5ot28")
-left_border = NodePath("CameraBorders/LeftBorder")
-bottom_border = NodePath("CameraBorders/BottomBorder")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1121407613]
 layer = 10
@@ -853,17 +851,8 @@ tile_set = SubResource("TileSet_kx6l7")
 
 [node name="Enemy" type="Node2D" parent="Environment" unique_id=1410418346]
 
-[node name="MGEnemy 2" parent="Environment/Enemy" unique_id=1539012725 instance=ExtResource("12_bgw3c")]
-position = Vector2(1310, 429)
-
-[node name="MGEnemy 01 Spawner" parent="Environment/Enemy" unique_id=820567774 instance=ExtResource("16_lrvbd")]
-position = Vector2(790, 909)
-
-[node name="MGEnemy 01 Spawner3" parent="Environment/Enemy" unique_id=1697859726 instance=ExtResource("16_lrvbd")]
-position = Vector2(652, 988)
-
 [node name="Turret 1" parent="Environment/Enemy" unique_id=1852494293 instance=ExtResource("17_lrvbd")]
-position = Vector2(721, 676)
+position = Vector2(752, 683)
 
 [node name="Turret 2" parent="Environment/Enemy" unique_id=136938526 instance=ExtResource("17_lrvbd")]
 position = Vector2(1095, 856)
@@ -914,6 +903,12 @@ allowed_direction = 2
 position = Vector2(1735, 364)
 enemy_scene = ExtResource("14_w75he")
 allowed_direction = 2
+
+[node name="MGEnemy 01 Spawner4" parent="Environment/Enemy" unique_id=947494271 instance=ExtResource("16_lrvbd")]
+position = Vector2(799, 907)
+
+[node name="MGEnemy 01 Spawner5" parent="Environment/Enemy" unique_id=1099896402 instance=ExtResource("16_lrvbd")]
+position = Vector2(665, 990)
 
 [node name="Markers" type="Node2D" parent="Environment" unique_id=1629931704]
 
@@ -969,6 +964,25 @@ weapon_type = 2
 position = Vector2(711, 530)
 allowed_direction = 2
 
+[node name="Platforms" type="Node2D" parent="Environment" unique_id=1310929063]
+
+[node name="DestroyPlatform Spawner" parent="Environment/Platforms" unique_id=509519647 instance=ExtResource("22_udfhf")]
+position = Vector2(1101, 457)
+
+[node name="DestroyPlatform Spawner2" parent="Environment/Platforms" unique_id=1115673334 instance=ExtResource("22_udfhf")]
+position = Vector2(1011, 461)
+
+[node name="DestroyPlatform Spawner3" parent="Environment/Platforms" unique_id=1100195771 instance=ExtResource("22_udfhf")]
+position = Vector2(919, 452)
+
+[node name="DestroyPlatform Spawner4" parent="Environment/Platforms" unique_id=1916238586 instance=ExtResource("22_udfhf")]
+position = Vector2(813, 448)
+
+[node name="CapsuleSpawner" parent="Environment/Platforms" unique_id=157670805 instance=ExtResource("17_oqlok")]
+position = Vector2(718, 357)
+allowed_direction = 1
+weapon_type = 4
+
 [node name="Player" parent="." unique_id=1043132733 instance=ExtResource("2_jirdo")]
 position = Vector2(170, 478)
 
@@ -980,5 +994,5 @@ position = Vector2(97, 515)
 [node name="BottomBorder" type="Node2D" parent="CameraBorders" unique_id=1706290094]
 position = Vector2(763, 1141)
 
-[node name="PickupL" parent="." unique_id=912860424 instance=ExtResource("22_udfhf")]
-position = Vector2(238, 499)
+[node name="PickupR" parent="." unique_id=912860424 instance=ExtResource("22_i6od7")]
+position = Vector2(400, 544)

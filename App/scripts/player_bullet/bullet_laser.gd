@@ -51,7 +51,7 @@ func _collect_laser_points(start_pos: Vector2, laser_dir: Vector2, remaining_pie
 	var query = PhysicsRayQueryParameters2D.create(start_pos, end_pos)
 	query.exclude = [shooter]
 	
-	query.collision_mask = 69
+	query.collision_mask = 68
 	
 	var result = space_state.intersect_ray(query)
 	
@@ -116,7 +116,7 @@ func _check_new_hits() -> void:
 		
 		var query = PhysicsRayQueryParameters2D.create(start, end)
 		query.exclude = [shooter]
-		query.collision_mask = 69
+		query.collision_mask = 68
 		
 		var result = space_state.intersect_ray(query)
 		

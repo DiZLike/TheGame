@@ -1,14 +1,14 @@
 [gd_scene format=3 uid="uid://cq16vqlyyur3s"]
 
-[ext_resource type="Script" uid="uid://c3ng7ciq42xbs" path="res://scenes/enemy/mg_fire_1.gd" id="1_28sg8"]
-[ext_resource type="Texture2D" uid="uid://b8c6y86mhqu7" path="res://sprites/enemy/megaman 2/fire_1/spritesheet.png" id="1_vcd6j"]
+[ext_resource type="Script" uid="uid://dcff655sva27n" path="res://scripts/projectiles/fireball1.gd" id="1_tfja2"]
+[ext_resource type="Texture2D" uid="uid://b8c6y86mhqu7" path="res://sprites/enemy/megaman 2/fire_1/spritesheet.png" id="2_654qk"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_28sg8"]
-atlas = ExtResource("1_vcd6j")
+atlas = ExtResource("2_654qk")
 region = Rect2(2, 2, 16, 18)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hyow5"]
-atlas = ExtResource("1_vcd6j")
+atlas = ExtResource("2_654qk")
 region = Rect2(20, 2, 16, 18)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wpwy8"]
@@ -28,16 +28,18 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_vcd6j"]
 radius = 7.0
 
-[node name="MGFire 1" type="CharacterBody2D" unique_id=607887517 groups=["immortal_enemy"]]
+[node name="Fireball1" type="Area2D" unique_id=1375038058 groups=["enemy_bullet"]]
 z_index = 10
-collision_layer = 256
+collision_layer = 4
 collision_mask = 0
-script = ExtResource("1_28sg8")
+script = ExtResource("1_tfja2")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=324175677]
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=324175677]
 sprite_frames = SubResource("SpriteFrames_wpwy8")
 animation = &"idle"
 autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=733704838]
 shape = SubResource("CircleShape2D_vcd6j")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1259240649]

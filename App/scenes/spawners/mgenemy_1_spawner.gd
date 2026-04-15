@@ -11,7 +11,6 @@ enum SpawnDirection {
 
 @export var enemy_scene: PackedScene = preload("res://scenes/enemy/mg_enemy_1.tscn")
 @export var on_shot: bool = false
-@export var spawn_delay: float = 2.0
 @export var allowed_direction: SpawnDirection = SpawnDirection.ALL:
 	set(value):
 		allowed_direction = value
@@ -23,7 +22,8 @@ enum SpawnDirection {
 
 var is_on_screen: bool = false
 var current_enemy: Node2D = null
-var can_spawn: bool = true
+var has_spawned_in_current_view: bool = false
+var is_spawning: bool = false  # ← Защита от повторного спавна во время задержки
 
 
 func _ready():
@@ -37,10 +37,9 @@ func _ready():
 		update_arrow_direction()
 
 
-func _process(delta):
-	if is_on_screen and can_spawn and current_enemy == null:
-		can_spawn = false
-		await get_tree().create_timer(spawn_delay).timeout
+func _process(_delta):
+	# Спавним только если: на экране, нет врага, не спавним прямо сейчас, и ещё не спавнили в этот заход
+	if is_on_screen and current_enemy == null and not is_spawning and not has_spawned_in_current_view:
 		spawn_enemy()
 
 
@@ -69,31 +68,47 @@ func update_arrow_direction():
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	if check_spawn_allowed():
 		is_on_screen = true
-		can_spawn = true
+		# Не сбрасываем has_spawned_in_current_view здесь
+		# Он сбрасывается только при выходе или смерти врага
 
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	is_on_screen = false
-	if not on_shot and current_enemy:
-		current_enemy.queue_free()
-		current_enemy = null
-
+	if not current_enemy:
+		has_spawned_in_current_view = false  # ← Сброс при выходе из кадра
+		is_spawning = false  # ← Отменяем ожидающий спавн
+	if on_shot:
+		queue_free()
 
 func spawn_enemy():
-	if not enemy_scene or current_enemy != null:
+	if not enemy_scene or current_enemy != null or is_spawning or has_spawned_in_current_view:
+		return
+	
+	is_spawning = true
+	
+	# Проверяем, что условия всё ещё валидны после задержки
+	if not is_on_screen or current_enemy != null:
+		is_spawning = false
 		return
 	
 	current_enemy = enemy_scene.instantiate()
 	current_enemy.global_position = global_position
 	
+	# Подключаем сигнал уничтожения
 	if current_enemy.has_signal("tree_exited"):
 		current_enemy.tree_exited.connect(_on_enemy_destroyed)
 	
 	get_tree().current_scene.add_child(current_enemy)
+	
+	has_spawned_in_current_view = true
+	is_spawning = false
 
 
 func _on_enemy_destroyed():
 	current_enemy = null
+	# ВАЖНО: Не сбрасываем has_spawned_in_current_view здесь
+	# Если враг умер, но спавнер всё ещё на экране — НЕ СПАВНИМ повторно
+	# Спавн произойдёт только после выхода и повторного входа спавнера в кадр
 
 
 func check_spawn_allowed() -> bool:
@@ -127,7 +142,10 @@ func _get_spawn_side_from_camera() -> String:
 		SpawnDirection.TOP, SpawnDirection.BOTTOM:
 			return "top" if diff.y < 0 else "bottom"
 		SpawnDirection.ALL:
-			return "left" if abs(diff.x) > abs(diff.y) and diff.x < 0 else "right" if abs(diff.x) > abs(diff.y) else "top" if diff.y < 0 else "bottom"
+			if abs(diff.x) > abs(diff.y):
+				return "left" if diff.x < 0 else "right"
+			else:
+				return "top" if diff.y < 0 else "bottom"
 	
 	return "unknown"
 

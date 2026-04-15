@@ -90,8 +90,6 @@ func _add_weapon(new_weapon: Item) -> bool:
 	
 	slots[WEAPON_SLOT_INDEX].set_item(new_weapon, 1)
 	inventory_updated.emit(WEAPON_SLOT_INDEX)
-	
-	print("Оружие экипировано: ", new_weapon.name)
 	return true
 
 

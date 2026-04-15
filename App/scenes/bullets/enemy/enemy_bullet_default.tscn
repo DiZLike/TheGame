@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://rd7itgvi76ce"]
 
 [ext_resource type="Texture2D" uid="uid://cw1j2vhlaysjn" path="res://sprites/bullets/enemy/spritesheet.png" id="1_3m5px"]
-[ext_resource type="Script" uid="uid://mqb76ooytg33" path="res://scenes/bullets/enemy/enemy_bullet_default.gd" id="1_ff5e4"]
+[ext_resource type="Script" uid="uid://cre7lkgj1ava7" path="res://scripts/projectiles/enemy_bullet_default.gd" id="1_ff5e4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ff5e4"]
 atlas = ExtResource("1_3m5px")
@@ -48,7 +48,7 @@ collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_ff5e4")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=835613379]
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=835613379]
 sprite_frames = SubResource("SpriteFrames_iopx8")
 autoplay = "default"
 frame_progress = 0.48726463
@@ -56,3 +56,5 @@ frame_progress = 0.48726463
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=324349400]
 scale = Vector2(0.245, 0.245)
 shape = SubResource("CircleShape2D_fva11")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=58992279]
