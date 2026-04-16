@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://474070rkqdn4"]
 
-[ext_resource type="Script" uid="uid://ckm4islcy7n28" path="res://scenes/ui/game_menu.gd" id="1_tup5k"]
+[ext_resource type="Script" uid="uid://ckm4islcy7n28" path="res://scenes/ui/menu/game_menu.gd" id="1_tup5k"]
 [ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="3_6jy2e"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jy2e"]
@@ -125,7 +125,7 @@ layout_mode = 2
 
 [node name="ItemsLabel" type="Label" parent="CenterContainer/MainLayout/InventoryPanel/ItemsSection" unique_id=1207215331]
 layout_mode = 2
-text = "Прочее"
+text = "Предметы"
 
 [node name="ItemsGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel/ItemsSection" unique_id=19909802]
 layout_mode = 2

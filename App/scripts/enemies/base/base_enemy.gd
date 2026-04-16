@@ -208,7 +208,7 @@ func _on_damaged(bullet_type: String) -> void:
 	Вызывается при получении урона (но не смерти).
 	Проигрывает звук попадания.
 	"""
-	AudioManager.play_sfx(hit_sound, 1, 1.0, global_position)
+	AudioManager.play_sfx(hit_sound, 1, global_position)
 
 func _on_death(bullet_type: String) -> void:
 	"""

@@ -55,9 +55,9 @@ const WEAPON_DATA = {
 		"name": "M - Пулемёт",
 		"sound": "res://data/audio/sounds/player_weapon/weapon_machinegun.ogg",
 		"levels": [
-			{"damage": 5, "magazine_size": 30, "reload_time": 3, "shoot_delay": 0.15, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0},
-			{"damage": 7, "magazine_size": 35, "reload_time": 3, "shoot_delay": 0.10, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
-			{"damage": 10, "magazine_size": 40, "reload_time": 1.1, "shoot_delay": 0.08, "bullet_speed": 450, "spread_count": 1, "spread_angle": 0},
+			{"damage": 10, "magazine_size": 30, "reload_time": 3, "shoot_delay": 0.15, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0},
+			{"damage": 10, "magazine_size": 35, "reload_time": 3, "shoot_delay": 0.10, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
+			{"damage": 20, "magazine_size": 40, "reload_time": 1.1, "shoot_delay": 0.08, "bullet_speed": 450, "spread_count": 1, "spread_angle": 0},
 			{"damage": 15, "magazine_size": 50, "reload_time": 0.9, "shoot_delay": 0.063, "bullet_speed": 450, "spread_count": 1, "spread_angle": 0}
 		],
 		"description": "Высокая скорострельность",

@@ -11,7 +11,9 @@ config_version=5
 [application]
 
 config/name="TheGame"
-run/main_scene="uid://3f6hhl2wbrpq"
+run/main_scene="uid://bywi2eo8g1grj"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="DiZlike/Glitchvania"
 config/features=PackedStringArray("4.6", "Mobile")
 config/icon="res://icon.svg"
 
@@ -27,12 +29,13 @@ AudioManager="*uid://bougi501l3reb"
 ScoreManager="*uid://b8cwsirgsb3f2"
 InventoryManager="*uid://cgfl38e2rquta"
 GameManager="*uid://clu8nd0tgm2c5"
+InputManager="*uid://bjgscygusc7jr"
 
 [display]
 
 window/size/viewport_width=1280
 window/size/viewport_height=720
-window/stretch/mode="viewport"
+window/stretch/mode="canvas_items"
 
 [dotnet]
 

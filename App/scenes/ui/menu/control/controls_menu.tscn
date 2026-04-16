@@ -1,0 +1,174 @@
+[gd_scene format=3 uid="uid://bs4wwlo6vlmtv"]
+
+[ext_resource type="Script" uid="uid://dq4kqgnsat7sa" path="res://scenes/ui/menu/control/controls_menu.gd" id="1_5oxfc"]
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="1_font"]
+
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.102, 0.102, 0.102, 0.898)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.4, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxEmpty" id="ButtonNormal"]
+
+[sub_resource type="StyleBoxEmpty" id="ButtonHover"]
+
+[node name="ControlsMenu" type="CanvasLayer" unique_id=751491882]
+layer = 128
+script = ExtResource("1_5oxfc")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1360917227]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=527663376]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -355.0
+offset_top = -305.0
+offset_right = 355.0
+offset_bottom = 305.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
+
+[node name="ControlsPanel" type="Panel" parent="MarginContainer" unique_id=1181116647]
+custom_minimum_size = Vector2(650, 550)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="PanelMargin" type="MarginContainer" parent="MarginContainer/ControlsPanel" unique_id=1418074338]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer/ControlsPanel/PanelMargin" unique_id=1889735942]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=433228922]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 20
+text = "Управление"
+horizontal_alignment = 1
+
+[node name="HeaderLabels" type="HBoxContainer" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=1264617456]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ActionHeaderSpacer" type="Control" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/HeaderLabels" unique_id=382023540]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="KeyboardHeader" type="Label" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/HeaderLabels" unique_id=339699556]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 10
+text = "КЛАВИАТУРА"
+horizontal_alignment = 1
+
+[node name="GamepadHeader" type="Label" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/HeaderLabels" unique_id=237563399]
+custom_minimum_size = Vector2(130, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.7, 0.7, 0.7, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 10
+text = "ГЕЙМПАД"
+horizontal_alignment = 1
+
+[node name="TopSeparator" type="HSeparator" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=1101105365]
+layout_mode = 2
+
+[node name="ActionsList" type="VBoxContainer" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=360051205]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/separation = 8
+
+[node name="BottomActions" type="HBoxContainer" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=216805236]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_constants/separation = 15
+
+[node name="ResetKeyboardButton" type="Button" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/BottomActions" unique_id=1911443923]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "СБРОС КЛАВИАТУРЫ"
+
+[node name="ResetGamepadButton" type="Button" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/BottomActions" unique_id=600867609]
+custom_minimum_size = Vector2(160, 40)
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "СБРОС ГЕЙМПАДА"
+
+[node name="BottomSpacer" type="Control" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/BottomActions" unique_id=753133794]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BottomSeparator" type="HSeparator" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=1436023099]
+layout_mode = 2
+
+[node name="MainSpacer" type="Control" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=941039405]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="NavigationButtons" type="HBoxContainer" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox" unique_id=1098913579]
+layout_mode = 2
+size_flags_horizontal = 0
+theme_override_constants/separation = 20
+
+[node name="BackButton" type="Button" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/NavigationButtons" unique_id=1989636904]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "НАЗАД"
+
+[node name="ApplyButton" type="Button" parent="MarginContainer/ControlsPanel/PanelMargin/MainVBox/NavigationButtons" unique_id=37110356]
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "ПРИМЕНИТЬ"

@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://bywi2eo8g1grj"]
+
+[ext_resource type="Script" uid="uid://d0c6gyf1r601m" path="res://scenes/ui/menu/main_menu.gd" id="1_5ssjm"]
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="2_eip10"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0ettg"]
+bg_color = Color(0, 0, 0, 1)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0ettg"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_duh7t"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6ymyu"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3ye4h"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7rktv"]
+
+[node name="MainMenu" type="Node2D" unique_id=1731785976]
+script = ExtResource("1_5ssjm")
+
+[node name="Panel" type="Panel" parent="." unique_id=242449894]
+clip_contents = true
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1294.0
+offset_bottom = 730.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_0ettg")
+
+[node name="MainLayout" type="HBoxContainer" parent="Panel" unique_id=1742953195]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 489.0
+offset_right = 322.0
+offset_bottom = 638.0
+theme_override_constants/separation = 20
+
+[node name="LeftPanel" type="VBoxContainer" parent="Panel/MainLayout" unique_id=1905567444]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="Panel/MainLayout/LeftPanel" unique_id=1534772997]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Resume" type="Button" parent="Panel/MainLayout/LeftPanel/ButtonsContainer" unique_id=1609689563]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_eip10")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0ettg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_duh7t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6ymyu")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_3ye4h")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7rktv")
+disabled = true
+text = "Продолжить"
+alignment = 0
+
+[node name="NewGame" type="Button" parent="Panel/MainLayout/LeftPanel/ButtonsContainer" unique_id=1719879025]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_eip10")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0ettg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_duh7t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6ymyu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7rktv")
+text = "Новая игра"
+alignment = 0
+
+[node name="Settings" type="Button" parent="Panel/MainLayout/LeftPanel/ButtonsContainer" unique_id=226377216]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_eip10")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0ettg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_duh7t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6ymyu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7rktv")
+text = "Настройки"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="Panel/MainLayout/LeftPanel/ButtonsContainer" unique_id=893653055]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_eip10")
+theme_override_font_sizes/font_size = 25
+theme_override_styles/normal = SubResource("StyleBoxEmpty_0ettg")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_duh7t")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_6ymyu")
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7rktv")
+text = "Выход"
+alignment = 0
+
+[node name="Spacer" type="Control" parent="Panel/MainLayout/LeftPanel" unique_id=608324697]
+layout_mode = 2

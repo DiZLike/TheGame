@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://cqi2vqepj10lg" path="res://scenes/ui/dialogue_box.tscn" id="2_l53as"]
 [ext_resource type="Script" uid="uid://d2em87pulur2p" path="res://scripts/mini_map.gd" id="3_btoec"]
 [ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/glitch/glitch_area.tscn" id="3_gwceb"]
-[ext_resource type="PackedScene" uid="uid://474070rkqdn4" path="res://scenes/ui/game_menu.tscn" id="3_w75he"]
+[ext_resource type="PackedScene" uid="uid://474070rkqdn4" path="res://scenes/ui/menu/game_menu.tscn" id="3_w75he"]
 [ext_resource type="AudioStream" uid="uid://6h6vgi63gglx" path="res://data/audio/sounds/text_typing/text_typing.ogg" id="4_vjtdm"]
 [ext_resource type="PackedScene" uid="uid://p0rrfwntal0y" path="res://scenes/ui/lives_panel.tscn" id="5_oqlok"]
 [ext_resource type="Texture2D" uid="uid://be64mqygo4m8g" path="res://tiles/l01.png" id="6_l53as"]
@@ -20,7 +20,6 @@
 [ext_resource type="PackedScene" uid="uid://dwhniglt2wh2" path="res://scenes/spawners/mgenemy_1_spawner.tscn" id="16_lrvbd"]
 [ext_resource type="PackedScene" uid="uid://cian5tvvwppb6" path="res://scenes/enemy/turret_1.tscn" id="17_lrvbd"]
 [ext_resource type="PackedScene" uid="uid://ddvxjlutkaj8f" path="res://scenes/spawners/capsule_spawner.tscn" id="17_oqlok"]
-[ext_resource type="PackedScene" uid="uid://cpeakm326wwu1" path="res://scenes/pickups/r_pickup.tscn" id="22_i6od7"]
 [ext_resource type="PackedScene" uid="uid://by0xnynw17f8m" path="res://scenes/spawners/destroy_platform_spawner.tscn" id="22_udfhf"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3sk1a"]
@@ -938,7 +937,7 @@ position = Vector2(615, 988)
 [node name="SpawnPoints" type="Node2D" parent="Environment" unique_id=1268767444]
 
 [node name="SpawnPoint" parent="Environment/SpawnPoints" unique_id=577425369 instance=ExtResource("14_bgw3c")]
-position = Vector2(284, 464)
+position = Vector2(172, 446)
 
 [node name="SpawnPoint2" parent="Environment/SpawnPoints" unique_id=1195823086 instance=ExtResource("14_bgw3c")]
 position = Vector2(828, 700)
@@ -993,6 +992,3 @@ position = Vector2(97, 515)
 
 [node name="BottomBorder" type="Node2D" parent="CameraBorders" unique_id=1706290094]
 position = Vector2(763, 1141)
-
-[node name="PickupR" parent="." unique_id=912860424 instance=ExtResource("22_i6od7")]
-position = Vector2(400, 544)

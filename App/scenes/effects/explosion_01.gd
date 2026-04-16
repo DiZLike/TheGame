@@ -14,8 +14,8 @@ var excluded_target: Node2D = null
 @onready var sound: AudioStream = preload("res://data/audio/sounds/explosions/rocket_explosion.ogg")
 
 func _ready() -> void:
-	AudioManager.play_sfx(sound, 1, 1.0, global_position)
-	# Настройка радиуса
+	AudioManager.play_sfx(sound, 1, global_position)
+	# Настройка радиус
 	if collision_shape and collision_shape.shape is CircleShape2D:
 		_original_radius = (collision_shape.shape as CircleShape2D).radius
 	
