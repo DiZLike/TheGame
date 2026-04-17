@@ -9,7 +9,7 @@ enum SpawnDirection {
 	BOTTOM,
 }
 
-@export var enemy_scene: PackedScene = preload("res://scenes/enemy/mg_enemy_1.tscn")
+@export var enemy_scene: PackedScene = preload("res://scenes/enemy/blazeman.tscn")
 @export var on_shot: bool = false
 @export var allowed_direction: SpawnDirection = SpawnDirection.ALL:
 	set(value):

@@ -273,7 +273,7 @@ func _on_area_entered(area: Area2D) -> void:
 
 func take_damage():
 	# Наносит урон: уменьшает жизни и запускает возрождение, если жизни ещё есть
-	GameManager.sub_lives()
+	GameManager.remove_lives(1)
 	if GameManager.get_lives() >= 0:
 		start_respawn()
 

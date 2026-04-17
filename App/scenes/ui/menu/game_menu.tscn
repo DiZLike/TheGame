@@ -1,148 +1,251 @@
 [gd_scene format=3 uid="uid://474070rkqdn4"]
 
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="1_font"]
 [ext_resource type="Script" uid="uid://ckm4islcy7n28" path="res://scenes/ui/menu/game_menu.gd" id="1_tup5k"]
-[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="3_6jy2e"]
+[ext_resource type="FontFile" uid="uid://cemps3oksdmll" path="res://data/fonts/EpilepsySans.ttf" id="2_8vgdp"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6jy2e"]
-bg_color = Color(0.6, 0.6, 0.6, 0.8235294)
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.102, 0.102, 0.102, 0.898)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.4, 0.4, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_6jy2e"]
+[sub_resource type="StyleBoxEmpty" id="ButtonNormal"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_vtvlb"]
+[sub_resource type="StyleBoxEmpty" id="ButtonHover"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_g8oa6"]
+[sub_resource type="StyleBoxFlat" id="InfoPanelStyle"]
+bg_color = Color(0.15, 0.15, 0.15, 0.7)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.4, 0.4, 0.4, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rbob"]
-
-[node name="GameMenu" type="Panel" unique_id=1045441974]
+[node name="GameMenu" type="CanvasLayer" unique_id=1045441974]
 process_mode = 2
-self_modulate = Color(0, 0, 0, 1)
-offset_right = 1287.0
-offset_bottom = 729.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_6jy2e")
+layer = 128
 script = ExtResource("1_tup5k")
 
-[node name="CenterContainer" type="CenterContainer" parent="." unique_id=559508103]
-layout_mode = 0
-offset_left = 26.0
-offset_top = 26.0
-offset_right = 304.0
-offset_bottom = 203.0
+[node name="Background" type="ColorRect" parent="." unique_id=295183647]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0.7)
 
-[node name="MainLayout" type="HBoxContainer" parent="CenterContainer" unique_id=2012148502]
+[node name="CenterContainer" type="CenterContainer" parent="." unique_id=559508103]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer" unique_id=2125271894]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="MainPanel" type="Panel" parent="CenterContainer/MarginContainer" unique_id=391218331]
+custom_minimum_size = Vector2(1100, 600)
+layout_mode = 2
+theme_override_styles/panel = SubResource("PanelStyle")
+
+[node name="PanelMargin" type="MarginContainer" parent="CenterContainer/MarginContainer/MainPanel" unique_id=729361015]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 15
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 15
+
+[node name="MainLayout" type="HBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin" unique_id=2012148502]
 layout_mode = 2
 theme_override_constants/separation = 20
 
-[node name="LeftPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=633512512]
+[node name="LeftPanel" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout" unique_id=633512512]
 layout_mode = 2
 
-[node name="TitleLabel" type="Label" parent="CenterContainer/MainLayout/LeftPanel" unique_id=723053725]
+[node name="TitleLabel" type="Label" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel" unique_id=723053725]
 layout_mode = 2
-text = "Меню"
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 16
+text = "ПАУЗА"
+horizontal_alignment = 1
 
-[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/MainLayout/LeftPanel" unique_id=1121647746]
+[node name="HSeparator" type="HSeparator" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel" unique_id=854276321]
 layout_mode = 2
-theme_override_constants/separation = 15
 
-[node name="Resume" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=1177590492]
+[node name="ButtonsContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel" unique_id=1121647746]
 layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Resume" type="Button" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel/ButtonsContainer" unique_id=1177590492]
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("3_6jy2e")
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
-text = "Продолжить"
-alignment = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "ПРОДОЛЖИТЬ"
 
-[node name="Button2" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=1475543426]
+[node name="Button2" type="Button" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel/ButtonsContainer" unique_id=1475543426]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("3_6jy2e")
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
-text = "Загрузить"
-alignment = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "ЗАГРУЗИТЬ"
 
-[node name="Button3" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=415404320]
+[node name="SettingsButton" type="Button" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel/ButtonsContainer" unique_id=415404320]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("3_6jy2e")
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
-text = "Настройки"
-alignment = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "НАСТРОЙКИ"
 
-[node name="QuitButton" type="Button" parent="CenterContainer/MainLayout/LeftPanel/ButtonsContainer" unique_id=1882699750]
+[node name="QuitButton" type="Button" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel/ButtonsContainer" unique_id=1882699750]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("3_6jy2e")
-theme_override_font_sizes/font_size = 25
-theme_override_styles/normal = SubResource("StyleBoxEmpty_6jy2e")
-theme_override_styles/pressed = SubResource("StyleBoxEmpty_vtvlb")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_g8oa6")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_3rbob")
-text = "Выход"
-alignment = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 14
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "ВЫХОД"
 
-[node name="Spacer" type="Control" parent="CenterContainer/MainLayout/LeftPanel" unique_id=1378154688]
+[node name="Spacer" type="Control" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel" unique_id=1378154688]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Separator" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout" unique_id=2047315010]
 layout_mode = 2
 
-[node name="Separator" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=2047315010]
+[node name="VSeparator" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/Separator" unique_id=380264992]
+custom_minimum_size = Vector2(2, 0)
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Line" type="ColorRect" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/Separator/VSeparator" unique_id=1298754321]
+layout_mode = 2
+size_flags_vertical = 3
+color = Color(0.4, 0.4, 0.4, 1)
+
+[node name="InventoryPanel" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout" unique_id=1396100175]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="InventoryTitle" type="Label" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel" unique_id=1290152811]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 14
+text = "ИНВЕНТАРЬ"
+
+[node name="HSeparator2" type="HSeparator" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel" unique_id=2008432198]
 layout_mode = 2
 
-[node name="Line2D" type="Line2D" parent="CenterContainer/MainLayout/Separator" unique_id=380264992]
-points = PackedVector2Array(0, 0, 0, 185.245)
-width = 2.0
+[node name="WeaponSection" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel" unique_id=1578660966]
+layout_mode = 2
+theme_override_constants/separation = 5
 
-[node name="InventoryPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=1396100175]
+[node name="WeaponLabel" type="Label" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel/WeaponSection" unique_id=1580077548]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+text = "ОРУЖИЕ"
+
+[node name="WeaponGrid" type="GridContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel/WeaponSection" unique_id=29315334]
 layout_mode = 2
 
-[node name="InventoryTitle" type="Label" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=1290152811]
+[node name="ItemsSection" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel" unique_id=1710336120]
 layout_mode = 2
-text = "Инвентарь"
+theme_override_constants/separation = 5
 
-[node name="WeaponSection" type="VBoxContainer" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=1578660966]
+[node name="ItemsLabel" type="Label" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel/ItemsSection" unique_id=1207215331]
 layout_mode = 2
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+text = "ПРЕДМЕТЫ"
 
-[node name="WeaponLabel" type="Label" parent="CenterContainer/MainLayout/InventoryPanel/WeaponSection" unique_id=1580077548]
+[node name="ItemsGrid" type="GridContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel/ItemsSection" unique_id=19909802]
 layout_mode = 2
-text = "Оружие"
-
-[node name="WeaponGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel/WeaponSection" unique_id=29315334]
-layout_mode = 2
+theme_override_constants/h_separation = 5
+theme_override_constants/v_separation = 5
 columns = 5
 
-[node name="ItemsSection" type="VBoxContainer" parent="CenterContainer/MainLayout/InventoryPanel" unique_id=1710336120]
+[node name="ItemInfoPanel" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout" unique_id=6215123]
+custom_minimum_size = Vector2(450, 0)
 layout_mode = 2
 
-[node name="ItemsLabel" type="Label" parent="CenterContainer/MainLayout/InventoryPanel/ItemsSection" unique_id=1207215331]
+[node name="ItemInfoPanelBg" type="Panel" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel" unique_id=732145890]
 layout_mode = 2
-text = "Предметы"
+size_flags_vertical = 3
+theme_override_styles/panel = SubResource("InfoPanelStyle")
 
-[node name="ItemsGrid" type="GridContainer" parent="CenterContainer/MainLayout/InventoryPanel/ItemsSection" unique_id=19909802]
-layout_mode = 2
-columns = 5
+[node name="ItemInfoMargin" type="MarginContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg" unique_id=938462715]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="ItemInfoPanel" type="VBoxContainer" parent="CenterContainer/MainLayout" unique_id=6215123]
-custom_minimum_size = Vector2(600, 0)
+[node name="ItemInfoVBox" type="VBoxContainer" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg/ItemInfoMargin" unique_id=573941062]
 layout_mode = 2
 
-[node name="ItemNameLabel" type="Label" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=1485347907]
+[node name="ItemNameLabel" type="Label" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg/ItemInfoMargin/ItemInfoVBox" unique_id=1485347907]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 14
+text = "text"
+
+[node name="ItemInfoSeparator" type="HSeparator" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg/ItemInfoMargin/ItemInfoVBox" unique_id=926451738]
 layout_mode = 2
 
-[node name="ItemDescription" type="RichTextLabel" parent="CenterContainer/MainLayout/ItemInfoPanel" unique_id=158269810]
+[node name="ItemDescription" type="RichTextLabel" parent="CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg/ItemInfoMargin/ItemInfoVBox" unique_id=158269810]
 layout_mode = 2
-theme_override_font_sizes/normal_font_size = 12
+size_flags_vertical = 3
+theme_override_colors/default_color = Color(0.9, 0.9, 0.9, 1)
+theme_override_fonts/normal_font = ExtResource("2_8vgdp")
+theme_override_fonts/bold_font = ExtResource("1_font")
+theme_override_fonts/bold_italics_font = ExtResource("1_font")
+theme_override_fonts/italics_font = ExtResource("1_font")
+theme_override_fonts/mono_font = ExtResource("1_font")
+theme_override_font_sizes/normal_font_size = 18
 bbcode_enabled = true
 text = "text"
 fit_content = true
 scroll_active = false
-tab_size = 5

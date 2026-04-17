@@ -1,5 +1,5 @@
-# main_menu.gd (обновлённый)
-extends Node2D
+# main_menu.gd (только клавиатурное управление)
+extends CanvasLayer
 
 @onready var buttons_container: VBoxContainer = $Panel/MainLayout/LeftPanel/ButtonsContainer
 @onready var resume_button: Button = $Panel/MainLayout/LeftPanel/ButtonsContainer/Resume
@@ -9,25 +9,36 @@ extends Node2D
 
 var buttons: Array[Button] = []
 var current_button_index: int = 0
-var settings_menu_scene = preload("res://scenes/ui/menu/settings_menu.tscn")  # Укажите правильный путь
-
+var settings_menu_scene = preload("res://scenes/ui/menu/settings_menu.tscn")
 
 func _ready() -> void:
 	# Собираем кнопки
 	for child in buttons_container.get_children():
 		if child is Button:
 			buttons.append(child)
+			# Отключаем фокус мыши для кнопок
+			child.focus_mode = Control.FOCUS_NONE
+			child.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
 	# Активируем кнопку "Продолжить" если есть сохранение
 	_update_resume_button_state()
 	
-	# Подключаем сигналы наведения
-	for i in buttons.size():
-		var button = buttons[i]
-		button.mouse_entered.connect(_on_button_hovered.bind(i))
+	# Находим первую активную кнопку для выделения
+	_find_first_active_button()
 	
 	# Визуальное выделение первого элемента
 	_update_visual_focus()
+
+
+func _find_first_active_button() -> void:
+	# Ищем первую не заблокированную кнопку
+	for i in buttons.size():
+		if not buttons[i].disabled:
+			current_button_index = i
+			return
+	
+	# Если все кнопки заблокированы (маловероятно), оставляем 0
+	current_button_index = 0
 
 
 func _update_resume_button_state() -> void:
@@ -40,6 +51,21 @@ func _update_resume_button_state() -> void:
 		resume_button.modulate = Color.WHITE
 
 
+func _find_next_active_button(direction: int) -> int:
+	# direction: -1 для вверх, +1 для вниз
+	var new_index = current_button_index
+	var attempts = 0
+	
+	while attempts < buttons.size():
+		new_index = (new_index + direction + buttons.size()) % buttons.size()
+		if not buttons[new_index].disabled:
+			return new_index
+		attempts += 1
+	
+	# Если все кнопки заблокированы, возвращаем текущий индекс
+	return current_button_index
+
+
 func _update_visual_focus() -> void:
 	# Подсветка кнопок
 	for i in buttons.size():
@@ -50,24 +76,23 @@ func _update_visual_focus() -> void:
 			button.add_theme_color_override("font_color", Color.WHITE)
 
 
-func _on_button_hovered(index: int) -> void:
-	current_button_index = index
-	_update_visual_focus()
-
-
 func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
 	
 	if event.is_action_pressed("ui_up"):
-		current_button_index = max(0, current_button_index - 1)
+		current_button_index = _find_next_active_button(-1)
 		_update_visual_focus()
 	elif event.is_action_pressed("ui_down"):
-		current_button_index = min(buttons.size() - 1, current_button_index + 1)
+		current_button_index = _find_next_active_button(1)
 		_update_visual_focus()
-	elif event.is_action_pressed("jump") or event.is_action_pressed("ui_accept"):
-		_execute_button_action(buttons[current_button_index])
-	elif event.is_action_pressed("ui_cancel"):
+	elif event.is_action_pressed("jump"):
+		# Выполняем действие только если кнопка не заблокирована
+		var button = buttons[current_button_index]
+		if not button.disabled:
+			_execute_button_action(button)
+	elif event.is_action_pressed("shoot"):
+		# В главном меню Cancel не делает ничего (или можно добавить выход)
 		pass
 
 
@@ -90,6 +115,7 @@ func _on_resume_pressed() -> void:
 func _on_new_game_pressed() -> void:
 	get_tree().change_scene_to_file("res://levels/level_1.tscn")
 
+
 func _on_settings_pressed() -> void:
 	# Скрываем главное меню, чтобы оно не мешало вводу
 	hide()
@@ -105,6 +131,7 @@ func _on_settings_pressed() -> void:
 func _on_settings_closed() -> void:
 	# Показываем главное меню обратно
 	show()
+
 
 func _on_controls_requested() -> void:
 	print("Открытие настроек управления...")

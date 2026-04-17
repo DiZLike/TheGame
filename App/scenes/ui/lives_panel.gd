@@ -30,11 +30,11 @@ func _ready() -> void:
 	
 	update_lives_display(GameManager.get_lives())
 	update_score_display(ScoreManager.get_score())
-	update_weapon_display(GameManager.get_current_weapon_type(), GameManager.get_current_weapon_level())
+	update_weapon_display(GameManager.get_current_weapon(), GameManager.get_current_weapon_level())
 	update_ammo_display(WeaponManager.get_current_ammo(), WeaponManager.get_max_ammo())
 	GameManager.register_lives_panel(self)
 
-func _on_lives_changed(new_lives: int):
+func _on_lives_changed(new_lives: int, old_lives: int):
 	update_lives_display(new_lives)
 
 func _on_score_changed(new_score: int):

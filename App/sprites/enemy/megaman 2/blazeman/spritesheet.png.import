@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8c6y86mhqu7"
-path="res://.godot/imported/spritesheet.png-8c7919f1402e3cbc8192924006c831e4.ctex"
+uid="uid://djiroujf76ojx"
+path="res://.godot/imported/spritesheet.png-25fe504c41812b7c6fc033d0a0103f72.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/enemy/megaman 2/fire_1/spritesheet.png"
-dest_files=["res://.godot/imported/spritesheet.png-8c7919f1402e3cbc8192924006c831e4.ctex"]
+source_file="res://sprites/enemy/megaman 2/blazeman/spritesheet.png"
+dest_files=["res://.godot/imported/spritesheet.png-25fe504c41812b7c6fc033d0a0103f72.ctex"]
 
 [params]
 

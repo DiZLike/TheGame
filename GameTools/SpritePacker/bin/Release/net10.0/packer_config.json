@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\bullets_enemy",
-  "OutputFolder": "sprites\\bullets_enemy",
+  "InputFolder": "sprites\\enemy\\contra\\camper",
+  "OutputFolder": "sprites\\enemy\\contra\\camper",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,
@@ -8,5 +8,5 @@
   "PixelArtMode": true,
   "UseSquareCells": false,
   "AutoColumns": true,
-  "VerticalAlignment": "center"
+  "VerticalAlignment": "bottom"
 }

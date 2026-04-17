@@ -1,0 +1,75 @@
+[gd_scene format=3 uid="uid://uy4lnwqpand4"]
+
+[ext_resource type="Texture2D" uid="uid://byhmu2ysykhhy" path="res://sprites/enemy/contra/camper/spritesheet.png" id="1_n0n1u"]
+[ext_resource type="Script" uid="uid://c7rs2bcs5el04" path="res://scripts/enemies/camper.gd" id="1_ph12c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ph12c"]
+size = Vector2(20, 11)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1pitd"]
+atlas = ExtResource("1_n0n1u")
+region = Rect2(28, 2, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_346as"]
+atlas = ExtResource("1_n0n1u")
+region = Rect2(54, 2, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ph12c"]
+atlas = ExtResource("1_n0n1u")
+region = Rect2(28, 2, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ctcg3"]
+atlas = ExtResource("1_n0n1u")
+region = Rect2(2, 2, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ae5yr"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1pitd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_346as")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ph12c")
+}],
+"loop": false,
+"name": &"attack_to_idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ctcg3")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[node name="Camper" type="CharacterBody2D" unique_id=1254282009 groups=["enemy"]]
+z_index = 10
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ph12c")
+attacks_per_cycle = 3
+health = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1887704387]
+position = Vector2(0, 2.5)
+shape = SubResource("RectangleShape2D_ph12c")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=944348379]
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=183249402]
+sprite_frames = SubResource("SpriteFrames_ae5yr")
+animation = &"attack"
+autoplay = "idle"
+
+[node name="ShootingPoint" type="Marker2D" parent="." unique_id=3535471]
+position = Vector2(-12, -4)

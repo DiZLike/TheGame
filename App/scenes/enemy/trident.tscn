@@ -1,0 +1,73 @@
+[gd_scene format=3 uid="uid://m5pyaulosoi1"]
+
+[ext_resource type="Script" uid="uid://b8mytk8cjahuo" path="res://scripts/enemies/trident.gd" id="1_047yn"]
+[ext_resource type="Texture2D" uid="uid://bl2jtoolcc2px" path="res://sprites/enemy/contra/trident/spritesheet.png" id="1_in7do"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_047yn"]
+size = Vector2(13, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_666wj"]
+atlas = ExtResource("1_in7do")
+region = Rect2(28, 2, 24, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qguta"]
+atlas = ExtResource("1_in7do")
+region = Rect2(2, 2, 24, 39)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0t21g"]
+atlas = ExtResource("1_in7do")
+region = Rect2(54, 2, 24, 39)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hy0qy"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_666wj")
+}],
+"loop": true,
+"name": &"down",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qguta")
+}],
+"loop": true,
+"name": &"line",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0t21g")
+}],
+"loop": true,
+"name": &"up",
+"speed": 5.0
+}]
+
+[node name="Trident" type="CharacterBody2D" unique_id=1802510207 groups=["enemy"]]
+z_index = 10
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_047yn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1462270764]
+position = Vector2(0, 4)
+shape = SubResource("RectangleShape2D_047yn")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=318899224]
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=1098400204]
+sprite_frames = SubResource("SpriteFrames_hy0qy")
+animation = &"down"
+
+[node name="ShootingPoints" type="Node2D" parent="." unique_id=1907154426]
+
+[node name="ShootingPointLine" type="Marker2D" parent="ShootingPoints" unique_id=1864718536]
+position = Vector2(-12, -8)
+
+[node name="ShootingPointUp" type="Marker2D" parent="ShootingPoints" unique_id=1499554476]
+position = Vector2(-9, -20)
+
+[node name="ShootingPointDown" type="Marker2D" parent="ShootingPoints" unique_id=254419410]
+position = Vector2(-12, 7)

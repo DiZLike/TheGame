@@ -1,0 +1,67 @@
+[gd_scene format=3 uid="uid://it8cjntipiur"]
+
+[ext_resource type="Script" uid="uid://dcrugrn57y1cs" path="res://scenes/pickups/live_pickup.gd" id="1_yu0xn"]
+[ext_resource type="Texture2D" uid="uid://c4qnetcug02dm" path="res://sprites/pickups/spritesheet.png" id="2_3idlv"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ykv02"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yu0xn"]
+atlas = ExtResource("2_3idlv")
+region = Rect2(2, 110, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3idlv"]
+atlas = ExtResource("2_3idlv")
+region = Rect2(28, 110, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bajx0"]
+atlas = ExtResource("2_3idlv")
+region = Rect2(54, 110, 24, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbuvw"]
+atlas = ExtResource("2_3idlv")
+region = Rect2(80, 110, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_blq34"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yu0xn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3idlv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_bajx0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbuvw")
+}],
+"loop": true,
+"name": &"default",
+"speed": 25.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6rliw"]
+
+[node name="PickupLife" type="CharacterBody2D" unique_id=912860424 groups=["weapon_pickup"]]
+z_index = 10
+collision_layer = 32
+script = ExtResource("1_yu0xn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1675286438]
+scale = Vector2(0.7, 0.7)
+shape = SubResource("CircleShape2D_ykv02")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1467491828]
+sprite_frames = SubResource("SpriteFrames_blq34")
+autoplay = "default"
+frame_progress = 0.7621223
+
+[node name="Area2D" type="Area2D" parent="." unique_id=931609637]
+collision_layer = 32
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1333368699]
+shape = SubResource("CircleShape2D_6rliw")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]

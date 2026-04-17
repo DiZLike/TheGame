@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://djiroujf76ojx"
-path="res://.godot/imported/spritesheet.png-714d4309bd4f566f81c10849df5985bc.ctex"
+uid="uid://bl2jtoolcc2px"
+path="res://.godot/imported/spritesheet.png-8fff38d4475463398cf30f0c5683c82f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/enemy/megaman 2/enemy_1/spritesheet.png"
-dest_files=["res://.godot/imported/spritesheet.png-714d4309bd4f566f81c10849df5985bc.ctex"]
+source_file="res://sprites/enemy/contra/trident/spritesheet.png"
+dest_files=["res://.godot/imported/spritesheet.png-8fff38d4475463398cf30f0c5683c82f.ctex"]
 
 [params]
 

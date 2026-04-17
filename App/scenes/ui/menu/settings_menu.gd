@@ -3,27 +3,27 @@ extends CanvasLayer
 
 enum MenuSection { SLIDERS, BUTTONS }
 
-# Правильные пути к узлам из вашей сцены
+# UI элементы
 @onready var settings_panel: Panel = $MarginContainer/SettingsPanel
-@onready var color_rect: ColorRect = $ColorRect
+@onready var color_rect: TextureRect = $ColorRect
 
 # Слайдеры и значения
-@onready var master_label: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterLabel
-@onready var master_slider: HSlider = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterHBox/MasterSlider
-@onready var master_value: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterHBox/MasterValue
+@onready var master_label: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer/MasterLabel
+@onready var master_slider: HSlider = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer/MasterHBox/MasterSlider
+@onready var master_value: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer/MasterHBox/MasterValue
 
-@onready var sfx_label: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer/SFXLabel
-@onready var sfx_slider: HSlider = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer/SFXHBox/SFXSlider
-@onready var sfx_value: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer/SFXHBox/SFXValue
+@onready var sfx_label: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer/SFXLabel
+@onready var sfx_slider: HSlider = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer/SFXHBox/SFXSlider
+@onready var sfx_value: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer/SFXHBox/SFXValue
 
-@onready var music_label: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer/MusicLabel
-@onready var music_slider: HSlider = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer/MusicHBox/MusicSlider
-@onready var music_value: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer/MusicHBox/MusicValue
+@onready var music_label: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer/MusicLabel
+@onready var music_slider: HSlider = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer/MusicHBox/MusicSlider
+@onready var music_value: Label = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer/MusicHBox/MusicValue
 
 # Кнопки
 @onready var controls_button: Button = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/ControlsButton
-@onready var back_button: Button = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/ButtonsContainer/BackButton
-@onready var apply_button: Button = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/ButtonsContainer/ApplyButton
+@onready var back_button: Button = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/NavigationButtons/BackButton
+@onready var apply_button: Button = $MarginContainer/SettingsPanel/PanelMargin/MainVBox/NavigationButtons/ApplyButton
 
 # Элементы для навигации
 var sliders: Array[HSlider] = []
@@ -49,7 +49,6 @@ func _ready() -> void:
 	
 	# Настраиваем фон
 	color_rect.mouse_filter = Control.MOUSE_FILTER_STOP
-	color_rect.color = Color(0, 0, 0, 0.7)
 	
 	# Отключаем встроенный фокус Godot у всех элементов
 	_setup_focus_modes()

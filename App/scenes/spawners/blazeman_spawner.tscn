@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dwhniglt2wh2"]
 
-[ext_resource type="Script" uid="uid://ctx0002q1012k" path="res://scenes/spawners/mgenemy_1_spawner.gd" id="1_gt7u5"]
-[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/enemy_1/spritesheet.png" id="2_gt7u5"]
+[ext_resource type="Script" uid="uid://ctx0002q1012k" path="res://scenes/spawners/blazeman_spawner.gd" id="1_gt7u5"]
+[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/blazeman/spritesheet.png" id="2_gt7u5"]
 [ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_e5se8"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_0b40b"]

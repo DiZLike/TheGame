@@ -2,10 +2,11 @@ extends Node2D
 
 @export var level_music: AudioStream
 
-@onready var glitch_layer = $UI/GlitchLayer
+@onready var glitch_layer = $UI/MiniMap/GlitchLayer
 @onready var tile_gnd = $"Environment/Tiles/TileGND"
 @onready var dialogue_box = $UI/DialogLayer
-@onready var game_menu : Panel = $UI/GameMenu
+@onready var game_menu: CanvasLayer = $UI/GameMenu
+@onready var player = $Player
 
 func _ready() -> void:
 	if dialogue_box:
@@ -60,3 +61,6 @@ func _01_create_glitch_enemy():
 func _01_2_activate():
 	var trig: DialogueTrigger = $Environment/DialogueTriggers/DTrig2
 	trig.activate()
+
+func weapon_training_enable():
+	GameManager.dialogue_trig["weapon_training_enable"] = true

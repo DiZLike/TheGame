@@ -1,11 +1,13 @@
 # game_menu.gd (с разделением на оружие и прочее, оба в GridContainer)
-extends Control
+extends CanvasLayer
 
-@onready var buttons_container: VBoxContainer = $CenterContainer/MainLayout/LeftPanel/ButtonsContainer
-@onready var weapon_grid: GridContainer = $CenterContainer/MainLayout/InventoryPanel/WeaponSection/WeaponGrid
-@onready var items_grid: GridContainer = $CenterContainer/MainLayout/InventoryPanel/ItemsSection/ItemsGrid
-@onready var item_name_label: Label = $CenterContainer/MainLayout/ItemInfoPanel/ItemNameLabel
-@onready var item_description_label: RichTextLabel = $CenterContainer/MainLayout/ItemInfoPanel/ItemDescription
+@onready var buttons_container: VBoxContainer = $CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/LeftPanel/ButtonsContainer
+@onready var weapon_grid: GridContainer = $CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel/WeaponSection/WeaponGrid
+@onready var items_grid: GridContainer = $CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/InventoryPanel/ItemsSection/ItemsGrid
+@onready var item_name_label: Label = $CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg/ItemInfoMargin/ItemInfoVBox/ItemNameLabel
+@onready var item_description_label: RichTextLabel = $CenterContainer/MarginContainer/MainPanel/PanelMargin/MainLayout/ItemInfoPanel/ItemInfoPanelBg/ItemInfoMargin/ItemInfoVBox/ItemDescription
+
+var settings_menu_scene = preload("res://scenes/ui/menu/settings_menu.tscn")
 
 enum MenuSection { BUTTONS, WEAPON, ITEMS }
 
@@ -25,6 +27,9 @@ func _ready() -> void:
 	for child in buttons_container.get_children():
 		if child is Button:
 			buttons.append(child)
+			child.focus_mode = Control.FOCUS_NONE
+			# Подключаем наведение мыши
+			child.mouse_entered.connect(_on_button_hovered.bind(buttons.size() - 1))
 	
 	# Настраиваем сетку оружия (1 колонка)
 	weapon_grid.columns = 1
@@ -34,7 +39,8 @@ func _ready() -> void:
 	_setup_item_slots()
 	
 	# Подключаем сигналы инвентаря
-	InventoryManager.inventory_updated.connect(_on_inventory_updated)
+	if InventoryManager.has_signal("inventory_updated"):
+		InventoryManager.inventory_updated.connect(_on_inventory_updated)
 	
 	# Визуальное выделение первого элемента
 	_update_visual_focus()
@@ -111,6 +117,9 @@ func _setup_weapon_slots() -> void:
 	var slot = _create_slot()
 	weapon_grid.add_child(slot)
 	weapon_slots.append(slot)
+	
+	# Подключаем наведение мыши
+	slot.mouse_entered.connect(_on_weapon_slot_hovered.bind(0))
 
 
 func _setup_item_slots() -> void:
@@ -120,10 +129,14 @@ func _setup_item_slots() -> void:
 	item_slots.clear()
 	
 	# Создаём 9 слотов для прочих предметов (индексы 1-9 в инвентаре)
-	for i in range(1, InventoryManager.inventory_size):
+	for i in range(1, 10):  # InventoryManager.inventory_size если доступен
 		var slot = _create_slot()
 		items_grid.add_child(slot)
 		item_slots.append(slot)
+		
+		# Подключаем наведение мыши
+		var slot_index = item_slots.size() - 1
+		slot.mouse_entered.connect(_on_item_slot_hovered.bind(slot_index))
 
 
 func _update_slot_display(slot: Control, inventory_index: int, show_count: bool = true) -> void:
@@ -337,10 +350,10 @@ func _execute_button_action(button: Button) -> void:
 	match button.name:
 		"Resume":
 			_on_resume_pressed()
-		"LoadButton", "Button2":
+		"Button2":
 			print("Загрузка...")
-		"SettingsButton", "Button3":
-			print("Настройки...")
+		"SettingsButton":
+			_on_settings_pressed()
 		"QuitButton":
 			get_tree().quit()
 
@@ -353,6 +366,16 @@ func _on_resume_pressed() -> void:
 	GameManager.is_paused = false
 	get_tree().paused = false
 
+func _on_settings_pressed() -> void:
+	hide() # Прячем текущее меню
+	
+	var settings_menu = settings_menu_scene.instantiate()
+	get_tree().root.add_child(settings_menu)
+	
+	settings_menu.settings_closed.connect(_on_settings_closed)
+
+func _on_settings_closed() -> void:
+	show() # Показываем меню обратно
 
 func refresh_inventory() -> void:
 	_update_slot_display(weapon_slots[0], WEAPON_SLOT_INDEX, false)

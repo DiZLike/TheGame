@@ -18,7 +18,7 @@ texture = ExtResource("2_gh2gh")
 shape = SubResource("RectangleShape2D_vu010")
 
 [node name="TopLimit" type="Node2D" parent="." unique_id=1824889343]
-position = Vector2(0, -75)
+position = Vector2(0, -50)
 
 [node name="BottomLimit" type="Node2D" parent="." unique_id=1417211984]
-position = Vector2(0, 75)
+position = Vector2(0, 50)

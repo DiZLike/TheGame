@@ -62,19 +62,21 @@ func _on_body_entered(body: Node2D) -> void:
 	if _is_queued_for_deletion:
 		return
 	
-	# Проверка на стрелка
 	if not can_hit_shooter and body == shooter:
 		return
 	
-	# Обработка попадания во врага
-	if body.is_in_group("enemy") or body.is_in_group("capsules") and body.has_method("on_hit"):
-		body.on_hit(damage, bullet_type)
-		_on_hit_enemy(body)  # Хук для дочерних классов
-		_queue_free()
+	var is_valid_target = body.is_in_group("enemy") or body.is_in_group("capsules")
+	if not (is_valid_target and body.has_method("on_hit")):
+		_on_other_collision(body)
 		return
 	
-	# Обработка других коллизий
-	_on_other_collision(body)
+	# Проверка уязвимости
+	if body.has_method("get_is_vulnerable") and not body.get_is_vulnerable():
+		return
+	
+	body.on_hit(damage, bullet_type)
+	_on_hit_enemy(body)
+	_queue_free()
 
 # ============================================
 # ВЫХОД ЗА ЭКРАН

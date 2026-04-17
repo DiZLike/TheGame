@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://47bfov555uuo"]
+
+[ext_resource type="Shader" uid="uid://s0enxa3j08yw" path="res://shaders/glitch_new.gdshader" id="1_6akbx"]
+[ext_resource type="Script" uid="uid://b2q55lhe4dsmq" path="res://scenes/effects/glitch_effect.gd" id="2_mgsd1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mgsd1"]
+shader = ExtResource("1_6akbx")
+shader_parameter/intensity = 0.06
+shader_parameter/speed = 6.0
+shader_parameter/block_size = 15.0
+shader_parameter/rgb_split_horizontal = 0.01
+shader_parameter/rgb_split_vertical = -0.03
+
+[node name="GlitchEffect" type="ColorRect" unique_id=331320997]
+material = SubResource("ShaderMaterial_mgsd1")
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_mgsd1")

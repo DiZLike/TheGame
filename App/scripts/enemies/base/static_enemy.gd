@@ -10,9 +10,9 @@ class_name StaticEnemy
 # ============================================
 
 # === НАСТРОЙКИ АТАКИ ===
-@export var attack_interval: float = 2.5      # Интервал между атаками
-@export var attack_delay: float = 0.4         # Задержка между выстрелами в серии
-@export var attacks_per_cycle: int = 1        # Количество атак за цикл
+@export_range(0, 10) var attack_interval: float = 2.5      # Интервал между атаками
+@export_range(0, 10) var attack_delay: float = 0.4         # Задержка между выстрелами в серии
+@export_range(0, 10) var attacks_per_cycle: int = 1        # Количество атак за цикл
 @export var attack_on_first_appearance: bool = true  # Атаковать сразу при появлении
 
 # === СОСТОЯНИЯ АТАКИ ===
@@ -25,6 +25,16 @@ var attack_timer: Timer                       # Таймер для интерв
 # ============================================
 # НАСТРОЙКА
 # ============================================
+func _ready() -> void:
+	# Устанавливаем параметры ДО вызова родительского _ready()
+	_movement_type = "rotate"     # Поворачивается к игроку
+	if attacks_per_cycle > 1:
+		_attack_pattern = "burst"
+		burst_bonus = attacks_per_cycle * 10
+	else:
+		_attack_pattern = "single"
+	super._ready()
+
 
 func _setup_components() -> void:
 	"""
@@ -70,7 +80,8 @@ func _on_deactivate() -> void:
 	
 	# Возвращаемся к idle анимации
 	if not _is_exploding and animated_sprite:
-		animated_sprite.play("idle")
+		if animated_sprite.sprite_frames.has_animation("idle"):
+			animated_sprite.play("idle")
 
 
 # ============================================
@@ -149,7 +160,8 @@ func _perform_attack() -> void:
 	if animated_sprite and not _is_exploding:
 		await get_tree().create_timer(0.3).timeout
 		if not _is_exploding and _is_attacking:
-			animated_sprite.play("idle")
+			if animated_sprite.sprite_frames.has_animation("idle"):
+				animated_sprite.play("idle")
 	
 	_is_currently_attacking = false
 

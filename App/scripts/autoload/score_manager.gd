@@ -10,3 +10,7 @@ func add_score(add: int) -> int:
 	
 func get_score() -> int:
 	return score
+
+func reset_score() -> int:
+	score = 0
+	return score

@@ -17,16 +17,10 @@ func _ready() -> void:
 	animated_sprite = $Turret/TurretSprite
 	
 	# Устанавливаем параметры для расчёта score
-	health = 60
 	_attack_pattern = "burst"     # Серия из 2 выстрелов
 	_movement_type = "rotate"     # Поворачивается, но стоит на месте
 	
-	# Параметры атаки
-	attack_interval = 2.3
-	attack_delay = 0.3
-	attacks_per_cycle = 2
-	attack_on_first_appearance = true
-	explosion_force = 50.0
+
 	
 	super._ready()
 	

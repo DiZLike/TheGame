@@ -24,16 +24,18 @@ const SCORE_ATTACK_PATTERN_BONUS: Dictionary = {
 	"none": 0,                                  # Нет атаки
 	"single": 50,                               # Одиночный выстрел
 	"burst": 100,                               # Серия выстрелов (турель)
-	"spread": 150,                              # Веер/разброс (MG)
+	"spread": 150,                              # Веер/разброс
 	"homing": 200,                              # Самонаводящиеся
 }
 const SCORE_MOVEMENT_BONUS: Dictionary = {
 	"none": 0,
-	"rotate": 30,                               # Поворачивается к игроку
-	"move": 60,                                 # Ходит по платформам
-	"fly": 90,                                  # Летает
+	"fixed_rotate": 30,
+	"rotate": 50,                               # Поворачивается к игроку
+	"move": 80,                                 # Ходит по платформам
+	"fly": 120,                                  # Летает
 }
 const SCORE_ROUND_STEP: int = 50               # Шаг округления
+var burst_bonus: int = 0
 
 # === ХАРАКТЕРИСТИКИ ДЛЯ РАСЧЁТА (переопределяются в дочерних классах) ===
 var _attack_pattern: String = "none"           # "none", "single", "burst", "spread", "homing"
@@ -125,6 +127,7 @@ func calculate_score() -> int:
 	
 	# Бонус за сложность паттерна атаки
 	raw_score += SCORE_ATTACK_PATTERN_BONUS.get(_attack_pattern, 0)
+	raw_score += burst_bonus
 	
 	# Бонус за подвижность (сложнее попасть)
 	raw_score += SCORE_MOVEMENT_BONUS.get(_movement_type, 0)

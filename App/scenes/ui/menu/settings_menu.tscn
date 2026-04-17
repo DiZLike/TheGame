@@ -1,10 +1,12 @@
 [gd_scene format=3 uid="uid://b5ov5ben0hiwy"]
 
 [ext_resource type="Script" uid="uid://30ojuiupye6y" path="res://scenes/ui/menu/settings_menu.gd" id="1_2ce8l"]
-[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="1_154di"]
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="1_font"]
+[ext_resource type="Texture2D" uid="uid://cxyvokmb6iyd5" path="res://backgrounds/image-9.png" id="2_v5t0p"]
+[ext_resource type="PackedScene" uid="uid://47bfov555uuo" path="res://scenes/effects/glitch_effect.tscn" id="3_r6134"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_154di"]
-bg_color = Color(0.101960786, 0.101960786, 0.101960786, 0.8980392)
+[sub_resource type="StyleBoxFlat" id="PanelStyle"]
+bg_color = Color(0.102, 0.102, 0.102, 0.898)
 border_width_left = 1
 border_width_top = 1
 border_width_right = 1
@@ -14,179 +16,212 @@ corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
-anti_aliasing = false
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_2ce8l"]
+[sub_resource type="StyleBoxEmpty" id="ButtonNormal"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_v5t0p"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_r6134"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7dygt"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ju2tb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_mbo8v"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_a87yb"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_78tyd"]
+[sub_resource type="StyleBoxEmpty" id="ButtonHover"]
 
 [node name="SettingsMenu" type="CanvasLayer" unique_id=472358300]
 layer = 128
 script = ExtResource("1_2ce8l")
 
-[node name="ColorRect" type="ColorRect" parent="." unique_id=994241840]
+[node name="ColorRect" type="TextureRect" parent="." unique_id=316161569]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("2_v5t0p")
+
+[node name="GlitchEffect" parent="ColorRect" unique_id=331320997 instance=ExtResource("3_r6134")]
+z_index = -1
+layout_mode = 0
+offset_right = 1287.0
+offset_bottom = 727.0
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=52554842]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -225.0
+offset_right = 250.0
+offset_bottom = 225.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 2
-color = Color(0, 0, 0, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="." unique_id=294604282]
-offset_right = 500.0
-offset_bottom = 450.0
+size_flags_vertical = 2
 theme_override_constants/margin_left = 30
-theme_override_constants/margin_top = 30
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
 
-[node name="SettingsPanel" type="Panel" parent="MarginContainer" unique_id=1593842177]
+[node name="SettingsPanel" type="Panel" parent="MarginContainer" unique_id=421881689]
 custom_minimum_size = Vector2(500, 450)
 layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_154di")
+theme_override_styles/panel = SubResource("PanelStyle")
 
-[node name="PanelMargin" type="MarginContainer" parent="MarginContainer/SettingsPanel" unique_id=717519318]
+[node name="PanelMargin" type="MarginContainer" parent="MarginContainer/SettingsPanel" unique_id=434435882]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 20
-theme_override_constants/margin_bottom = 20
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
 
-[node name="MainVBox" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin" unique_id=1756966535]
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin" unique_id=936771754]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=86632588]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 15
+text = "НАСТРОЙКИ"
+horizontal_alignment = 1
+
+[node name="TopSeparator" type="HSeparator" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=741384975]
+layout_mode = 2
+
+[node name="VolumeContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=2047979667]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="MasterContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer" unique_id=1461632907]
+layout_mode = 2
+
+[node name="MasterLabel" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer" unique_id=970137893]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+text = "ГРОМКОСТЬ"
+
+[node name="MasterHBox" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer" unique_id=1348450243]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="Title" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=1275269923]
+[node name="MasterSlider" type="HSlider" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer/MasterHBox" unique_id=718739140]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+value = 80.0
+
+[node name="MasterValue" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterContainer/MasterHBox" unique_id=161924420]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.8, 0, 1)
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 20
-text = "Настройки"
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+text = "80%"
+horizontal_alignment = 2
 
-[node name="Separator" type="HSeparator" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=1296630909]
+[node name="SFXContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer" unique_id=1888270007]
 layout_mode = 2
 
-[node name="VolumeContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=269627356]
+[node name="SFXLabel" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer" unique_id=41965947]
 layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+text = "ЗВУКИ"
 
-[node name="MasterLabel" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer" unique_id=971695978]
+[node name="SFXHBox" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer" unique_id=475246973]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 16
-text = "Громкость"
+theme_override_constants/separation = 10
 
-[node name="MasterHBox" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer" unique_id=1350648127]
-layout_mode = 2
-
-[node name="MasterSlider" type="HSlider" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterHBox" unique_id=1751649444]
+[node name="SFXSlider" type="HSlider" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer/SFXHBox" unique_id=2085969853]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 value = 80.0
 
-[node name="MasterValue" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MasterHBox" unique_id=205538237]
+[node name="SFXValue" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/SFXContainer/SFXHBox" unique_id=1756111477]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
 text = "80%"
+horizontal_alignment = 2
 
-[node name="SFXContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=668160131]
+[node name="MusicContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer" unique_id=385716667]
 layout_mode = 2
 
-[node name="SFXLabel" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer" unique_id=1541385644]
+[node name="MusicLabel" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer" unique_id=956511050]
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 16
-text = "Звуки"
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+text = "МУЗЫКА"
 
-[node name="SFXHBox" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer" unique_id=400199014]
+[node name="MusicHBox" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer" unique_id=1415044465]
 layout_mode = 2
+theme_override_constants/separation = 10
 
-[node name="SFXSlider" type="HSlider" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer/SFXHBox" unique_id=362223374]
+[node name="MusicSlider" type="HSlider" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer/MusicHBox" unique_id=767551832]
 layout_mode = 2
 size_flags_horizontal = 3
 mouse_filter = 2
 value = 80.0
 
-[node name="SFXValue" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/SFXContainer/SFXHBox" unique_id=591474274]
+[node name="MusicValue" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/VolumeContainer/MusicContainer/MusicHBox" unique_id=774101064]
+custom_minimum_size = Vector2(40, 0)
 layout_mode = 2
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 14
+theme_override_colors/font_color = Color(1, 0.8, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
 text = "80%"
+horizontal_alignment = 2
 
-[node name="MusicContainer" type="VBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=1837458116]
+[node name="MiddleSeparator" type="HSeparator" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=599232779]
 layout_mode = 2
 
-[node name="MusicLabel" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer" unique_id=723299881]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 16
-text = "Музыка"
-
-[node name="MusicHBox" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer" unique_id=511243451]
-layout_mode = 2
-
-[node name="MusicSlider" type="HSlider" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer/MusicHBox" unique_id=840479440]
+[node name="ControlsButton" type="Button" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=758828797]
+custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
-mouse_filter = 2
-value = 80.0
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "УПРАВЛЕНИЕ"
 
-[node name="MusicValue" type="Label" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/MusicContainer/MusicHBox" unique_id=551001942]
-layout_mode = 2
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 14
-text = "80%"
-
-[node name="Spacer" type="Control" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=1936728420]
+[node name="MainSpacer" type="Control" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=1229049497]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="ControlsButton" type="Button" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=162307994]
+[node name="BottomSeparator" type="HSeparator" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=1225938600]
 layout_mode = 2
-focus_mode = 0
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxEmpty_2ce8l")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_v5t0p")
-text = "Управление"
-alignment = 0
 
-[node name="ButtonsContainer" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=382108380]
+[node name="NavigationButtons" type="HBoxContainer" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox" unique_id=2021007404]
 layout_mode = 2
+size_flags_horizontal = 0
 theme_override_constants/separation = 20
 
-[node name="BackButton" type="Button" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/ButtonsContainer" unique_id=1215833102]
+[node name="BackButton" type="Button" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/NavigationButtons" unique_id=503395177]
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = SubResource("StyleBoxEmpty_r6134")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_7dygt")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_ju2tb")
-text = "Назад"
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "НАЗАД"
 
-[node name="ApplyButton" type="Button" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/ButtonsContainer" unique_id=1910465644]
+[node name="ApplyButton" type="Button" parent="MarginContainer/SettingsPanel/PanelMargin/MainVBox/NavigationButtons" unique_id=1607998172]
 layout_mode = 2
+size_flags_horizontal = 3
 focus_mode = 0
-theme_override_fonts/font = ExtResource("1_154di")
-theme_override_styles/normal = SubResource("StyleBoxEmpty_mbo8v")
-theme_override_styles/hover = SubResource("StyleBoxEmpty_a87yb")
-theme_override_styles/focus = SubResource("StyleBoxEmpty_78tyd")
-text = "Применить"
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormal")
+theme_override_styles/hover = SubResource("ButtonHover")
+text = "ПРИМЕНИТЬ"

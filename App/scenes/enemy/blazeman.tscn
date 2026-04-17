@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bx1q1xd1k27dd"]
 
-[ext_resource type="Script" uid="uid://dtltwvj453u0p" path="res://scripts/enemies/mg_enemy_1.gd" id="1_hh53n"]
-[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/enemy_1/spritesheet.png" id="1_xn6gf"]
+[ext_resource type="Script" uid="uid://dtltwvj453u0p" path="res://scripts/enemies/blazeman.gd" id="1_hh53n"]
+[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/blazeman/spritesheet.png" id="1_xn6gf"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hh53n"]
 atlas = ExtResource("1_xn6gf")
@@ -47,7 +47,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y0han"]
 size = Vector2(23, 29)
 
-[node name="MGEnemy 1" type="CharacterBody2D" unique_id=1539012725 groups=["enemy"]]
+[node name="Blaze Man" type="CharacterBody2D" unique_id=1539012725 groups=["enemy"]]
 z_index = 10
 collision_layer = 4
 script = ExtResource("1_hh53n")

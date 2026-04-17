@@ -17,7 +17,7 @@ class BindingItem:
 
 # UI элементы
 @onready var controls_panel: Panel = $MarginContainer/ControlsPanel
-@onready var color_rect: ColorRect = $ColorRect
+@onready var color_rect: TextureRect = $ColorRect
 @onready var actions_list: VBoxContainer = $MarginContainer/ControlsPanel/PanelMargin/MainVBox/ActionsList
 
 @onready var reset_keyboard_button: Button = $MarginContainer/ControlsPanel/PanelMargin/MainVBox/BottomActions/ResetKeyboardButton
@@ -84,7 +84,8 @@ func _create_action_items() -> void:
 		InputManager.InputAction.MENU
 	]
 	
-	var font = load("res://data/fonts/PressStart2P-Regular.ttf")
+	var font1 = load("res://data/fonts/thin_pixel-7.ttf")
+	var font2 = load("res://data/fonts/LCD5x8HRU.ttf")
 	
 	for action in actions:
 		var display_name = InputManager.get_action_display_name(action)
@@ -97,8 +98,8 @@ func _create_action_items() -> void:
 		# Название действия
 		var name_label = Label.new()
 		name_label.text = item.display_name
-		name_label.add_theme_font_override("font", font)
-		name_label.add_theme_font_size_override("font_size", 14)
+		name_label.add_theme_font_override("font", font1)
+		name_label.add_theme_font_size_override("font_size", 35)
 		name_label.add_theme_color_override("font_color", Color.WHITE)
 		name_label.size_flags_horizontal = Control.SIZE_EXPAND
 		name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_LEFT
@@ -110,13 +111,13 @@ func _create_action_items() -> void:
 		spacer.size_flags_horizontal = Control.SIZE_EXPAND
 		
 		# Панель для клавиши
-		var key_panel = _create_binding_panel(font)
+		var key_panel = _create_binding_panel(font2)
 		var key_value_label = key_panel.get_child(0)
 		key_value_label.add_theme_color_override("font_color", Color(1, 0.8, 0))
 		item.key_value_label = key_value_label
 		
 		# Панель для геймпада
-		var gamepad_panel = _create_binding_panel(font)
+		var gamepad_panel = _create_binding_panel(font2)
 		var gamepad_value_label = gamepad_panel.get_child(0)
 		gamepad_value_label.add_theme_color_override("font_color", Color(0.4, 0.8, 1))
 		item.gamepad_value_label = gamepad_value_label
