@@ -41,6 +41,10 @@ func _apply_easing_curve(value: float) -> float:
 	return value
 
 func _physics_process(delta: float) -> void:
+	# В редакторе не двигаем платформы
+	if Engine.is_editor_hint():
+		return
+	
 	if not is_active or is_disabled:
 		return
 	

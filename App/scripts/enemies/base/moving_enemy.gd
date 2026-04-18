@@ -16,7 +16,7 @@ const GRAVITY: float = 700.0
 @export var jump_velocity: float = -175.0    # Сила прыжка
 
 # === НАПРАВЛЕНИЕ ДВИЖЕНИЯ ===
-enum Direction { LEFT, RIGHT }
+enum Direction { LEFT, RIGHT, UP, DOWN }
 @export var move_direction: Direction = Direction.RIGHT
 
 # === КОМПОНЕНТЫ ===

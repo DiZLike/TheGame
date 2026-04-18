@@ -52,6 +52,7 @@ capsules=""
 immortal_enemy=""
 enemy_bullet=""
 weapon_pickup=""
+terrain_deadly=""
 
 [input]
 
@@ -459,6 +460,7 @@ menu={
 2d_physics/layer_7="flying_capsules"
 2d_physics/layer_8="border"
 2d_physics/layer_9="enemy_immortal"
+2d_physics/layer_10="terrain_deadly"
 
 [physics]
 

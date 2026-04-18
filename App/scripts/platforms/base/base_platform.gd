@@ -14,6 +14,13 @@ var is_active: bool = true
 var is_disabled: bool = false
 
 func _ready() -> void:
+	if Engine.is_editor_hint():
+		# В редакторе только отображаем спрайт
+		if sprite:
+			sprite.visible = is_visible_on_start
+			_modulate_sprite(platform_color)
+		return
+	
 	if sprite:
 		sprite.visible = is_visible_on_start
 		_modulate_sprite(platform_color)

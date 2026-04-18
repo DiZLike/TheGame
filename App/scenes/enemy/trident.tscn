@@ -50,6 +50,9 @@ z_index = 10
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("1_047yn")
+up_angle_threshold = 75.0
+down_angle_threshold = 75.0
+health = 1
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1462270764]
 position = Vector2(0, 4)

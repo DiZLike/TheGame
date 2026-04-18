@@ -36,6 +36,7 @@ animations = [{
 
 [node name="SchoolboySpawner" type="Node2D" unique_id=146069070]
 script = ExtResource("1_23stf")
+enemy_scene = null
 spawn_delay = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]

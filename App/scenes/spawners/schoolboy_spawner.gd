@@ -1,17 +1,11 @@
 @tool
 extends Node2D
 
-enum SpawnDirection {
-	ALL,        # Все стороны
-	LEFT,       # Только левая сторона
-	RIGHT,      # Только правая сторона
-	TOP,        # Только верхняя сторона
-	BOTTOM,     # Только нижняя сторона
-}
+enum SpawnDirection { ALL, LEFT, RIGHT, TOP, BOTTOM }
 
-@export var enemy_scene: PackedScene
 @export var on_shot: bool = false
-@export var spawn_delay: float = 2.0
+@export var spawn_delay: float = 0
+@export var max_enemies: int = 1
 @export var allowed_direction: SpawnDirection = SpawnDirection.ALL:
 	set(value):
 		allowed_direction = value
@@ -20,171 +14,130 @@ enum SpawnDirection {
 
 @onready var arrow: AnimatedSprite2D = $Arrow
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var enemy_scene = preload("res://scenes/enemy/schoolboy.tscn")
+@onready var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 var is_on_screen: bool = false
 var is_spawned: bool = false
-var spawn_timer: float = 0.0
+var can_spawn: bool = true  # <-- новый флаг: можно ли спавнить при входе
+var spawned_enemies: Array = []
+var current_enemy_count: int:
+	get:
+		return spawned_enemies.filter(func(e): return is_instance_valid(e)).size()
 
 func _ready():
-	# В игре скрываем визуальные элементы, но оставляем функционал
 	if not Engine.is_editor_hint():
-		if arrow:
-			arrow.visible = false
-		if sprite:
-			sprite.visible = false
-	
-	if Engine.is_editor_hint():
-		# В редакторе ждём немного, чтобы узлы успели загрузиться
-		await get_tree().process_frame
+		if arrow: arrow.visible = false
+		if sprite: sprite.visible = false
 		update_arrow_direction()
+		
+		# Подключаем сигнал вручную, если не подключен через редактор
+		if visibility_notifier:
+			if not visibility_notifier.screen_entered.is_connected(_on_visible_on_screen_notifier_2d_screen_entered):
+				visibility_notifier.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
+			if not visibility_notifier.screen_exited.is_connected(_on_visible_on_screen_notifier_2d_screen_exited):
+				visibility_notifier.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
 	else:
-		# В игре обновляем направление без визуальных эффектов
+		await get_tree().process_frame
 		update_arrow_direction()
 
 func update_arrow_direction():
-	if not arrow:
-		return
+	if not arrow: return
 	
-	# В редакторе показываем стрелку, в игре - нет
-	if Engine.is_editor_hint():
-		arrow.visible = true
-	else:
-		arrow.visible = false
-	
-	# Сбрасываем предыдущие трансформации
+	arrow.visible = Engine.is_editor_hint()
 	arrow.rotation = 0
 	arrow.scale = Vector2(1, 1)
 	
 	match allowed_direction:
-		SpawnDirection.LEFT:
-			arrow.scale = Vector2(-1, 1)  # Зеркалим по горизонтали (влево)
-		SpawnDirection.RIGHT:
-			arrow.scale = Vector2(1, 1)   # Обычное направление (вправо)
-		SpawnDirection.TOP:
-			arrow.rotation = deg_to_rad(-90)  # Поворот вверх
-		SpawnDirection.BOTTOM:
-			arrow.rotation = deg_to_rad(90)   # Поворот вниз
-		SpawnDirection.ALL:
-			arrow.scale = Vector2(1, 1)       # Стандартное направление
-			arrow.rotation = 0
-
-func _process(delta):
-	if is_on_screen:
-		spawn_timer += delta
-		if spawn_timer >= spawn_delay:
-			spawn_enemy()
-			spawn_timer = 0.0
+		SpawnDirection.LEFT:   arrow.scale = Vector2(-1, 1)
+		SpawnDirection.TOP:    arrow.rotation = deg_to_rad(-90)
+		SpawnDirection.BOTTOM: arrow.rotation = deg_to_rad(90)
 
 func get_spawn_side_from_camera() -> String:
 	var camera = get_viewport().get_camera_2d()
-	if not camera:
-		return "unknown"
+	if not camera: return "unknown"
 	
-	var camera_pos = camera.global_position
-	var spawn_pos = global_position
+	var diff = global_position - camera.global_position
 	
-	# Определяем разницу позиций
-	var diff_x = spawn_pos.x - camera_pos.x
-	var diff_y = spawn_pos.y - camera_pos.y
-	
-	# Для горизонтальных направлений (LEFT, RIGHT, HORIZONTAL) - игнорируем Y
 	match allowed_direction:
 		SpawnDirection.LEFT, SpawnDirection.RIGHT:
-			if diff_x < 0:
-				return "left"
-			else:
-				return "right"
-		
+			return "left" if diff.x < 0 else "right"
 		SpawnDirection.TOP, SpawnDirection.BOTTOM:
-			if diff_y < 0:
-				return "top"
-			else:
-				return "bottom"
-		
+			return "top" if diff.y < 0 else "bottom"
 		SpawnDirection.ALL:
-			# Определяем по максимальному отклонению
-			if abs(diff_x) > abs(diff_y):
-				return "left" if diff_x < 0 else "right"
-			else:
-				return "top" if diff_y < 0 else "bottom"
-	
+			if abs(diff.x) > abs(diff.y):
+				return "left" if diff.x < 0 else "right"
+			return "top" if diff.y < 0 else "bottom"
 	return "unknown"
 
 func check_spawn_allowed() -> bool:
 	var side = get_spawn_side_from_camera()
-	
 	match allowed_direction:
-		SpawnDirection.LEFT:
-			return side == "left"
-		SpawnDirection.RIGHT:
-			return side == "right"
-		SpawnDirection.TOP:
-			return side == "top"
-		SpawnDirection.BOTTOM:
-			return side == "bottom"
-		SpawnDirection.ALL:
-			return true
-	
+		SpawnDirection.LEFT:   return side == "left"
+		SpawnDirection.RIGHT:  return side == "right"
+		SpawnDirection.TOP:    return side == "top"
+		SpawnDirection.BOTTOM: return side == "bottom"
+		SpawnDirection.ALL:    return true
 	return false
 
-func get_enemy_direction(side: String):
-	# Определяем направление движения врага в зависимости от стороны спавна
+func get_enemy_direction(side: String) -> String:
 	match side:
-		"left":
-			return "right"  # Слева - бежит направо
-		"right":
-			return "left"   # Справа - бежит налево
-		"top":
-			return "right"  # Сверху - бежит направо (или можно random)
-		"bottom":
-			return "right"  # Снизу - бежит направо
-		_:
-			return "right"
+		"left": return "right"
+		"right": return "left"
+		"top", "bottom": return "right"
+		_: return "right"
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
-	var side = get_spawn_side_from_camera()
+	if not check_spawn_allowed():
+		return
 	
-	if check_spawn_allowed():
-		is_on_screen = true
-		spawn_timer = 0.0
+	is_on_screen = true
+	
+	# Спавним только если можно и не заспавнено
+	if can_spawn and not is_spawned and current_enemy_count < max_enemies:
+		if spawn_delay > 0:
+			await get_tree().create_timer(spawn_delay).timeout
+			# Проверяем, что спавнер всё ещё на экране после задержки
+			if not is_on_screen:
+				return
+		
+		spawn_enemy()
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	is_on_screen = false
+	
 	if not on_shot:
 		is_spawned = false
+		can_spawn = true  # <-- разрешаем спавн при следующем входе
+		cleanup_invalid_enemies()
+
+func cleanup_invalid_enemies():
+	spawned_enemies = spawned_enemies.filter(func(e): return is_instance_valid(e))
 
 func spawn_enemy():
-	if not enemy_scene:
-		print("Ошибка: enemy_scene не назначен!")
+	if not is_on_screen or is_spawned or current_enemy_count >= max_enemies:
 		return
-	if is_spawned:
-		return
+	
 	is_spawned = true
+	can_spawn = false  # <-- запрещаем повторный спавн, пока не выйдем с экрана
+	
 	var enemy = enemy_scene.instantiate()
-	
-	# Определяем сторону спавна и задаем направление врагу
-	var side = get_spawn_side_from_camera()
-	var direction = get_enemy_direction(side)
-	
-	# Устанавливаем направление движения врага
-	if enemy.has_method("set_move_direction"):
-		enemy.set_move_direction(direction)
-	elif enemy.has_method("change_direction"):
-		# Альтернативный вариант
-		if direction == "left" and enemy.move_direction == enemy.Direction.RIGHT:
-			enemy.change_direction()
-		elif direction == "right" and enemy.move_direction == enemy.Direction.LEFT:
-			enemy.change_direction()
-	else:
-		# Прямое присвоение свойства
-		enemy.move_direction = {
-			"left": enemy.Direction.LEFT,
-			"right": enemy.Direction.RIGHT,
-			"up": enemy.Direction.UP,
-			"down": enemy.Direction.DOWN,
-		}.get(direction, enemy.Direction.RIGHT)
-	
-	var spawn_position = global_position
-	
-	enemy.global_position = spawn_position
+	enemy.global_position = global_position
 	get_tree().current_scene.add_child(enemy)
+	
+	spawned_enemies.append(enemy)
+	enemy.tree_exited.connect(_on_enemy_destroyed.bind(enemy))
+	
+	if allowed_direction == SpawnDirection.LEFT:
+		enemy.set_move_direction("right")
+	
+	cleanup_invalid_enemies()
+	if on_shot:
+		queue_free()
+
+func _on_enemy_destroyed(enemy):
+	spawned_enemies.erase(enemy)
+	cleanup_invalid_enemies()
+	
+	# ВАЖНО: не сбрасываем can_spawn здесь!
+	# Спавнер должен дождаться выхода с экрана, чтобы снова спавнить

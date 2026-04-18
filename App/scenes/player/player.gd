@@ -266,6 +266,8 @@ func _on_area_2d_body_entered(body: Node2D) -> void:
 	if body.is_in_group("enemy") or body.is_in_group("immortal_enemy"):
 		if not is_invincible and not is_respawning:
 			take_damage()
+	elif body.is_in_group("terrain_deadly"):
+		take_damage()
 func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_bullet"):
 		if not is_invincible and not is_respawning:
@@ -374,3 +376,7 @@ func force_respawn():
 	# Принудительно запускает возрождение (например, при падении в пропасть)
 	if not is_respawning:
 		start_respawn()
+
+
+func _on_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
+	pass # Replace with function body.
