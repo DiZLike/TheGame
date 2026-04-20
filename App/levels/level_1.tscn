@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://3f6hhl2wbrpq"]
 
 [ext_resource type="Script" uid="uid://cadu8j7xxr0rj" path="res://levels/level_1.gd" id="1_bt44k"]
-[ext_resource type="AudioStream" uid="uid://c1024om7n572h" path="res://data/audio/music/temp/TheGame - Track 07.ogg" id="2_5ot28"]
+[ext_resource type="AudioStream" uid="uid://bydetr14ap8ib" path="res://data/audio/music/temp/Track 52.mp3" id="2_0fu15"]
 [ext_resource type="PackedScene" uid="uid://bjklp0s2pk6fb" path="res://scenes/player/player.tscn" id="2_jirdo"]
 [ext_resource type="PackedScene" uid="uid://brjseglgmb5bk" path="res://scenes/bugs/glitch_layer.tscn" id="2_kx6l7"]
 [ext_resource type="PackedScene" uid="uid://cqi2vqepj10lg" path="res://scenes/ui/dialogue_box.tscn" id="2_l53as"]
@@ -753,7 +753,7 @@ sources/0 = SubResource("TileSetAtlasSource_ntdhj")
 
 [node name="Level1" type="Node2D" unique_id=871521492]
 script = ExtResource("1_bt44k")
-level_music = ExtResource("2_5ot28")
+level_music = ExtResource("2_0fu15")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1121407613]
 layer = 10
@@ -1078,7 +1078,7 @@ up_angle_threshold = 60.0
 down_angle_threshold = 60.0
 
 [node name="Player" parent="." unique_id=1043132733 instance=ExtResource("2_jirdo")]
-position = Vector2(2829, 1106)
+position = Vector2(135, 398)
 
 [node name="CameraBorders" type="Node2D" parent="." unique_id=362354054]
 

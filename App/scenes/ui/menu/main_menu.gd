@@ -7,11 +7,14 @@ extends CanvasLayer
 @onready var settings_button: Button = $Panel/MainLayout/LeftPanel/ButtonsContainer/Settings
 @onready var quit_button: Button = $Panel/MainLayout/LeftPanel/ButtonsContainer/QuitButton
 
+@export var menu_music: AudioStream
+
 var buttons: Array[Button] = []
 var current_button_index: int = 0
 var settings_menu_scene = preload("res://scenes/ui/menu/settings_menu.tscn")
 
 func _ready() -> void:
+	AudioManager.set_music(menu_music)
 	# Собираем кнопки
 	for child in buttons_container.get_children():
 		if child is Button:

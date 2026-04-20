@@ -1,4 +1,5 @@
 <Solution>
   <Project Path="DialogEditor/DialogEditor.csproj" />
+  <Project Path="NesDpcmConverter/NesDpcmConverter.csproj" Id="91860f7f-2e28-4a27-89c8-3dea5773bd40" />
   <Project Path="SpritePacker/SpritePacker.csproj" />
 </Solution>

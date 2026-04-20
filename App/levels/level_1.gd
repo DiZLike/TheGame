@@ -9,12 +9,15 @@ extends Node2D
 @onready var player = $Player
 @onready var lives_panel = $UI/LivesPanel
 
+var ambient_jungle = preload("res://data/audio/ambient/01395_nes.wav")
+
 func _ready() -> void:
 	if dialogue_box:
 		dialogue_box.method_executed.connect(_on_dialogue_method_executed)
 		dialogue_box.dialogue_finished.connect(_on_dialogue_finished)
 	# Запускаем музыку уровня
-	AudioManager.set_music(level_music)
+	AudioManager.stop_music()
+	AudioManager.set_music(ambient_jungle)
 
 @warning_ignore("unused_parameter")
 func _process(delta: float) -> void:
@@ -96,3 +99,5 @@ func _01_2_activate():
 
 func weapon_training_enable():
 	GameManager.dialogue_trig["weapon_training_enable"] = true
+	AudioManager.stop_music()
+	AudioManager.set_music(level_music)

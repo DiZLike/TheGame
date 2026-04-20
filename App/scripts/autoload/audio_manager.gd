@@ -67,6 +67,7 @@ func _setup_players() -> void:
 	music_player = AudioStreamPlayer.new()
 	music_player.name = "MusicPlayer"
 	music_player.bus = MUSIC_BUS
+	music_player.finished.connect(_on_music_finished)
 	add_child(music_player)
 	
 	# UI плеер (отдельный, чтобы не конфликтовал с SFX)
@@ -83,6 +84,9 @@ func _setup_players() -> void:
 		add_child(player)
 		sfx_pool.append(player)
 
+func _on_music_finished() -> void:
+	if music_player.stream and current_music:
+		music_player.play()
 
 # === ВНУТРЕННИЕ МЕТОДЫ ОБНОВЛЕНИЯ ГРОМКОСТИ ===
 
