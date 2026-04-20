@@ -1,0 +1,55 @@
+{
+  "Dialogues": [
+	{
+	  "Id": "d1",
+	  "Speaker": "Алекс",
+	  "Text": "Фух. Уничтожены. Твои расчеты, Null?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d2",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d2",
+	  "Speaker": "Null",
+	  "Text": "Мои. С погрешностью в 0.001 пикселя. Ты чуть не промазал по верхнему из-за своей манеры дергаться в воздухе. Но засчитано.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d3",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d3",
+	  "Speaker": "Алекс",
+	  "Text": "Погнали дальше, пока тут новые баги не выросли.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d4",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d4",
+	  "Speaker": "Null",
+	  "Text": "Погнали. Я вижу ещё аномалии впереди. Но это уже следующий разрыв. Там будет интереснее. Или нет. Я же Null. Мне без разницы.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "end",
+	  "GlitchEnabled": true
+	}
+  ],
+  "Metadata": {
+	"Chapter": 1,
+	"Level": "1-1",
+	"Title": "Corrupted Jungle — Barrier Puzzle",
+	"Background": "res://assets/backgrounds/jungle_corrupted.png",
+	"Music": "res://assets/music/level_theme.ogg"
+  }
+}

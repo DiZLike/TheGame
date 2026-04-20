@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cqi2vqepj10lg"]
 
 [ext_resource type="Script" uid="uid://d3ca4aphcc5sr" path="res://scenes/ui/dialogue_box.gd" id="1_xg44k"]
-[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/glitch/glitch_area.tscn" id="2_6iboe"]
+[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/bugs/glitch_area.tscn" id="2_6iboe"]
 
 [sub_resource type="Gradient" id="Gradient_xg44k"]
 
@@ -36,6 +36,10 @@ layout_mode = 0
 offset_left = -2.0
 offset_right = 85.0
 offset_bottom = 83.0
+alpha_fade_top = 0.0
+alpha_fade_bottom = 0.0
+alpha_fade_left = 0.0
+alpha_fade_right = 0.0
 
 [node name="NameLabel" type="Label" parent="Panel" unique_id=501913300]
 layout_mode = 1

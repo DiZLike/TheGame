@@ -1,0 +1,35 @@
+[gd_scene format=3 uid="uid://b731nj4rtlwam"]
+
+[ext_resource type="Script" uid="uid://b8af2l43meqsj" path="res://scenes/bugs/glitch_area.gd" id="1_d71v6"]
+[ext_resource type="Shader" uid="uid://22igpfw23tnq" path="res://shaders/glitch_area.gdshader" id="1_ier43"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d71v6"]
+shader = ExtResource("1_ier43")
+shader_parameter/intensity = 0.06
+shader_parameter/speed = 6.0
+shader_parameter/block_size = 15.0
+shader_parameter/rgb_split_horizontal = 0.01
+shader_parameter/rgb_split_vertical = -0.03
+shader_parameter/edge_fade = 0.3
+shader_parameter/curve_strength = 0.02
+shader_parameter/alpha_fade_top = 0.15
+shader_parameter/alpha_fade_bottom = 0.15
+shader_parameter/alpha_fade_left = 0.15
+shader_parameter/alpha_fade_right = 0.15
+
+[node name="GlitchArea" type="Control" unique_id=1022921014]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("1_d71v6")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1382815766]
+z_index = 11
+material = SubResource("ShaderMaterial_d71v6")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

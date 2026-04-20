@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://df7ehbfhrxfup"]
+
+[ext_resource type="Texture2D" uid="uid://cq6kygnabct7n" path="res://sprites/bugs/bug_sprite1.png" id="1_xwoqa"]
+[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/bugs/glitch_area.tscn" id="2_mgpee"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ya21b"]
+size = Vector2(20, 35.75419)
+
+[node name="Bug" type="StaticBody2D" unique_id=1608676095 groups=["bug"]]
+z_index = 10
+
+[node name="GlitchArea" parent="." unique_id=1022921014 instance=ExtResource("2_mgpee")]
+offset_left = -21.0
+offset_top = -32.0
+offset_right = 21.0
+offset_bottom = 35.0
+intensity = 0.02
+speed = 4.0
+rgb_split_vertical = -0.01
+alpha_fade_top = 0.0
+alpha_fade_bottom = 0.0
+alpha_fade_left = 0.3
+alpha_fade_right = 0.3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2032415155]
+scale = Vector2(0.68, 1.79)
+shape = SubResource("RectangleShape2D_ya21b")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1156608532]
+texture = ExtResource("1_xwoqa")

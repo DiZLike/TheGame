@@ -3,7 +3,6 @@
 [ext_resource type="Script" uid="uid://cwhj0m5r51bp7" path="res://scripts/player_bullet/bullet_default.gd" id="1_7lxke"]
 [ext_resource type="Texture2D" uid="uid://l7tvlldncxew" path="res://sprites/bullets/player/spritesheet.png" id="2_0ucct"]
 
-
 [sub_resource type="AtlasTexture" id="AtlasTexture_7lxke"]
 atlas = ExtResource("2_0ucct")
 region = Rect2(1, 32, 18, 8)
@@ -22,10 +21,10 @@ animations = [{
 [sub_resource type="CircleShape2D" id="CircleShape2D_g43bc"]
 
 [node name="BulletMachinegun" type="Area2D" unique_id=1798761570]
-z_index = 10
+z_index = 11
 scale = Vector2(0.75, 0.75)
 collision_layer = 8
-collision_mask = 68
+collision_mask = 1092
 script = ExtResource("1_7lxke")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1905016560]

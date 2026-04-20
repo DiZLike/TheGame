@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\enemy\\contra\\camper",
-  "OutputFolder": "sprites\\enemy\\contra\\camper",
+  "InputFolder": "sprites\\barrier_sources\\01",
+  "OutputFolder": "sprites\\barrier_sources\\01",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,
@@ -8,5 +8,5 @@
   "PixelArtMode": true,
   "UseSquareCells": false,
   "AutoColumns": true,
-  "VerticalAlignment": "bottom"
+  "VerticalAlignment": "center"
 }

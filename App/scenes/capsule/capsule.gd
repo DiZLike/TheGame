@@ -23,6 +23,7 @@ var direction: Vector2:
 		}.get(move_direction, Vector2.ZERO)
 		
 var _on_hit: bool = false
+var spawn_only_if_player_doesnt_have: bool = false
 
 func _ready():
 	if weapon_type == WeaponsType.WeaponType.DEFAULT:
@@ -62,6 +63,7 @@ func pickup_spawn():
 		return
 	_on_hit = true
 	var pic = pickup.instantiate() as CharacterBody2D
+	pic.spawn_only_if_player_doesnt_have = spawn_only_if_player_doesnt_have
 	pic.global_position = global_position
 	pic.velocity.y = -200
 	get_tree().current_scene.add_child(pic)

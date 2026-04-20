@@ -5,7 +5,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tourh"]
 
 [node name="BulletLaser" type="Area2D" unique_id=883322612]
-z_index = 10
+z_index = 11
 script = ExtResource("1_mpjg8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=176279322]

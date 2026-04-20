@@ -11,8 +11,10 @@ enum SpawnDirection {
 	BOTTOM,     # Только нижняя сторона
 }
 
+@export var enable: bool = true
 @export var on_shot: bool = false
 @export var spawn_delay: float = 2.0
+@export var spawn_only_if_player_doesnt_have: bool = false
 @export var allowed_direction: SpawnDirection = SpawnDirection.ALL:
 	set(value):
 		allowed_direction = value
@@ -160,6 +162,8 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 		is_spawned = false
 
 func spawn_enemy():
+	if not enable:
+		return
 	if not capsule:
 		if Engine.is_editor_hint():
 			print("Ошибка: enemy_scene не назначен!")
@@ -168,7 +172,10 @@ func spawn_enemy():
 		return
 	is_spawned = true
 	var cap = capsule.instantiate()
+	
+	# Передаём параметры в капсулу
 	cap.weapon_type = weapon_type
+	cap.spawn_only_if_player_doesnt_have = spawn_only_if_player_doesnt_have
 	
 	# Определяем сторону спавна и задаем направление врагу
 	var side = get_spawn_side_from_camera()

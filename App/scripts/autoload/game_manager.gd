@@ -338,7 +338,7 @@ func _show_training_dialogue() -> void:
 		return
 	
 	complete_weapon_training()
-	show_dialogue("01-dialogue03", "d1")
+	show_dialogue("/level_01/03_weapon_tutorial", "d1")
 
 
 # ============================================

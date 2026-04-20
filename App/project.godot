@@ -28,6 +28,7 @@ DialogueLoader="*uid://dawjopqo4gpvm"
 AudioManager="*uid://bougi501l3reb"
 ScoreManager="*uid://b8cwsirgsb3f2"
 InventoryManager="*uid://cgfl38e2rquta"
+BarrierSourceManager="*uid://cgvw6qw7f4ict"
 GameManager="*uid://clu8nd0tgm2c5"
 InputManager="*uid://bjgscygusc7jr"
 
@@ -53,6 +54,8 @@ immortal_enemy=""
 enemy_bullet=""
 weapon_pickup=""
 terrain_deadly=""
+bug=""
+barrier_source=""
 
 [input]
 
@@ -461,6 +464,7 @@ menu={
 2d_physics/layer_8="border"
 2d_physics/layer_9="enemy_immortal"
 2d_physics/layer_10="terrain_deadly"
+2d_physics/layer_11="barrier_source"
 
 [physics]
 

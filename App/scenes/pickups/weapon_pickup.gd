@@ -12,6 +12,7 @@ extends CharacterBody2D
 const WeaponsType = preload("res://scripts/weapon_types.gd")
 @export var weapon_type: WeaponsType.WeaponType = WeaponsType.WeaponType.DEFAULT   # Тип оружия (0-5)
 @export var bounce_force: float = -150.0           # Сила отскока от земли
+@export var spawn_only_if_player_doesnt_have: bool = false  # Спавнить только если у игрока нет такого оружия
 
 # ============================================
 # КОМПОНЕНТЫ
@@ -29,8 +30,22 @@ var _picked: bool = false
 # ИНИЦИАЛИЗАЦИЯ
 # ============================================
 func _ready() -> void:
+	# Проверяем, нужно ли удалить предмет при спавне
+	if spawn_only_if_player_doesnt_have:
+		_check_and_destroy_if_player_has_weapon()
+	
 	# Включаем физику
 	set_physics_process(true)
+
+func _check_and_destroy_if_player_has_weapon() -> void:
+	# Находим менеджер оружия
+	var weapon_manager = get_node_or_null("/root/WeaponManager")
+	if not weapon_manager:
+		return
+	
+	# Если у игрока уже есть такое оружие, удаляем предмет
+	if weapon_manager.current_weapon == weapon_type:
+		queue_free()
 
 # ============================================
 # ФИЗИКА (CharacterBody2D)

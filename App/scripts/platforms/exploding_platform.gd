@@ -11,6 +11,8 @@ class_name ExplodingPlatform
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var detection_area: Area2D = $DetectionArea
 
+var player: Node2D
+
 # === СОСТОЯНИЯ ===
 var is_triggered: bool = false
 var is_exploding: bool = false
@@ -26,6 +28,7 @@ func _setup_platform() -> void:
 
 func _on_detection_entered(body: Node2D) -> void:
 	if body.is_in_group("player") and not is_triggered and not is_exploding:
+		player = body
 		player_on_platform = true
 		start_explosion_sequence()
 
@@ -71,5 +74,5 @@ func explode() -> void:
 	explosion.explode_from_animated_sprite(animated_sprite, global_position, explosion_force)
 	
 	animated_sprite.visible = false
-	await get_tree().create_timer(0.5).timeout
+	#await get_tree().create_timer(0.5).timeout
 	queue_free()

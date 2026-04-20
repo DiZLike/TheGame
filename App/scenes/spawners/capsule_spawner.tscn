@@ -45,6 +45,7 @@ animations = [{
 z_index = 100
 script = ExtResource("1_4vgw3")
 on_shot = true
+required = null
 spawn_delay = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]

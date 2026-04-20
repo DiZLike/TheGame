@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://cgftnfm4xc8qh"]
+
+[ext_resource type="Script" uid="uid://dhmcflekejeem" path="res://scenes/barrier_source/barrier_source_1.gd" id="1_5bylk"]
+[ext_resource type="Texture2D" uid="uid://drwhxetn531py" path="res://sprites/barrier_sources/01/spritesheet.png" id="1_hbvfm"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5bylk"]
+atlas = ExtResource("1_hbvfm")
+region = Rect2(2, 2, 9, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3lt3"]
+atlas = ExtResource("1_hbvfm")
+region = Rect2(13, 2, 9, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yy5s6"]
+atlas = ExtResource("1_hbvfm")
+region = Rect2(24, 2, 9, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_y3xm6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5bylk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3lt3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yy5s6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3lt3")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0mcq5"]
+size = Vector2(8, 14)
+
+[node name="Barrier Source 1" type="Area2D" unique_id=351467114 groups=["barrier_source"]]
+z_index = 10
+collision_layer = 1024
+collision_mask = 8
+script = ExtResource("1_5bylk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1006115777]
+sprite_frames = SubResource("SpriteFrames_y3xm6")
+autoplay = "default"
+frame_progress = 0.6282681
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1800765396]
+shape = SubResource("RectangleShape2D_0mcq5")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]
