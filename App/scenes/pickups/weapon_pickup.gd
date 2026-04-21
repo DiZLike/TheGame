@@ -17,6 +17,8 @@ const WeaponsType = preload("res://scripts/weapon_types.gd")
 # ============================================
 # КОМПОНЕНТЫ
 # ============================================
+@onready var sound_weapon: AudioStream = preload("res://data/audio/sounds/pickups/weapon.mp3")
+@onready var sound_upgrade: AudioStream = preload("res://data/audio/sounds/pickups/upgrade.mp3")
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 
@@ -94,13 +96,14 @@ func _on_body_entered(body: Node2D) -> void:
 	if weapon_manager.current_weapon == weapon_type:
 		# То же оружие - улучшаем
 		weapon_manager.upgrade_weapon()
+		AudioManager.play_sfx(sound_upgrade)
 	else:
 		# Новое оружие
 		weapon_manager.change_weapon(weapon_type)
+		AudioManager.play_sfx(sound_weapon)
 	
 	# Эффект подбора
 	var tween = create_tween()
 	tween.tween_property(sprite, "scale", Vector2(0, 0), 0.1)
-	
 	await tween.finished
 	queue_free()

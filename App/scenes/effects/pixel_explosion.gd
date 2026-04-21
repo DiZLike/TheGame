@@ -7,8 +7,10 @@ extends Node2D
 @export var bounce: float = 0.3
 @export var linear_damp: float = 0.5
 
+var screenshot_path: String = "user://explosion_screenshots/"
 # Создает взрыв из текстуры спрайта
 func explode_from_sprite(sprite: Sprite2D, position: Vector2, base_force: float = 350.0) -> void:
+	#save_sprite_to_file(sprite)
 	var texture = sprite.texture
 	if not texture:
 		return
@@ -54,6 +56,29 @@ func explode_from_sprite(sprite: Sprite2D, position: Vector2, base_force: float 
 	# Автоматически удалить сцену после завершения анимации всех пикселей
 	await get_tree().create_timer(fade_duration + 0.5).timeout
 	queue_free()
+	
+func save_sprite_to_file(sprite: Sprite2D) -> void:
+	var texture = sprite.texture
+	if not texture:
+		return
+	
+	# Создаем уникальное имя файла с временной меткой
+	var timestamp = Time.get_unix_time_from_system()
+	var filename = "explosion_%d.png" % timestamp
+	
+	# Создаем директорию если её нет
+	DirAccess.make_dir_recursive_absolute(screenshot_path)
+	
+	var full_path = screenshot_path + filename
+	
+	# Сохраняем текстуру
+	var image = texture.get_image()
+	if image:
+		var error = image.save_png(full_path)
+		if error == OK:
+			print("Sprite saved to: ", ProjectSettings.globalize_path(full_path))
+		else:
+			print("Failed to save sprite: ", error)
 
 # Альтернативный метод для AnimatedSprite2D
 func explode_from_animated_sprite(animated_sprite: AnimatedSprite2D, position: Vector2, base_force: float = 350.0) -> void:

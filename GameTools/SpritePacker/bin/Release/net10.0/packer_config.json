@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\barrier_sources\\01",
-  "OutputFolder": "sprites\\barrier_sources\\01",
+  "InputFolder": "sprites\\coin\\01",
+  "OutputFolder": "sprites\\coin\\01",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,

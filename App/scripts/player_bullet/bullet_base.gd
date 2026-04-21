@@ -5,6 +5,9 @@ class_name BulletBase
 # БАЗОВЫЙ КЛАСС ДЛЯ ВСЕХ ПУЛЬ
 # ============================================
 
+# Предзагружаем сцену взрыва (укажите правильный путь)
+const TILE_EXPLOSION_SCENE = preload("res://scenes/effects/pixel_explosion.tscn")
+
 # === ОБЩИЕ ПАРАМЕТРЫ ===
 var direction: Vector2 = Vector2.RIGHT:
 	set(value):
@@ -78,6 +81,9 @@ func _on_body_entered(body: Node2D) -> void:
 	_on_hit_enemy(body)
 	_queue_free()
 
+func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
+	pass
+
 # ============================================
 # ВЫХОД ЗА ЭКРАН
 # ============================================
@@ -93,7 +99,6 @@ func _queue_free() -> void:
 		return
 	
 	_is_queued_for_deletion = true
-	# Убираем вызов WeaponManager.remove_bullet() так как теперь нет лимита на экране
 	queue_free()
 
 # ============================================
@@ -124,4 +129,92 @@ func _on_hit_enemy(enemy: Node2D) -> void:
 # Вызывается при столкновении с не-врагом
 @warning_ignore("unused_parameter")
 func _on_other_collision(body: Node2D) -> void:
-	pass
+	if body.is_in_group("terrain") or body.is_in_group("terrain_deadly"):
+		return
+	if body is TileMapLayer:
+		var local_point = body.to_local(global_position)
+		var center_coords = body.local_to_map(local_point)
+		
+		var closest_coord: Vector2i
+		var min_distance = INF
+		
+		# Ищем в радиусе 3, выбираем ближайший тайл к точке коллизии
+		for x in range(-3, 4):
+			for y in range(-3, 4):
+				var coord = center_coords + Vector2i(x, y)
+				if body.get_cell_source_id(coord) != -1:
+					# Центр клетки в глобальных координатах
+					var cell_center = body.to_global(body.map_to_local(coord))
+					var dist = global_position.distance_to(cell_center)
+					if dist < min_distance:
+						min_distance = dist
+						closest_coord = coord
+		
+		if min_distance != INF:
+			# Получаем центр уничтожаемого тайла
+			var cell_center = body.to_global(body.map_to_local(closest_coord))
+			
+			# Создаем взрыв тайла перед удалением
+			_create_tile_explosion(cell_center, body, closest_coord)
+			
+			# Удаляем тайл
+			body.set_cell(closest_coord, -1)
+			queue_free()
+
+# ============================================
+# ВЗРЫВ ТАЙЛА (ИСПРАВЛЕННАЯ ВЕРСИЯ)
+# ============================================
+# ============================================
+# ВЗРЫВ ТАЙЛА (ВЕРСИЯ С БЕЛЫМ СПРАЙТОМ)
+# ============================================
+# ============================================
+# ВЗРЫВ ТАЙЛА (С ОТЛАДКОЙ)
+# ============================================
+func _create_tile_explosion(position: Vector2, tilemap: TileMapLayer, coords: Vector2i) -> void:
+	# Получаем текстуру тайла
+	var tile_texture = _get_tile_texture_from_atlas(tilemap, coords)
+	
+	if tile_texture:
+		var explosion = TILE_EXPLOSION_SCENE.instantiate()
+		
+		get_tree().root.add_child(explosion)
+		explosion.global_position = position
+		
+		var sprite = Sprite2D.new()
+		sprite.texture = tile_texture
+		sprite.centered = true
+		
+		# Проверяем наличие метода
+		if explosion.has_method("explode_from_sprite"):
+			explosion.explode_from_sprite(sprite, position)
+		else:
+			print("ERROR: explosion has no method 'explode_from_sprite'")
+		
+		sprite.queue_free()
+	else:
+		print("=== NO TEXTURE DATA ===")
+
+# ============================================
+# ПОЛУЧЕНИЕ ТЕКСТУРЫ ТАЙЛА ИЗ АТЛАСА
+# ============================================
+func _get_tile_texture_from_atlas(tilemap: TileMapLayer, coords: Vector2i) -> Texture2D:
+	var source_id = tilemap.get_cell_source_id(coords)
+	
+	if source_id == -1:
+		return null
+	
+	var tileset = tilemap.tile_set
+	var source = tileset.get_source(source_id)
+	
+	if source is TileSetAtlasSource:
+		var atlas_coords = tilemap.get_cell_atlas_coords(coords)
+		
+		var region = source.get_tile_texture_region(atlas_coords)
+		
+		if region != Rect2i() and source.texture:
+			var atlas_texture = AtlasTexture.new()
+			atlas_texture.atlas = source.texture
+			atlas_texture.region = region
+			return atlas_texture
+	
+	return null

@@ -1,23 +1,23 @@
 [gd_scene format=3 uid="uid://0sqfsokr4pat"]
 
 [ext_resource type="Script" uid="uid://cgjd02c0v2r1w" path="res://scripts/platforms/exploding_platform.gd" id="1_hk0pp"]
-[ext_resource type="Texture2D" uid="uid://cm5va56ps0grk" path="res://sprites/platforms/mario_platform.png" id="2_nfhb4"]
+[ext_resource type="Texture2D" uid="uid://dvl6harcpp0nb" path="res://sprites/platforms/mario_platform2.png" id="2_hk0pp"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_vu010"]
-size = Vector2(48, 7)
+size = Vector2(32, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hk0pp"]
-size = Vector2(48, 8)
+size = Vector2(32, 6)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_hk0pp"]
-atlas = ExtResource("2_nfhb4")
-region = Rect2(0, 0, 48, 7)
+[sub_resource type="AtlasTexture" id="AtlasTexture_nfhb4"]
+atlas = ExtResource("2_hk0pp")
+region = Rect2(0, 0, 32, 7)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nfhb4"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_hk0pp")
+"texture": SubResource("AtlasTexture_nfhb4")
 }],
 "loop": true,
 "name": &"default",
@@ -37,6 +37,7 @@ collision_layer = 0
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1112157915]
+position = Vector2(0, -1)
 shape = SubResource("RectangleShape2D_hk0pp")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1230772118]

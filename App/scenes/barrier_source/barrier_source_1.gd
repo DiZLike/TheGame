@@ -58,9 +58,8 @@ func set_disable():
 		animated_sprite.visible = false
 		animated_sprite.stop()
 	
-	process_mode = PROCESS_MODE_DISABLED
 	enable = false
-
+	save_properties_to_manager()
 
 func set_enable():
 	monitoring = true
@@ -74,9 +73,8 @@ func set_enable():
 		animated_sprite.visible = true
 		animated_sprite.play()
 	
-	process_mode = PROCESS_MODE_INHERIT
 	enable = true
-
+	save_properties_to_manager()
 
 func _on_area_entered(area: Area2D):
 	if not enable:

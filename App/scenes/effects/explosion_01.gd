@@ -26,6 +26,30 @@ func _ready() -> void:
 		animation.play("explode")
 
 func _on_body_entered(body: Node2D) -> void:
+	if body.is_in_group("terrain") or body.is_in_group("terrain_deadly"):
+		return
+	if body is TileMapLayer:
+		var local_point = body.to_local(global_position)
+		var center_coords = body.local_to_map(local_point)
+		
+		var closest_coord: Vector2i
+		var min_distance = INF
+		
+		# Ищем в радиусе 3, выбираем ближайший тайл к точке коллизии
+		for x in range(-3, 4):
+			for y in range(-3, 4):
+				var coord = center_coords + Vector2i(x, y)
+				if body.get_cell_source_id(coord) != -1:
+					# Центр клетки в глобальных координатах
+					var cell_center = body.to_global(body.map_to_local(coord))
+					var dist = global_position.distance_to(cell_center)
+					if dist < min_distance:
+						min_distance = dist
+						closest_coord = coord
+		
+		if min_distance != INF:
+			body.set_cell(closest_coord, -1)
+	
 	# Исключаем исключённую цель
 	if body == shooter or body == excluded_target or not body.is_in_group("enemy"):
 		return

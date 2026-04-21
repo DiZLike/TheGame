@@ -56,6 +56,8 @@ weapon_pickup=""
 terrain_deadly=""
 bug=""
 barrier_source=""
+coin=""
+destroyed_tile=""
 
 [input]
 
@@ -465,6 +467,7 @@ menu={
 2d_physics/layer_9="enemy_immortal"
 2d_physics/layer_10="terrain_deadly"
 2d_physics/layer_11="barrier_source"
+2d_physics/layer_12="terrain_destroyed"
 
 [physics]
 

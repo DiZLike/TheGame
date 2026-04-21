@@ -1,5 +1,6 @@
 # ui/DialogueBox.gd
 extends CanvasLayer
+class_name DialogueBox
 
 # Сигналы
 signal dialogue_started
@@ -92,8 +93,6 @@ func _ready():
 	
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	current_scene = get_tree().current_scene
-	
-	GameManager.register_dialogue_box(self)
 
 # ============ ПОРТРЕТЫ ============
 

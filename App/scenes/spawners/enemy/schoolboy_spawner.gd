@@ -19,7 +19,7 @@ enum SpawnDirection { ALL, LEFT, RIGHT, TOP, BOTTOM }
 
 var is_on_screen: bool = false
 var is_spawned: bool = false
-var can_spawn: bool = true  # <-- новый флаг: можно ли спавнить при входе
+var can_spawn: bool = true
 var spawned_enemies: Array = []
 var current_enemy_count: int:
 	get:
@@ -31,7 +31,6 @@ func _ready():
 		if sprite: sprite.visible = false
 		update_arrow_direction()
 		
-		# Подключаем сигнал вручную, если не подключен через редактор
 		if visibility_notifier:
 			if not visibility_notifier.screen_entered.is_connected(_on_visible_on_screen_notifier_2d_screen_entered):
 				visibility_notifier.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
@@ -80,12 +79,26 @@ func check_spawn_allowed() -> bool:
 		SpawnDirection.ALL:    return true
 	return false
 
-func get_enemy_direction(side: String) -> String:
-	match side:
-		"left": return "right"
-		"right": return "left"
-		"top", "bottom": return "right"
-		_: return "right"
+func get_enemy_direction_to_player() -> String:
+	# Находим игрока
+	var player = get_tree().get_first_node_in_group("player")
+	if not player:
+		# Если игрок не найден, используем камеру как точку отсчета
+		var camera = get_viewport().get_camera_2d()
+		if camera:
+			var diff_to_camera = global_position - camera.global_position
+			return "right" if diff_to_camera.x < 0 else "left"
+		return "right"
+	
+	# Определяем направление от врага к игроку
+	var diff_to_player = player.global_position - global_position
+	
+	# Возвращаем направление, куда должен смотреть враг
+	# Учитываем, что стандартно враг смотрит влево
+	if diff_to_player.x > 0:
+		return "right"  # Игрок справа -> враг должен смотреть вправо
+	else:
+		return "left"   # Игрок слева -> враг должен смотреть влево
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	if not check_spawn_allowed():
@@ -93,11 +106,9 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	
 	is_on_screen = true
 	
-	# Спавним только если можно и не заспавнено
 	if can_spawn and not is_spawned and current_enemy_count < max_enemies:
 		if spawn_delay > 0:
 			await get_tree().create_timer(spawn_delay).timeout
-			# Проверяем, что спавнер всё ещё на экране после задержки
 			if not is_on_screen:
 				return
 		
@@ -108,7 +119,7 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	
 	if not on_shot:
 		is_spawned = false
-		can_spawn = true  # <-- разрешаем спавн при следующем входе
+		can_spawn = true
 		cleanup_invalid_enemies()
 
 func cleanup_invalid_enemies():
@@ -119,7 +130,7 @@ func spawn_enemy():
 		return
 	
 	is_spawned = true
-	can_spawn = false  # <-- запрещаем повторный спавн, пока не выйдем с экрана
+	can_spawn = false
 	
 	var enemy = enemy_scene.instantiate()
 	enemy.global_position = global_position
@@ -128,8 +139,9 @@ func spawn_enemy():
 	spawned_enemies.append(enemy)
 	enemy.tree_exited.connect(_on_enemy_destroyed.bind(enemy))
 	
-	if allowed_direction == SpawnDirection.LEFT:
-		enemy.set_move_direction("right")
+	# Устанавливаем направление лицом к игроку
+	var direction = get_enemy_direction_to_player()
+	enemy.set_move_direction(direction)
 	
 	cleanup_invalid_enemies()
 	if on_shot:
@@ -138,6 +150,3 @@ func spawn_enemy():
 func _on_enemy_destroyed(enemy):
 	spawned_enemies.erase(enemy)
 	cleanup_invalid_enemies()
-	
-	# ВАЖНО: не сбрасываем can_spawn здесь!
-	# Спавнер должен дождаться выхода с экрана, чтобы снова спавнить

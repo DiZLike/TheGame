@@ -80,16 +80,8 @@ func _process_hit(collider: Node2D, hit_point: Vector2) -> void:
 				collider.on_hit(damage, bullet_type)
 			_create_spark_effect(hit_point)
 	
-	elif collider.is_in_group("terrain"):
-		var is_duplicate = false
-		for existing_point in _hit_terrain_points:
-			if existing_point.distance_to(hit_point) < 5.0:
-				is_duplicate = true
-				break
-		
-		if not is_duplicate:
-			_hit_terrain_points.append(hit_point)
-			_create_spark_effect(hit_point)
+	elif collider.is_in_group("destroyed_tile"):
+		_create_spark_effect(hit_point)
 
 func _start_hit_checking() -> void:
 	_hit_check_timer = Timer.new()

@@ -1,17 +1,17 @@
 [gd_scene format=3 uid="uid://by0xnynw17f8m"]
 
-[ext_resource type="Script" uid="uid://v07p0gaftjbd" path="res://scenes/spawners/destroy_platform_spawner.gd" id="1_32142"]
-[ext_resource type="Texture2D" uid="uid://cm5va56ps0grk" path="res://sprites/platforms/mario_platform.png" id="2_egbet"]
+[ext_resource type="Script" uid="uid://v07p0gaftjbd" path="res://scenes/spawners/enemy/destroy_platform_spawner.gd" id="1_32142"]
+[ext_resource type="Texture2D" uid="uid://dvl6harcpp0nb" path="res://sprites/platforms/mario_platform2.png" id="2_ddk8a"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cq7bj"]
-atlas = ExtResource("2_egbet")
-region = Rect2(0, 0, 48, 7)
+[sub_resource type="AtlasTexture" id="AtlasTexture_1fbfd"]
+atlas = ExtResource("2_ddk8a")
+region = Rect2(0, 0, 32, 7)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rs7wp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cq7bj")
+"texture": SubResource("AtlasTexture_1fbfd")
 }],
 "loop": true,
 "name": &"default",
@@ -29,7 +29,7 @@ autoplay = "default"
 frame_progress = 0.8387944
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=741628321]
-rect = Rect2(-24, -4, 48, 8)
+rect = Rect2(-16, -4, 32, 8)
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

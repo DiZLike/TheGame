@@ -34,7 +34,7 @@ const SCORE_MOVEMENT_BONUS: Dictionary = {
 	"move": 80,                                 # Ходит по платформам
 	"fly": 120,                                  # Летает
 }
-const SCORE_ROUND_STEP: int = 50               # Шаг округления
+const SCORE_ROUND_STEP: int = 10              # Шаг округления
 var burst_bonus: int = 0
 
 # === ХАРАКТЕРИСТИКИ ДЛЯ РАСЧЁТА (переопределяются в дочерних классах) ===

@@ -1,18 +1,25 @@
-[gd_scene format=3 uid="uid://bhakknh3dqmxl"]
+[gd_scene format=3 uid="uid://dwhniglt2wh2"]
 
-[ext_resource type="Script" uid="uid://twf158ps0ja2" path="res://scenes/spawners/schoolboy_spawner.gd" id="1_23stf"]
-[ext_resource type="Texture2D" uid="uid://q0opryxorcm0" path="res://sprites/enemy/contra/schoolboy/spritesheet.png" id="2_23stf"]
-[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_5ctnt"]
+[ext_resource type="Script" uid="uid://ctx0002q1012k" path="res://scenes/spawners/enemy/blazeman_spawner.gd" id="1_gt7u5"]
+[ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/blazeman/spritesheet.png" id="2_gt7u5"]
+[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_e5se8"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8s31u"]
-atlas = ExtResource("2_23stf")
-region = Rect2(38, 2, 16, 32)
+[sub_resource type="AtlasTexture" id="AtlasTexture_0b40b"]
+atlas = ExtResource("2_gt7u5")
+region = Rect2(2, 40, 44, 36)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e5se8"]
+atlas = ExtResource("2_gt7u5")
+region = Rect2(48, 40, 44, 36)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_rs7wp"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_8s31u")
+"texture": SubResource("AtlasTexture_0b40b")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e5se8")
 }],
 "loop": true,
 "name": &"default",
@@ -20,7 +27,7 @@ animations = [{
 }]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mkwvi"]
-atlas = ExtResource("3_5ctnt")
+atlas = ExtResource("3_e5se8")
 region = Rect2(2, 2, 32, 32)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_x28r6"]
@@ -34,9 +41,8 @@ animations = [{
 "speed": 5.0
 }]
 
-[node name="SchoolboySpawner" type="Node2D" unique_id=146069070]
-script = ExtResource("1_23stf")
-enemy_scene = null
+[node name="MGEnemy 01 Spawner" type="Node2D" unique_id=146069070]
+script = ExtResource("1_gt7u5")
 spawn_delay = 0.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]
@@ -48,7 +54,7 @@ frame_progress = 0.8387944
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=741628321]
 
 [node name="Arrow" type="AnimatedSprite2D" parent="." unique_id=438452896]
-z_index = 9
+z_index = 10
 sprite_frames = SubResource("SpriteFrames_x28r6")
 
 [connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]

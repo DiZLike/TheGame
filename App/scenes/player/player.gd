@@ -4,6 +4,7 @@ class_name Player
 # Сигналы
 signal player_respawned(new_position: Vector2)
 signal weapon_picked_up()
+signal coin_picked_up()
 
 # Константы настроек игрока
 const SPEED: float = 100.0
@@ -16,7 +17,7 @@ const BLINK_INTERVAL: float = 0.1    # Интервал мигания при н
 # Ссылки на узлы
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D          # Анимации персонажа
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D          # Основной коллайдер
-@onready var damage_collision: CollisionShape2D = $DamageDetector/CollisionShape2D  # Коллайдер для получения урона
+@onready var damage_collision: CollisionShape2D = $Detector/CollisionShape2D  # Коллайдер для получения урона
 @onready var shoot_point: Marker2D = $ShootPoint                            # Точка вылета пули
 
 # Флаги состояния персонажа
@@ -272,6 +273,8 @@ func _on_area_entered(area: Area2D) -> void:
 	if area.is_in_group("enemy_bullet"):
 		if not is_invincible and not is_respawning:
 			take_damage()
+	if area.is_in_group("coin"):
+		coin_picked_up.emit()
 
 func take_damage():
 	# Наносит урон: уменьшает жизни и запускает возрождение, если жизни ещё есть

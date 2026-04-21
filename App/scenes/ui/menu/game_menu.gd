@@ -355,6 +355,7 @@ func _execute_button_action(button: Button) -> void:
 		"SettingsButton":
 			_on_settings_pressed()
 		"QuitButton":
+			GameManager.save_game()
 			get_tree().quit()
 
 

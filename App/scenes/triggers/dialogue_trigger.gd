@@ -6,6 +6,9 @@ class_name DialogueTrigger
 @export var dialogue_start_id: String = ""
 @export var active: bool = true
 
+# Уникальный идентификатор для сохранения состояния триггера
+@export var unique_trigger_id: String = ""
+
 # Настройки безопасности
 @export var take_control: bool = true  # Забрать управление
 @export var make_invincible: bool = true  # Сделать неуязвимым
@@ -19,6 +22,12 @@ var player: CharacterBody2D = null
 var triggered: bool = false
 
 func _ready():
+	# Проверяем, не был ли триггер уже активирован ранее
+	if one_shot and not unique_trigger_id.is_empty():
+		if GameManager.has_triggered_dialogue(unique_trigger_id):
+			queue_free()
+			return
+	
 	if dialogue_box == null:
 		dialogue_box = get_tree().current_scene.find_child("DialogueBox", true, false)
 
@@ -33,6 +42,11 @@ func _on_body_entered(body):
 	
 	player = body
 	triggered = true
+	
+	# Отмечаем триггер как активированный в GameManager
+	if one_shot and not unique_trigger_id.is_empty():
+		GameManager.mark_dialogue_triggered(unique_trigger_id)
+	
 	prepare_and_start_dialogue()
 
 func prepare_and_start_dialogue():

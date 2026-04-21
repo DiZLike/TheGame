@@ -6,7 +6,7 @@ signal item_used(slot_index: int, item: Item)
 
 const SAVE_KEY = "player_inventory"
 const ITEMS_PATH = "res://items/"
-const ITEMS_DATA_PATH = "res://data/weapons/"
+const ITEMS_DATA_PATH = "res://data/items/"
 const WEAPON_SLOT_INDEX: int = 0
 
 var inventory_size: int = 11
@@ -32,7 +32,8 @@ func _preload_items() -> void:
 		"weapon_s",
 		"weapon_r",
 		"weapon_h",
-		"weapon_l"
+		"weapon_l",
+		"coin"
 	]
 	
 	for item_id in item_files:
@@ -91,6 +92,46 @@ func _add_weapon(new_weapon: Item) -> bool:
 	slots[WEAPON_SLOT_INDEX].set_item(new_weapon, 1)
 	inventory_updated.emit(WEAPON_SLOT_INDEX)
 	return true
+	
+func add_item_to_slot(slot_index: int, item: Item, quantity: int = 1) -> bool:
+	if slot_index < 0 or slot_index >= slots.size():
+		push_error("Invalid slot index: ", slot_index)
+		return false
+	
+	if item == null or quantity <= 0:
+		return false
+	
+	var target_slot = slots[slot_index]
+	
+	# Если слот пустой - просто добавляем
+	if target_slot.is_empty():
+		var to_add = min(quantity, item.max_stack)
+		target_slot.set_item(item, to_add)
+		inventory_updated.emit(slot_index)
+		return true
+	
+	# Если в слоте такой же предмет и есть место для стака
+	if target_slot.item.id == item.id:
+		if target_slot.quantity >= item.max_stack:
+			return false  # Стак уже полный
+		
+		var space_left = item.max_stack - target_slot.quantity
+		var to_add = min(quantity, space_left)
+		target_slot.add_quantity(to_add)
+		inventory_updated.emit(slot_index)
+		return true
+	
+	# Если в слоте другой предмет
+	return false
+
+
+func add_item_by_id_to_slot(slot_index: int, item_id: String, quantity: int = 1) -> bool:
+	var item = get_item_by_id(item_id)
+	if item == null:
+		push_error("Item not found: ", item_id)
+		return false
+	
+	return add_item_to_slot(slot_index, item, quantity)
 
 
 func _add_regular_item(item: Item, quantity: int) -> bool:

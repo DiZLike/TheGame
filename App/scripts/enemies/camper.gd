@@ -1,5 +1,5 @@
 extends DirectionalStaticEnemy
-class_name LineShotEnemy
+class_name Camper
 
 # ============================================
 # ВРАГ СТРЕЛЯЮЩИЙ ТОЛЬКО ПРЯМО
@@ -83,6 +83,21 @@ func _setup_shooting_points() -> void:
 	var shooting_point = $ShootingPoint
 	if shooting_point:
 		shooting_points = [shooting_point]
+
+func _update_shooting_points_positions() -> void:
+	"""
+	Зеркалит позицию точки спавна при отзеркаливании спрайта.
+	"""
+	if not animated_sprite or shooting_points.is_empty():
+		return
+	
+	var is_flipped = animated_sprite.flip_h
+	var point = shooting_points[0]
+	
+	if point:
+		# Если у точки есть метод set_flipped - используем его
+		var base_x = abs(point.position.x)
+		point.position.x = base_x if is_flipped else -base_x
 
 func _get_shoot_directions() -> Array[Vector2]:
 	"""

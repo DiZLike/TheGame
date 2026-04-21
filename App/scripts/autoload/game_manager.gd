@@ -23,8 +23,6 @@ var is_paused: bool = false:
 
 ## Ссылки на основные узлы (публичные для удобства)
 var player: Player = null
-var dialogue_box: CanvasLayer = null
-var lives_panel: CanvasLayer = null
 
 # ============================================
 # ПРИВАТНЫЕ ПЕРЕМЕННЫЕ
@@ -40,7 +38,9 @@ var _player_data: Dictionary = {
 	"game": {
 		"weapon_training_completed": false
 	},
-	"inventory": {}
+	"inventory": {},
+	"collected_items": [],
+	"triggered_dialogues": []
 }
 
 var dialogue_trig: Dictionary = {}
@@ -53,14 +53,14 @@ func _ready() -> void:
 	_initialize_game()
 	_connect_signals()
 
-
 func _initialize_game() -> void:
 	# Синхронизируем очки с ScoreManager
 	_player_data["score"] = ScoreManager.get_score()
 	
 	# Загружаем сохранение если есть
 	if _has_save_file():
-		load_game()
+		#load_game()
+		pass
 	else:
 		_load_inventory_from_data()
 		_apply_weapon_settings()
@@ -84,16 +84,7 @@ func _connect_signals() -> void:
 
 func register_player(player_node: Player) -> void:
 	player = player_node
-	player.weapon_picked_up.connect(_on_weapon_picked_up)
-
-
-func register_dialogue_box(dialogue_node: CanvasLayer) -> void:
-	dialogue_box = dialogue_node
-
-
-func register_lives_panel(panel: CanvasLayer) -> void:
-	lives_panel = panel
-
+	InventoryManager.add_item_by_id("weapon_d")
 
 # ============================================
 # ЖИЗНИ (улучшенное API)
@@ -168,18 +159,20 @@ func _apply_weapon_settings() -> void:
 # ============================================
 # ИНВЕНТАРЬ (упрощённое API)
 # ============================================
+func has_unique_item(unique_id: String) -> bool:
+	return _player_data["collected_items"].has(unique_id)
 
-func add_item(item_id: String, quantity: int = 1) -> bool:
-	return InventoryManager.add_item_by_id(item_id, quantity)
-
+func add_item(slot: int, item_id: String, unique_id: String) -> bool:
+	var ok = InventoryManager.add_item_by_id_to_slot(slot, item_id, 1)
+	if not _player_data["collected_items"].has(unique_id):
+		_player_data["collected_items"].append(unique_id)
+	return ok
 
 func remove_item(slot_index: int, quantity: int = 1) -> bool:
 	return InventoryManager.remove_item(slot_index, quantity)
 
-
 func use_item(slot_index: int) -> Dictionary:
 	return InventoryManager.use_item(slot_index)
-
 
 func get_inventory_slot(slot_index: int) -> Dictionary:
 	return {
@@ -187,7 +180,6 @@ func get_inventory_slot(slot_index: int) -> Dictionary:
 		"quantity": InventoryManager.get_quantity(slot_index),
 		"is_empty": InventoryManager.is_slot_empty(slot_index)
 	}
-
 
 func clear_inventory() -> void:
 	_player_data["inventory"] = {}
@@ -203,29 +195,26 @@ func _load_inventory_from_data() -> void:
 		InventoryManager.load_inventory(_player_data["inventory"])
 		inventory_loaded.emit()
 
-
 # ============================================
-# ПРОГРЕСС ИГРЫ
+# ДИАЛОГОВЫЕ ТРИГГЕРЫ
 # ============================================
 
-func is_weapon_training_completed() -> bool:
-	return _player_data["game"]["weapon_training_completed"]
+func has_triggered_dialogue(trigger_id: String) -> bool:
+	return _player_data["triggered_dialogues"].has(trigger_id)
 
+func mark_dialogue_triggered(trigger_id: String) -> void:
+	if not _player_data["triggered_dialogues"].has(trigger_id):
+		_player_data["triggered_dialogues"].append(trigger_id)
+		print("Dialogue trigger marked as triggered: ", trigger_id)
 
-func complete_weapon_training() -> void:
-	_player_data["game"]["weapon_training_completed"] = true
-
-
-func is_first_weapon_pickup() -> bool:
-	return not _player_data["game"]["weapon_training_completed"]
-
+func clear_triggered_dialogues() -> void:
+	_player_data["triggered_dialogues"].clear()
 
 # ============================================
 # СОХРАНЕНИЕ И ЗАГРУЗКА
 # ============================================
 
 const SAVE_PATH = "user://savegame.save"
-
 
 func save_game() -> void:
 	# Обновляем данные перед сохранением
@@ -298,7 +287,9 @@ func reset_game() -> void:
 		"game": {
 			"weapon_training_completed": false
 		},
-		"inventory": {}
+		"inventory": {},
+		"collected_items": [],
+		"triggered_dialogues": []
 	}
 	
 	ScoreManager.score = 0
@@ -308,54 +299,10 @@ func reset_game() -> void:
 	lives_changed.emit(_player_data["lives"], 0)
 	ScoreManager.score_changed.emit(0)
 
-
-# ============================================
-# ДИАЛОГИ
-# ============================================
-
-func show_dialogue(dialogue_id: String, start_node: String = "d1") -> void:
-	if not dialogue_box:
-		push_error("DialogueBox not registered!")
-		return
-	
-	if player:
-		player.take_control_away(true)
-	
-	if lives_panel:
-		lives_panel.visible = false
-	
-	dialogue_box.dialogue_finished.connect(_on_dialogue_finished, CONNECT_ONE_SHOT)
-	dialogue_box.start_dialogue(dialogue_id, start_node)
-
-
-func _show_training_dialogue() -> void:
-	if dialogue_trig.has("weapon_training_enable"):
-		if not dialogue_trig["weapon_training_enable"]:
-			return
-	else:
-		return
-	if is_weapon_training_completed():
-		return
-	
-	complete_weapon_training()
-	show_dialogue("/level_01/03_weapon_tutorial", "d1")
-
-
 # ============================================
 # ОБРАБОТЧИКИ СИГНАЛОВ
 # ============================================
 
-func _on_weapon_picked_up() -> void:
-	if is_first_weapon_pickup():
-		_show_training_dialogue()
-
-
-func _on_dialogue_finished() -> void:
-	if lives_panel:
-		lives_panel.visible = true
-	
-	if player:
-		player.restore_control()
 
 
 func _on_score_manager_changed(new_score: int) -> void:

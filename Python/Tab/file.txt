@@ -1,0 +1,19 @@
+func _on_other_collision(body: Node2D) -> void:
+	# Проверяем, что столкнулись именно с TileMapLayer
+	if body is TileMapLayer:
+		# Получаем глобальную позицию пули в момент касания
+		var collision_point = global_position
+		
+		# Конвертируем глобальную позицию в локальную относительно слоя тайлов
+		var local_point = body.to_local(collision_point)
+		
+		# Получаем координаты клетки (тайла) по этой позиции
+		var tile_coords = body.local_to_map(local_point)
+		
+		# Опционально: Проверяем, есть ли там тайл (source_id != -1)
+		if body.get_cell_source_id(tile_coords) != -1:
+			# Удаляем тайл, устанавливая source_id = -1
+			body.set_cell(tile_coords, -1)
+			
+			# Удаляем саму пулю, чтобы она не удаляла несколько тайлов за раз
+			queue_free()

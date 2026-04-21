@@ -3,7 +3,7 @@ class_name BulletHoming
 
 var flight_time: float = 3.0
 var homing_strength: float = 0.05
-var search_radius: float = 4000.0
+var search_radius: float = 250.0
 var spawn_deviation: float = 10.0
 var explosion_radius: float = 15.0
 
@@ -56,6 +56,8 @@ func _on_hit_enemy(enemy: Node2D) -> void:
 
 @warning_ignore("unused_parameter")
 func _on_other_collision(body: Node2D) -> void:
+	if body.is_in_group("terrain") or body.is_in_group("terrain_deadly"):
+		return
 	call_deferred("_explode")
 
 func _explode() -> void:

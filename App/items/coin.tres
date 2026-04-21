@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="Item" format=3 uid="uid://dsxyecjf0hyf7"]
+
+[ext_resource type="Script" uid="uid://pwl265ihdcol" path="res://scripts/inventory/item.gd" id="1_2jpt2"]
+[ext_resource type="Texture2D" uid="uid://bn5sonb3p053l" path="res://sprites/coin/01/spritesheet.png" id="1_527q1"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o3dv7"]
+atlas = ExtResource("1_527q1")
+region = Rect2(2, 2, 10, 14)
+
+[resource]
+script = ExtResource("1_2jpt2")
+id = "coin"
+name = "Монетка"
+icon = SubResource("AtlasTexture_o3dv7")
+item_type = 3
+metadata/_custom_type_script = "uid://pwl265ihdcol"

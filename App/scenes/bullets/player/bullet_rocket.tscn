@@ -30,7 +30,7 @@ animations = [{
 [node name="BulletRocket" type="Area2D" unique_id=1798761570]
 z_index = 11
 collision_layer = 8
-collision_mask = 1093
+collision_mask = 3140
 script = ExtResource("1_oe8yj")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1543303615]
@@ -46,4 +46,5 @@ frame_progress = 0.27318013
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=533304289]
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
