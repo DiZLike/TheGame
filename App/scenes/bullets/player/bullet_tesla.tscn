@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://o6e0sp2gfsdk"]
+
+[ext_resource type="Script" uid="uid://bc8c85s0xnfbb" path="res://scripts/player_bullet/bullet_tesla.gd" id="1_wklot"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_n83vr"]
+
+[node name="BulletTesla" type="Area2D" unique_id=1381740634]
+z_index = 10
+collision_layer = 8
+collision_mask = 3140
+script = ExtResource("1_wklot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=804067619]
+shape = SubResource("CircleShape2D_n83vr")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1028020325]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_shape_entered" from="." to="." method="_on_body_shape_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

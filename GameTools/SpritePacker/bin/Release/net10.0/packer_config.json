@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\coin\\01",
-  "OutputFolder": "sprites\\coin\\01",
+  "InputFolder": "sprites\\pickup",
+  "OutputFolder": "sprites\\pickup",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,

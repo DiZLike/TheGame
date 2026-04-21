@@ -56,7 +56,6 @@ func _physics_process(delta):
 @warning_ignore("unused_parameter")
 func on_hit(damage: int, bullet: String):
 	call_deferred("pickup_spawn")
-	queue_free()
 
 func pickup_spawn():
 	if _on_hit:
@@ -67,3 +66,4 @@ func pickup_spawn():
 	pic.global_position = global_position
 	pic.velocity.y = -200
 	get_tree().current_scene.add_child(pic)
+	queue_free()

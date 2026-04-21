@@ -13,6 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://p0rrfwntal0y" path="res://scenes/ui/lives_panel.tscn" id="5_oqlok"]
 [ext_resource type="Texture2D" uid="uid://be64mqygo4m8g" path="res://tiles/l01.png" id="6_l53as"]
 [ext_resource type="PackedScene" uid="uid://ddqy7bpqqutd7" path="res://scenes/triggers/dialogue_trigger.tscn" id="9_3sk1a"]
+[ext_resource type="PackedScene" uid="uid://b1vvlmooommk2" path="res://scenes/pickups/t_pickup.tscn" id="10_0x1rk"]
 [ext_resource type="PackedScene" uid="uid://df7ehbfhrxfup" path="res://scenes/bugs/bug.tscn" id="11_0fu15"]
 [ext_resource type="PackedScene" uid="uid://ce425mldiovry" path="res://scenes/platforms/с_moving_platform.tscn" id="11_ntdhj"]
 [ext_resource type="PackedScene" uid="uid://gsson12meqrx" path="res://scenes/platforms/v_moving_platform.tscn" id="11_ryfpa"]
@@ -1115,7 +1116,7 @@ down_angle_threshold = 60.0
 position = Vector2(3031, 941)
 
 [node name="Player" parent="." unique_id=1043132733 instance=ExtResource("2_jirdo")]
-position = Vector2(2823, 780)
+position = Vector2(2852, 774)
 
 [node name="CameraBorders" type="Node2D" parent="." unique_id=362354054]
 
@@ -1124,3 +1125,6 @@ position = Vector2(97, 515)
 
 [node name="BottomBorder" type="Node2D" parent="CameraBorders" unique_id=1706290094]
 position = Vector2(2231, 1599)
+
+[node name="PickupT" parent="." unique_id=912860424 instance=ExtResource("10_0x1rk")]
+position = Vector2(2909, 785)

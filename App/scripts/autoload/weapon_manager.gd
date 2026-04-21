@@ -112,6 +112,17 @@ func _spawn_bullet(origin: Vector2, direction: Vector2, weapon: Dictionary) -> v
 	bullet.damage = weapon["damage"]
 	bullet.speed = weapon["bullet_speed"]
 	
+	# Параметры для тесла-пушки
+	if current_weapon == WeaponsType.WeaponType.TESLA:
+		if weapon.has("chain_count"):
+			bullet.chain_count = weapon["chain_count"]
+		if weapon.has("chain_range"):
+			bullet.chain_range = weapon["chain_range"]
+		if weapon.has("chain_damage_falloff"):
+			bullet.chain_damage_falloff = weapon["chain_damage_falloff"]
+		if weapon.has("chain_delay"):
+			bullet.chain_delay = weapon["chain_delay"]
+	
 	# Дополнительные параметры для специальных типов
 	if weapon.has("explosion_radius"):
 		bullet.explosion_radius = weapon["explosion_radius"]
@@ -180,6 +191,8 @@ func change_weapon(weapon_type: int) -> void:
 		InventoryManager.add_item_by_id("weapon_h")
 	if current_weapon == WeaponsType.WeaponType.LASER:
 		InventoryManager.add_item_by_id("weapon_l")
+	if current_weapon == WeaponsType.WeaponType.TESLA:
+		InventoryManager.add_item_by_id("weapon_t")
 	
 	current_level = 0
 	_update_weapon_cache()

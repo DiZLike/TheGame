@@ -59,9 +59,9 @@ vertical_alignment = 1
 [node name="LivesPanel" type="Panel" parent="." unique_id=1415495372]
 self_modulate = Color(1, 1, 1, 0)
 offset_left = 24.0
-offset_top = 48.0
+offset_top = 50.0
 offset_right = 164.0
-offset_bottom = 98.0
+offset_bottom = 100.0
 
 [node name="Medal1" type="AnimatedSprite2D" parent="LivesPanel" unique_id=418715799]
 position = Vector2(15, 25)

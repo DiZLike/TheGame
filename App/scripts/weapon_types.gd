@@ -13,7 +13,8 @@ enum WeaponType {
 	SPREADGUN,  # 2 - Спредган
 	LASER,      # 3 - Лазер
 	ROCKET,     # 4 - Ракеты
-	HOMING      # 5 - Самонаводящиеся
+	HOMING,     # 5 - Самонаводящиеся
+	TESLA		# 6 - Тесла
 }
 
 # ============================================
@@ -25,7 +26,8 @@ const BULLET_SCENES = {
 	WeaponType.SPREADGUN: preload("res://scenes/bullets/player/bullet_spread.tscn"),
 	WeaponType.LASER: preload("res://scenes/bullets/player/bullet_laser.tscn"),
 	WeaponType.ROCKET: preload("res://scenes/bullets/player/bullet_rocket.tscn"),
-	WeaponType.HOMING: preload("res://scenes/bullets/player/bullet_homing.tscn")
+	WeaponType.HOMING: preload("res://scenes/bullets/player/bullet_homing.tscn"),
+	WeaponType.TESLA: preload("res://scenes/bullets/player/bullet_tesla.tscn"),
 }
 
 # ============================================
@@ -126,5 +128,45 @@ const WEAPON_DATA = {
 		],
 		"description": "Самонаводящиеся снаряды",
 		"overload_name": "РОЙ"
+	},
+	WeaponType.TESLA: {
+		"sound": "res://data/audio/sounds/player_weapon/weapon_laser.ogg",
+		"levels": [
+			{
+				"damage": 15,
+				"bullet_speed": 0,
+				"shoot_delay": 0.8,
+				"magazine_size": 1,
+				"reload_time": 1.5,
+				"chain_count": 3,
+				"chain_range": 200.0,
+				"chain_damage_falloff": 0.7,
+				"chain_delay": 0.08
+			},
+			# Уровень 2
+			{
+				"damage": 20,
+				"bullet_speed": 0,
+				"shoot_delay": 0.7,
+				"magazine_size": 1,
+				"reload_time": 1.3,
+				"chain_count": 4,
+				"chain_range": 250.0,
+				"chain_damage_falloff": 0.75,
+				"chain_delay": 0.06
+			},
+			# Уровень 3
+			{
+				"damage": 25,
+				"bullet_speed": 0,
+				"shoot_delay": 0.6,
+				"magazine_size": 1,
+				"reload_time": 1.0,
+				"chain_count": 5,
+				"chain_range": 300.0,
+				"chain_damage_falloff": 0.8,
+				"chain_delay": 0.05
+			}
+		]
 	}
 }
