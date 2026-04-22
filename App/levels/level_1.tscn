@@ -937,9 +937,9 @@ position = Vector2(2089, 1121)
 [node name="SpawnersCapsule" type="Node2D" parent="Environment" unique_id=539816188]
 
 [node name="CapsuleSpawner" parent="Environment/SpawnersCapsule" unique_id=1522388741 instance=ExtResource("17_oqlok")]
-position = Vector2(930, 1016)
+position = Vector2(936, 974)
 allowed_direction = 4
-weapon_type = 5
+weapon_type = 4
 
 [node name="CapsuleSpawner2" parent="Environment/SpawnersCapsule" unique_id=961232469 instance=ExtResource("17_oqlok")]
 position = Vector2(782, 546)
@@ -1138,7 +1138,7 @@ down_angle_threshold = 60.0
 position = Vector2(3031, 941)
 
 [node name="Player" parent="." unique_id=1043132733 instance=ExtResource("2_jirdo")]
-position = Vector2(2985, 1124)
+position = Vector2(203, 481)
 
 [node name="CameraBorders" type="Node2D" parent="." unique_id=362354054]
 

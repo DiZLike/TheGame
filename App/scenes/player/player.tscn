@@ -379,7 +379,7 @@ animation = &"idle"
 autoplay = "idle"
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1173401302 groups=["camera"]]
-zoom = Vector2(2.65, 2.65)
+zoom = Vector2(3, 3)
 position_smoothing_enabled = true
 drag_vertical_enabled = true
 drag_top_margin = 0.4

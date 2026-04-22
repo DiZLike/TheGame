@@ -87,10 +87,10 @@ const WEAPON_DATA = {
 		"name": "R - Ракеты",
 		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.ogg",
 		"levels": [
-			{"damage": 30, "magazine_size": 1, "reload_time": 0.7, "shoot_delay": 0.7, "bullet_speed": 250, "spread_count": 1, "spread_angle": 0, "explosion_radius": 12},
-			{"damage": 30, "magazine_size": 1, "reload_time": 0.8, "shoot_delay": 0.8, "bullet_speed": 275, "spread_count": 1, "spread_angle": 0, "explosion_radius": 18},
-			{"damage": 30, "magazine_size": 1, "reload_time": 1.2, "shoot_delay": 1.2, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "explosion_radius": 23},
-			{"damage": 40, "magazine_size": 1, "reload_time": 1.5, "shoot_delay": 1.5, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0, "explosion_radius": 35}
+			{"damage": 30, "magazine_size": 1, "reload_time": 0.7, "shoot_delay": 0.7, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "explosion_radius": 12},
+			{"damage": 30, "magazine_size": 2, "reload_time": 0.8, "shoot_delay": 0.7, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0, "explosion_radius": 18},
+			{"damage": 30, "magazine_size": 2, "reload_time": 1.2, "shoot_delay": 0.7, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0, "explosion_radius": 23},
+			{"damage": 40, "magazine_size": 2, "reload_time": 1.5, "shoot_delay": 0.7, "bullet_speed": 400, "spread_count": 1, "spread_angle": 0, "explosion_radius": 35}
 		],
 		"description": "Взрывчатые ракеты",
 		"overload_name": "ТАКТИЧЕСКИЙ ГРИБ"
@@ -103,7 +103,7 @@ const WEAPON_DATA = {
 		"name": "H - Самонаводящиеся",
 		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.ogg",
 		"levels": [
-			{"damage": 20, "magazine_size": 2, "reload_time": 2, "flight_time": 2.0, "shoot_delay": 0.4, "bullet_speed": 200, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.06},
+			{"damage": 20, "magazine_size": 2, "reload_time": 2, "flight_time": 2.0, "shoot_delay": 0.4, "bullet_speed": 250, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.06},
 			{"damage": 20, "magazine_size": 2, "reload_time": 1.8, "flight_time": 2.0, "shoot_delay": 0.35, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.08},
 			{"damage": 20, "magazine_size": 3, "reload_time": 1.6, "flight_time": 2.0, "shoot_delay": 0.3, "bullet_speed": 400, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.10},
 			{"damage": 30, "magazine_size": 4, "reload_time": 1.5, "flight_time": 2.0, "shoot_delay": 0.3, "bullet_speed": 600, "spread_count": 1, "spread_angle": 0, "homing_strength": 1.0}
