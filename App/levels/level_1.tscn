@@ -899,6 +899,7 @@ unique_trigger_id = "l1_null_hint_barrier_01"
 
 [node name="Bug" parent="Environment/Bags" unique_id=1608676095 instance=ExtResource("11_0fu15")]
 position = Vector2(2912, 1120)
+unique_bug_id = "bug1"
 
 [node name="Pickups" type="Node2D" parent="Environment" unique_id=1062698118]
 
@@ -949,7 +950,7 @@ allowed_direction = 1
 weapon_type = 4
 
 [node name="CapsuleSpawner6" parent="Environment/SpawnersCapsule" unique_id=1325917585 instance=ExtResource("17_oqlok")]
-position = Vector2(1835, 1391)
+position = Vector2(1959, 1387)
 enable = false
 on_shot = false
 spawn_only_if_player_doesnt_have = true
@@ -986,7 +987,7 @@ position = Vector2(1460, 869)
 position = Vector2(2187, 1400)
 
 [node name="DestroyPlatform Spawner7" parent="Environment/Platforms" unique_id=526544783 instance=ExtResource("22_udfhf")]
-position = Vector2(2209, 1340)
+position = Vector2(2216, 1340)
 
 [node name="VMovingPlatform" parent="Environment/Platforms" unique_id=1708840818 instance=ExtResource("11_ryfpa")]
 position = Vector2(1421, 959)
@@ -999,7 +1000,7 @@ top_limit = -50.0
 bottom_limit = 50.0
 
 [node name="VMovingPlatform3" parent="Environment/Platforms" unique_id=2001658898 instance=ExtResource("11_ryfpa")]
-position = Vector2(2206, 1253)
+position = Vector2(2190, 1253)
 top_limit = -50.0
 bottom_limit = 50.0
 
@@ -1083,7 +1084,7 @@ position = Vector2(1693, 1071)
 position = Vector2(1728, 835)
 
 [node name="Camper" parent="Enemy" unique_id=1254282009 instance=ExtResource("12_4knja")]
-position = Vector2(2526, 1168)
+position = Vector2(2495, 1168)
 
 [node name="Turret 8" parent="Enemy" unique_id=861417607 instance=ExtResource("17_lrvbd")]
 position = Vector2(2138, 1324)

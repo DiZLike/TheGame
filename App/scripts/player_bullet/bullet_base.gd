@@ -5,9 +5,6 @@ class_name BulletBase
 # БАЗОВЫЙ КЛАСС ДЛЯ ВСЕХ ПУЛЬ
 # ============================================
 
-# Предзагружаем сцену взрыва (укажите правильный путь)
-const TILE_EXPLOSION_SCENE = preload("res://scenes/effects/pixel_explosion.tscn")
-
 # === ОБЩИЕ ПАРАМЕТРЫ ===
 var direction: Vector2 = Vector2.RIGHT:
 	set(value):
@@ -169,21 +166,18 @@ func _create_tile_explosion(position: Vector2, tilemap: TileMapLayer, coords: Ve
 	var tile_texture = _get_tile_texture_from_atlas(tilemap, coords)
 	
 	if tile_texture:
-		var explosion = TILE_EXPLOSION_SCENE.instantiate()
+		var tile_scene = load("res://scenes/tile.tscn")
+		var tile = tile_scene.instantiate()
 		
-		get_tree().root.add_child(explosion)
-		explosion.global_position = position
+		get_tree().root.add_child(tile)
+		tile.global_position = position
 		
 		var sprite = Sprite2D.new()
 		sprite.texture = tile_texture
 		sprite.centered = true
 		
-		# Проверяем наличие метода
-		if explosion.has_method("explode_from_sprite"):
-			explosion.explode_from_sprite(sprite, position)
-		else:
-			print("ERROR: explosion has no method 'explode_from_sprite'")
-		
+		tile.set_sprite(sprite)
+		tile.destroy(bullet_type)
 		sprite.queue_free()
 	else:
 		print("=== NO TEXTURE DATA ===")

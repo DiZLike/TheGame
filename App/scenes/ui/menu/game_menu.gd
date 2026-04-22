@@ -129,7 +129,7 @@ func _setup_item_slots() -> void:
 	item_slots.clear()
 	
 	# Создаём 9 слотов для прочих предметов (индексы 1-9 в инвентаре)
-	for i in range(1, 10):  # InventoryManager.inventory_size если доступен
+	for i in range(1, InventoryManager.inventory_size):  # InventoryManager.inventory_size если доступен
 		var slot = _create_slot()
 		items_grid.add_child(slot)
 		item_slots.append(slot)

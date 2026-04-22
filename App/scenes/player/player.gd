@@ -20,6 +20,12 @@ const BLINK_INTERVAL: float = 0.1    # Интервал мигания при н
 @onready var damage_collision: CollisionShape2D = $Detector/CollisionShape2D  # Коллайдер для получения урона
 @onready var shoot_point: Marker2D = $ShootPoint                            # Точка вылета пули
 
+var skins = [
+	preload("res://sprites/player/default/spritesheet.png"),
+	preload("res://sprites/player/skin1/spritesheet.png"),
+	preload("res://sprites/player/skin2/spritesheet.png")
+]
+
 # Флаги состояния персонажа
 var is_jumping: bool = false        # Находится ли в прыжке
 var is_crouching: bool = false      # Приседает ли
@@ -383,3 +389,20 @@ func force_respawn():
 
 func _on_shape_entered(area_rid: RID, area: Area2D, area_shape_index: int, local_shape_index: int) -> void:
 	pass # Replace with function body.
+	
+func change_skin(index: int) -> void:
+	if index < 0 or index >= skins.size():
+		return
+	
+	var new_atlas = skins[index]
+	var current_anim = animated_sprite.animation
+	var current_frame = animated_sprite.frame
+	
+	for anim in animated_sprite.sprite_frames.get_animation_names():
+		for i in animated_sprite.sprite_frames.get_frame_count(anim):
+			var tex = animated_sprite.sprite_frames.get_frame_texture(anim, i)
+			if tex is AtlasTexture:
+				tex.atlas = new_atlas
+	
+	animated_sprite.play(current_anim)
+	animated_sprite.frame = current_frame

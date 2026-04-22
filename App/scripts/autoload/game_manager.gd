@@ -35,12 +35,15 @@ var _player_data: Dictionary = {
 		"type": WeaponsType.WeaponType.DEFAULT,
 		"level": 0
 	},
+	"skin": 2,
 	"game": {
-		"weapon_training_completed": false
+		"weapon_training_completed": false,
+		"coin_collection_started": false
 	},
 	"inventory": {},
 	"collected_items": [],
-	"triggered_dialogues": []
+	"triggered_dialogues": [],
+	"removed_bugs": []
 }
 
 var dialogue_trig: Dictionary = {}
@@ -85,6 +88,7 @@ func _connect_signals() -> void:
 func register_player(player_node: Player) -> void:
 	player = player_node
 	InventoryManager.add_item_by_id("weapon_d")
+	player.change_skin(_player_data["skin"])
 
 # ============================================
 # ЖИЗНИ (улучшенное API)
@@ -209,6 +213,18 @@ func mark_dialogue_triggered(trigger_id: String) -> void:
 
 func clear_triggered_dialogues() -> void:
 	_player_data["triggered_dialogues"].clear()
+	
+# ============================================
+# УДАЛЕНИЕ БАГОВ (БАРЬЕРОВ)
+# ============================================
+func has_bug_removed(bug_id: String) -> bool:
+	return _player_data["removed_bugs"].has(bug_id)
+func mark_bug_removed(bug_id: String) -> void:
+	if not _player_data["removed_bugs"].has(bug_id):
+		_player_data["removed_bugs"].append(bug_id)
+		print("Bug marked as removed: ", bug_id)
+func clear_removed_bugs() -> void:
+	_player_data["removed_bugs"].clear()
 
 # ============================================
 # СОХРАНЕНИЕ И ЗАГРУЗКА

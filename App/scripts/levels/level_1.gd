@@ -69,5 +69,5 @@ func barrier_1_group_destroyed(group_name: String) -> void:
 	if group_name == "b1":
 		show_dialogue("/level_01/null_hint_barrier_01_destroy", "d1", false)
 		$Environment/SpawnersCapsule/CapsuleSpawner6.queue_free()
-		$Environment/Bags/Bug.queue_free()
+		$Environment/Bags/Bug.remove()
 #endregion
