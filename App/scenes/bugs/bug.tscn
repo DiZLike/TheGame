@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://cpkjvkfkuks28" path="res://scenes/bugs/bug.gd" id="1_pxqo7"]
 [ext_resource type="Texture2D" uid="uid://cq6kygnabct7n" path="res://sprites/bugs/bug_sprite1.png" id="1_xwoqa"]
-[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/bugs/glitch_area.tscn" id="2_mgpee"]
+[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/effects/glitch/glitch_area.tscn" id="2_mgpee"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ya21b"]
 size = Vector2(20, 35.75419)

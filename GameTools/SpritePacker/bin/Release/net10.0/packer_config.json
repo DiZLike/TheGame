@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\pickup",
-  "OutputFolder": "sprites\\pickup",
+  "InputFolder": "sprites\\portal",
+  "OutputFolder": "sprites\\portal",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,

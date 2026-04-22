@@ -9,7 +9,7 @@ extends Node2D
 
 var screenshot_path: String = "user://explosion_screenshots/"
 # Создает взрыв из текстуры спрайта
-func explode_from_sprite(sprite: Sprite2D, position: Vector2, base_force: float = 350.0) -> void:
+func explode_from_sprite(sprite: Sprite2D, position1: Vector2, base_force: float = 350.0) -> void:
 	#save_sprite_to_file(sprite)
 	var texture = sprite.texture
 	if not texture:
@@ -49,7 +49,7 @@ func explode_from_sprite(sprite: Sprite2D, position: Vector2, base_force: float 
 				Vector2(x + random_offset, y + random_offset),
 				tex_size,
 				sprite.offset,
-				position,
+				position1,
 				final_force
 			)
 	

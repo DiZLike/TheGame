@@ -47,7 +47,7 @@ animations = [{
 z_index = 10
 collision_layer = 32
 script = ExtResource("1_4i8g4")
-weapon_type = 5
+weapon_type = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1675286438]
 scale = Vector2(0.7, 0.7)

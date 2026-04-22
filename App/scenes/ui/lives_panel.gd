@@ -6,7 +6,6 @@ const M_WEAPON = preload("res://scenes/ui/weapon/m_weapon.tscn")
 const S_WEAPON = preload("res://scenes/ui/weapon/s_weapon.tscn")
 const H_WEAPON = preload("res://scenes/ui/weapon/h_weapon.tscn")
 const R_WEAPON = preload("res://scenes/ui/weapon/r_weapon.tscn")
-const L_WEAPON = preload("res://scenes/ui/weapon/l_weapon.tscn")
 const T_WEAPON = preload("res://scenes/ui/weapon/t_weapon.tscn")
 
 @onready var score_label: Label = $ScorePanel/ScoreLabel
@@ -78,8 +77,6 @@ func update_weapon_display(weapon_type: WeaponsType.WeaponType, level: int) -> v
 			current_weapon = H_WEAPON.instantiate()
 		WeaponsType.WeaponType.ROCKET:
 			current_weapon = R_WEAPON.instantiate()
-		WeaponsType.WeaponType.LASER:
-			current_weapon = L_WEAPON.instantiate()
 		WeaponsType.WeaponType.TESLA:
 			current_weapon = T_WEAPON.instantiate()
 		_:

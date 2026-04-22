@@ -32,7 +32,6 @@ func _preload_items() -> void:
 		"weapon_s",
 		"weapon_r",
 		"weapon_h",
-		"weapon_l",
 		"weapon_t",
 		"coin"
 	]

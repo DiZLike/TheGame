@@ -78,9 +78,6 @@ func _on_body_entered(body: Node2D) -> void:
 	_on_hit_enemy(body)
 	_queue_free()
 
-func _on_body_shape_entered(body_rid: RID, body: Node2D, body_shape_index: int, local_shape_index: int) -> void:
-	pass
-
 # ============================================
 # ВЫХОД ЗА ЭКРАН
 # ============================================
@@ -161,7 +158,7 @@ func _on_other_collision(body: Node2D) -> void:
 # ============================================
 # ВЗРЫВ ТАЙЛА
 # ============================================
-func _create_tile_explosion(position: Vector2, tilemap: TileMapLayer, coords: Vector2i) -> void:
+func _create_tile_explosion(position1: Vector2, tilemap: TileMapLayer, coords: Vector2i) -> void:
 	# Получаем текстуру тайла
 	var tile_texture = _get_tile_texture_from_atlas(tilemap, coords)
 	
@@ -170,7 +167,7 @@ func _create_tile_explosion(position: Vector2, tilemap: TileMapLayer, coords: Ve
 		var tile = tile_scene.instantiate()
 		
 		get_tree().root.add_child(tile)
-		tile.global_position = position
+		tile.global_position = position1
 		
 		var sprite = Sprite2D.new()
 		sprite.texture = tile_texture

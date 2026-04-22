@@ -26,7 +26,7 @@ func _on_hit_enemy(enemy: Node2D) -> void:
 @warning_ignore("unused_parameter")
 func _on_other_collision(body: Node2D) -> void:
 	call_deferred("_explode")
-	#super._on_other_collision(body)
+	super._on_other_collision(body)
 
 func _explode() -> void:
 	if _has_exploded:
@@ -41,7 +41,7 @@ func _explode() -> void:
 	var explosion = explosion_scene.instantiate() as Explosion
 	
 	explosion.global_position = global_position
-	explosion.damage = damage / 2
+	explosion.damage = damage / 2.0
 	explosion.explosion_radius = explosion_radius
 	explosion.shooter = shooter
 	explosion.excluded_target = _hit_enemy

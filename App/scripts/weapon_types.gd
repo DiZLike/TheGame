@@ -11,10 +11,9 @@ enum WeaponType {
 	DEFAULT,    # 0 - Стандартная пушка
 	MACHINEGUN, # 1 - Пулемёт
 	SPREADGUN,  # 2 - Спредган
-	LASER,      # 3 - Лазер
-	ROCKET,     # 4 - Ракеты
-	HOMING,     # 5 - Самонаводящиеся
-	TESLA		# 6 - Тесла
+	ROCKET,     # 3 - Ракеты
+	HOMING,     # 4 - Самонаводящиеся
+	TESLA		# 5 - Тесла
 }
 
 # ============================================
@@ -24,7 +23,6 @@ const BULLET_SCENES = {
 	WeaponType.DEFAULT: preload("res://scenes/bullets/player/bullet_default.tscn"),
 	WeaponType.MACHINEGUN: preload("res://scenes/bullets/player/bullet_machinegun.tscn"),
 	WeaponType.SPREADGUN: preload("res://scenes/bullets/player/bullet_spread.tscn"),
-	WeaponType.LASER: preload("res://scenes/bullets/player/bullet_laser.tscn"),
 	WeaponType.ROCKET: preload("res://scenes/bullets/player/bullet_rocket.tscn"),
 	WeaponType.HOMING: preload("res://scenes/bullets/player/bullet_homing.tscn"),
 	WeaponType.TESLA: preload("res://scenes/bullets/player/bullet_tesla.tscn"),
@@ -80,22 +78,6 @@ const WEAPON_DATA = {
 		],
 		"description": "Веерная стрельба",
 		"overload_name": "ФАНТОМНЫЙ ВЕЕР"
-	},
-	
-	# ------------------------------------------------------------
-	# L - ЛАЗЕР
-	# ------------------------------------------------------------
-	WeaponType.LASER: {
-		"name": "L - Лазер",
-		"sound": "res://data/audio/sounds/player_weapon/weapon_laser.ogg",
-		"levels": [
-			{"damage": 30, "magazine_size": 1, "reload_time": 0.8, "shoot_delay": 0.8, "bullet_speed": 0, "spread_count": 1, "spread_angle": 0, "pierce": 0, "laser_duration": 0.1},
-			{"damage": 30, "magazine_size": 1, "reload_time": 0.7, "shoot_delay": 0.7, "bullet_speed": 0, "spread_count": 1, "spread_angle": 0, "pierce": 1, "laser_duration": 0.15},
-			{"damage": 30, "magazine_size": 1, "reload_time": 0.6, "shoot_delay": 0.6, "bullet_speed": 0, "spread_count": 1, "spread_angle": 0, "pierce": 2, "laser_duration": 0.2},
-			{"damage": 40, "magazine_size": 1, "reload_time": 1.0, "shoot_delay": 1.0, "bullet_speed": 0, "spread_count": 1, "spread_angle": 0, "pierce": 999, "laser_duration": 0.3}
-		],
-		"description": "Мгновенный луч",
-		"overload_name": "РАЗРЫВ РЕАЛЬНОСТИ"
 	},
 	
 	# ------------------------------------------------------------

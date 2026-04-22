@@ -177,7 +177,7 @@ func reload() -> void:
 # ============================================
 # ПУБЛИЧНЫЕ МЕТОДЫ
 # ============================================
-func change_weapon(weapon_type: int) -> void:
+func change_weapon(weapon_type: WeaponsType.WeaponType) -> void:
 	current_weapon = weapon_type
 	if current_weapon == WeaponsType.WeaponType.DEFAULT:
 		InventoryManager.add_item_by_id("weapon_d")
@@ -189,8 +189,6 @@ func change_weapon(weapon_type: int) -> void:
 		InventoryManager.add_item_by_id("weapon_r")
 	if current_weapon == WeaponsType.WeaponType.HOMING:
 		InventoryManager.add_item_by_id("weapon_h")
-	if current_weapon == WeaponsType.WeaponType.LASER:
-		InventoryManager.add_item_by_id("weapon_l")
 	if current_weapon == WeaponsType.WeaponType.TESLA:
 		InventoryManager.add_item_by_id("weapon_t")
 	

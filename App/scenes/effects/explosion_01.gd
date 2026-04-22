@@ -15,7 +15,7 @@ var excluded_target: Node2D = null
 
 func _ready() -> void:
 	AudioManager.play_sfx(sound, 1, global_position)
-	# Настройка радиус
+	# Настройка радиуса
 	if collision_shape and collision_shape.shape is CircleShape2D:
 		_original_radius = (collision_shape.shape as CircleShape2D).radius
 	
@@ -24,38 +24,61 @@ func _ready() -> void:
 	
 	if animation:
 		animation.play("explode")
+		
+	# Подключаем сигнал вручную, если не подключен через редактор
+	if not body_entered.is_connected(_on_body_entered):
+		body_entered.connect(_on_body_entered)
 
 func _on_body_entered(body: Node2D) -> void:
+	# Пропускаем группы terrain
 	if body.is_in_group("terrain") or body.is_in_group("terrain_deadly"):
 		return
-	if body is TileMapLayer:
-		var local_point = body.to_local(global_position)
-		var center_coords = body.local_to_map(local_point)
-		
-		var closest_coord: Vector2i
-		var min_distance = INF
-		
-		# Ищем в радиусе 3, выбираем ближайший тайл к точке коллизии
-		for x in range(-3, 4):
-			for y in range(-3, 4):
-				var coord = center_coords + Vector2i(x, y)
-				if body.get_cell_source_id(coord) != -1:
-					# Центр клетки в глобальных координатах
-					var cell_center = body.to_global(body.map_to_local(coord))
-					var dist = global_position.distance_to(cell_center)
-					if dist < min_distance:
-						min_distance = dist
-						closest_coord = coord
-		
-		if min_distance != INF:
-			body.set_cell(closest_coord, -1)
 	
-	# Исключаем исключённую цель
-	if body == shooter or body == excluded_target or not body.is_in_group("enemy"):
+	# Обработка TileMapLayer
+	if body is TileMapLayer:
+		_handle_tilemap_destruction(body)
+	
+	# Исключаем стрелявшего и исключённую цель
+	if body == shooter or body == excluded_target:
+		return
+	
+	# Наносим урон только врагам
+	if not body.is_in_group("enemy"):
 		return
 	
 	if body.has_method("on_hit"):
 		body.on_hit(damage, "explosion")
+
+func _handle_tilemap_destruction(tilemap: TileMapLayer) -> void:
+	var local_point = tilemap.to_local(global_position)
+	var center_coords = tilemap.local_to_map(local_point)
+	
+	# Получаем размер тайла из TileSet
+	var tile_size = tilemap.tile_set.tile_size
+	
+	# Вычисляем радиус в клетках (округляем вверх)
+	var cell_radius = ceil(explosion_radius / max(tile_size.x, tile_size.y))
+	
+	# Собираем все тайлы в радиусе взрыва для уничтожения
+	var cells_to_remove: Array[Vector2i] = []
+	
+	for x in range(-cell_radius, cell_radius + 1):
+		for y in range(-cell_radius, cell_radius + 1):
+			var coord = center_coords + Vector2i(x, y)
+			
+			# Проверяем, существует ли тайл в этой клетке
+			if tilemap.get_cell_source_id(coord) != -1:
+				# Центр клетки в глобальных координатах
+				var cell_center = tilemap.to_global(tilemap.map_to_local(coord))
+				var dist = global_position.distance_to(cell_center)
+				
+				# Уничтожаем только тайлы в радиусе взрыва
+				if dist <= explosion_radius:
+					cells_to_remove.append(coord)
+	
+	# Удаляем все найденные тайлы
+	for coord in cells_to_remove:
+		tilemap.set_cell(coord, -1)
 
 func _on_animation_finished() -> void:
 	queue_free()

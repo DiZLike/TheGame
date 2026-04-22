@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://30ojuiupye6y" path="res://scenes/ui/menu/settings_menu.gd" id="1_2ce8l"]
 [ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="1_font"]
 [ext_resource type="Texture2D" uid="uid://cxyvokmb6iyd5" path="res://backgrounds/image-9.png" id="2_v5t0p"]
-[ext_resource type="PackedScene" uid="uid://47bfov555uuo" path="res://scenes/effects/glitch_effect.tscn" id="3_r6134"]
+[ext_resource type="PackedScene" uid="uid://47bfov555uuo" path="res://scenes/effects/glitch/glitch_effect.tscn" id="3_r6134"]
 
 [sub_resource type="StyleBoxFlat" id="PanelStyle"]
 bg_color = Color(0.102, 0.102, 0.102, 0.898)

@@ -281,11 +281,11 @@ func _create_short_lightning(from: Vector2) -> void:
 	# Рисуем короткую молнию
 	_create_lightning_effect(from, to)
 
-func _create_spark_effect(position: Vector2) -> void:
+func _create_spark_effect(position1: Vector2) -> void:
 	var spark_scene = load("res://scenes/effects/spark_effect.tscn")
 	if spark_scene:
 		var spark = spark_scene.instantiate()
-		spark.global_position = position
+		spark.global_position = position1
 		get_tree().current_scene.add_child(spark)
 
 func _create_lightning_effect(from: Vector2, to: Vector2) -> void:
@@ -328,8 +328,8 @@ func _generate_lightning_points(from: Vector2, to: Vector2) -> Array:
 		var base_point = from.lerp(to, t)
 		
 		# Добавляем случайное смещение перпендикулярно направлению
-		var direction = (to - from).normalized()
-		var perpendicular = Vector2(-direction.y, direction.x)
+		var direction1 = (to - from).normalized()
+		var perpendicular = Vector2(-direction1.y, direction1.x)
 		var offset = randf_range(-displacement, displacement)
 		
 		var point = base_point + perpendicular * offset
@@ -338,12 +338,12 @@ func _generate_lightning_points(from: Vector2, to: Vector2) -> Array:
 	points.append(to)
 	return points
 
-func _create_hit_effect(position: Vector2) -> void:
+func _create_hit_effect(position1: Vector2) -> void:
 	# Создаём электрические искры при попадании
 	var spark_scene = load("res://scenes/effects/spark_effect.tscn")
 	if spark_scene:
 		var spark = spark_scene.instantiate()
-		spark.global_position = position
+		spark.global_position = position1
 		get_tree().current_scene.add_child(spark)
 		
 		# Если есть метод для изменения цвета, вызываем его
@@ -364,7 +364,3 @@ func _finish_chain() -> void:
 # ============================================
 # ПЕРЕОПРЕДЕЛЯЕМ МЕТОДЫ БАЗОВОГО КЛАССА
 # ============================================
-
-func _on_hit_enemy(enemy: Node2D) -> void:
-	# Не используем - цепь всегда стартует от точки спавна
-	pass

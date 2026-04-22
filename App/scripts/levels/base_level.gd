@@ -12,10 +12,13 @@ class_name BaseLevel
 @onready var game_menu: CanvasLayer = $UI/GameMenu
 @onready var player: Player = $Player
 @onready var lives_panel: CanvasLayer = $UI/LivesPanel
+@onready var fade_overlay: ColorRect = $UI/FadeOverlay  # Добавляем FadeOverlay
 #endregion
 
 #region Жизненный цикл
 func _ready() -> void:
+	_setup_fade_overlay()  # Инициализация затемнения
+	_setup_portals()       # Подключение порталов
 	_setup_dialogue_signals()
 	_setup_music()
 	_setup_player_signals()
@@ -29,6 +32,22 @@ func _input(event: InputEvent) -> void:
 #endregion
 
 #region Инициализация (private)
+func _setup_fade_overlay() -> void:
+	if fade_overlay:
+		fade_overlay.visible = false
+		fade_overlay.modulate.a = 0.0
+
+func _setup_portals() -> void:
+	# Находим все порталы на сцене
+	var portals = get_tree().get_nodes_in_group("portals")
+	for portal in portals:
+		if portal is Portal:
+			# Подключаем сигналы портала к методам уровня
+			if portal.has_signal("fade_out_requested"):
+				portal.fade_out_requested.connect(_on_portal_fade_out)
+			if portal.has_signal("fade_in_requested"):
+				portal.fade_in_requested.connect(_on_portal_fade_in)
+
 func _setup_dialogue_signals() -> void:
 	if dialogue_box:
 		dialogue_box.method_executed.connect(_on_dialogue_method_executed)
@@ -54,7 +73,7 @@ func _pause_game() -> void:
 		game_menu.visible = true
 #endregion
 
-#region Визуальные эффекты (глитч)
+#region Визуальные эффекты
 func show_glitch(duration: float = 0.0) -> void:
 	if not glitch_layer:
 		return
@@ -66,6 +85,32 @@ func show_glitch(duration: float = 0.0) -> void:
 func hide_glitch() -> void:
 	if glitch_layer:
 		glitch_layer.visible = false
+
+# Новые методы для работы с затемнением
+func fade_out(duration: float = 0.5) -> void:
+	if not fade_overlay:
+		return
+	
+	fade_overlay.visible = true
+	var tween = create_tween()
+	tween.tween_property(fade_overlay, "modulate:a", 1.0, duration)
+	await tween.finished
+
+func fade_in(duration: float = 0.5) -> void:
+	if not fade_overlay:
+		return
+	
+	var tween = create_tween()
+	tween.tween_property(fade_overlay, "modulate:a", 0.0, duration)
+	await tween.finished
+	fade_overlay.visible = false
+
+# Обработчики сигналов от порталов
+func _on_portal_fade_out(duration: float) -> void:
+	await fade_out(duration)
+
+func _on_portal_fade_in(duration: float) -> void:
+	await fade_in(duration)
 #endregion
 
 #region Система диалогов
@@ -111,6 +156,7 @@ func complete_weapon_training() -> void:
 func _on_weapon_picked_up() -> void:
 	if is_first_weapon_pickup():
 		_show_training_dialogue()
+
 func _on_coin_picked_up() -> void:
 	pass
 

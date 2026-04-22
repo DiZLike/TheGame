@@ -222,7 +222,7 @@ func set_music(music: AudioStream, fade_in_time: float = 0.0) -> void:
 	if fade_in_time > 0:
 		# Плавное появление
 		is_music_fading = true
-		var original_volume_db = music_player.volume_db
+		var _original_volume_db = music_player.volume_db
 		music_player.volume_db = linear_to_db(0.0)
 		music_player.stream = music
 		music_player.play()

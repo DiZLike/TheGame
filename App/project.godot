@@ -15,6 +15,8 @@ run/main_scene="uid://bywi2eo8g1grj"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="DiZlike/Glitchvania"
 config/features=PackedStringArray("4.6", "Mobile")
+boot_splash/show_image=false
+boot_splash/use_filter=false
 config/icon="res://icon.svg"
 
 [audio]
@@ -58,6 +60,7 @@ bug=""
 barrier_source=""
 coin=""
 destroyed_tile=""
+portals=""
 
 [input]
 

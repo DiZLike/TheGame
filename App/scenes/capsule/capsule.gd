@@ -32,8 +32,6 @@ func _ready():
 		pickup = preload("res://scenes/pickups/m_pickup.tscn")
 	elif weapon_type == WeaponsType.WeaponType.SPREADGUN:
 		pickup = preload("res://scenes/pickups/s_pickup.tscn")
-	elif weapon_type == WeaponsType.WeaponType.LASER:
-		pickup = preload("res://scenes/pickups/l_pickup.tscn")
 	elif weapon_type == WeaponsType.WeaponType.ROCKET:
 		pickup = preload("res://scenes/pickups/r_pickup.tscn")
 	elif weapon_type == WeaponsType.WeaponType.HOMING:

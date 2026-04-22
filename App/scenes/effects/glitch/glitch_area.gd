@@ -1,4 +1,5 @@
 extends Control
+class_name GlitchArea
 
 @onready var color_rect: ColorRect = $ColorRect
 

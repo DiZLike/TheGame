@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://b731nj4rtlwam"]
 
-[ext_resource type="Script" uid="uid://b8af2l43meqsj" path="res://scenes/bugs/glitch_area.gd" id="1_d71v6"]
+[ext_resource type="Script" uid="uid://b8af2l43meqsj" path="res://scenes/effects/glitch/glitch_area.gd" id="1_d71v6"]
 [ext_resource type="Shader" uid="uid://22igpfw23tnq" path="res://shaders/glitch_area.gdshader" id="1_ier43"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d71v6"]

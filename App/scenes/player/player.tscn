@@ -1,8 +1,14 @@
 [gd_scene format=3 uid="uid://bjklp0s2pk6fb"]
 
 [ext_resource type="Texture2D" uid="uid://jhskiec4h0e7" path="res://sprites/player/default/spritesheet.png" id="1_8afob"]
-[ext_resource type="Script" uid="uid://380tlcj4jkiw" path="res://scenes/player/player.gd" id="1_dovo2"]
+[ext_resource type="Script" uid="uid://380tlcj4jkiw" path="res://scripts/player/player.gd" id="1_dovo2"]
 [ext_resource type="Script" uid="uid://dfc8rvpek4djt" path="res://scripts/camera.gd" id="3_gmlin"]
+[ext_resource type="Script" uid="uid://qxhp0xl6y6e7" path="res://scripts/player/movement_controller.gd" id="4_lvxji"]
+[ext_resource type="Script" uid="uid://boqsbns7qp8bd" path="res://scripts/player/animation_controller.gd" id="5_p47bc"]
+[ext_resource type="Script" uid="uid://bvcr8fa1nr83l" path="res://scripts/player/shoot_controller.gd" id="6_75vfm"]
+[ext_resource type="Script" uid="uid://dppfeoagiyfgv" path="res://scripts/player/respawn_controller.gd" id="7_0owmy"]
+[ext_resource type="Script" uid="uid://cgxova176vbko" path="res://scripts/player/shield_effect.gd" id="8_qek5x"]
+[ext_resource type="Script" uid="uid://bfdcgvdlg4xhk" path="res://scripts/player/skin_manager.gd" id="9_5gtgg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
 size = Vector2(12, 31)
@@ -376,11 +382,29 @@ autoplay = "idle"
 zoom = Vector2(2.65, 2.65)
 position_smoothing_enabled = true
 drag_vertical_enabled = true
-drag_top_margin = 0.6
+drag_top_margin = 0.4
 script = ExtResource("3_gmlin")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1899347454]
 position = Vector2(14, 0)
+
+[node name="MovementController" type="Node" parent="." unique_id=70240006]
+script = ExtResource("4_lvxji")
+
+[node name="AnimationController" type="Node" parent="." unique_id=2113451927]
+script = ExtResource("5_p47bc")
+
+[node name="ShootController" type="Node" parent="." unique_id=675522724]
+script = ExtResource("6_75vfm")
+
+[node name="RespawnController" type="Node" parent="." unique_id=1499508084]
+script = ExtResource("7_0owmy")
+
+[node name="ShieldEffect" type="Node" parent="." unique_id=400117981]
+script = ExtResource("8_qek5x")
+
+[node name="SkinManager" type="Node" parent="." unique_id=1463191861]
+script = ExtResource("9_5gtgg")
 
 [connection signal="area_entered" from="Detector" to="." method="_on_area_entered"]
 [connection signal="area_shape_entered" from="Detector" to="." method="_on_shape_entered"]

@@ -1,0 +1,147 @@
+[gd_scene format=3 uid="uid://bopbte5n10h7b"]
+
+[ext_resource type="Script" uid="uid://de355tpmr6xbm" path="res://scripts/portals/portal_1.gd" id="1_3b6bg"]
+[ext_resource type="Texture2D" uid="uid://bcawxm8ky4ycv" path="res://sprites/portal/01/spritesheet.png" id="1_wjeyn"]
+[ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/effects/glitch/glitch_area.tscn" id="3_0skdj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0skdj"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(162, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qytfx"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(130, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ci53d"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(98, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hywcy"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(66, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_xwci0"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(34, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7f5k5"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(2, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y4dpl"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(2, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_iucn3"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(2, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ciwa7"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(34, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_nohy7"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(66, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pxxcg"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(98, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0je33"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(130, 2, 30, 47)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_v232v"]
+atlas = ExtResource("1_wjeyn")
+region = Rect2(162, 2, 30, 47)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rte8p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0skdj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qytfx")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ci53d")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hywcy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_xwci0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7f5k5")
+}],
+"loop": false,
+"name": &"closing",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_y4dpl")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_iucn3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ciwa7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_nohy7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pxxcg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0je33")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_v232v")
+}],
+"loop": false,
+"name": &"opening",
+"speed": 7.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3b6bg"]
+size = Vector2(4, 35)
+
+[node name="Portal 1" type="Area2D" unique_id=1262998367]
+z_index = 9
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_3b6bg")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1032586264]
+sprite_frames = SubResource("SpriteFrames_rte8p")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1664284839]
+position = Vector2(0, 3.5)
+shape = SubResource("RectangleShape2D_3b6bg")
+
+[node name="GlitchArea" parent="." unique_id=1022921014 instance=ExtResource("3_0skdj")]
+visible = false
+offset_left = -27.0
+offset_top = -33.0
+offset_right = 27.0
+offset_bottom = 24.0
+intensity = 0.03
+rgb_split_vertical = -0.01
+alpha_fade_top = 0.0
+alpha_fade_bottom = 0.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="animation_finished" from="AnimatedSprite2D" to="." method="_on_animation_finished"]
