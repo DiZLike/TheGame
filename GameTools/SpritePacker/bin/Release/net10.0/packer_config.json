@@ -1,6 +1,6 @@
 {
-  "InputFolder": "sprites\\portal",
-  "OutputFolder": "sprites\\portal",
+  "InputFolder": "sprites\\bullets_enemy",
+  "OutputFolder": "sprites\\bullets_enemy",
   "OutputImage": "spritesheet.png",
   "Columns": 0,
   "Padding": 2,

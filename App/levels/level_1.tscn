@@ -31,6 +31,7 @@
 [ext_resource type="PackedScene" uid="uid://cj3h7f67yixaq" path="res://scenes/coin/coin.tscn" id="27_voubc"]
 [ext_resource type="PackedScene" uid="uid://cyq3ybcbl2ipq" path="res://scenes/pickups/h_pickup.tscn" id="30_06ecp"]
 [ext_resource type="PackedScene" uid="uid://bopbte5n10h7b" path="res://scenes/portals/portal_1.tscn" id="30_pnpm1"]
+[ext_resource type="PackedScene" uid="uid://b84yr31lygabw" path="res://scenes/enemy/acid_spitter.tscn" id="32_ohjdc"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3sk1a"]
 texture = ExtResource("6_l53as")
@@ -1254,3 +1255,9 @@ position = Vector2(97, 515)
 
 [node name="BottomBorder" type="Node2D" parent="CameraBorders" unique_id=1706290094]
 position = Vector2(2231, 1599)
+
+[node name="AcidSpitter" parent="." unique_id=1293667178 instance=ExtResource("32_ohjdc")]
+position = Vector2(1603, 1527)
+
+[node name="AcidSpitter2" parent="." unique_id=966895019 instance=ExtResource("32_ohjdc")]
+position = Vector2(1655, 1528)
