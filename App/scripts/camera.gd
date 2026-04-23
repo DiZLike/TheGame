@@ -1,4 +1,5 @@
 extends Camera2D
+class_name PlayerSideCamera
 
 @onready var border_groupe: Node2D = $"../../CameraBorders"
 

@@ -8,6 +8,7 @@ signal weapon_picked_up()
 signal coin_picked_up()
 
 # Ссылки на узлы
+@onready var camera_controller: CameraController = $CameraController
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 @onready var damage_collision: CollisionShape2D = $Detector/CollisionShape2D
@@ -45,6 +46,7 @@ func _physics_process(delta: float) -> void:
 	movement_controller.apply_gravity(delta)
 	_handle_input()
 	_update_animation()
+	#camera_controller._process(delta)
 	move_and_slide()
 	movement_controller.reset_jump_on_landing()
 

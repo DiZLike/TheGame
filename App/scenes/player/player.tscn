@@ -9,6 +9,7 @@
 [ext_resource type="Script" uid="uid://dppfeoagiyfgv" path="res://scripts/player/respawn_controller.gd" id="7_0owmy"]
 [ext_resource type="Script" uid="uid://cgxova176vbko" path="res://scripts/player/shield_effect.gd" id="8_qek5x"]
 [ext_resource type="Script" uid="uid://bfdcgvdlg4xhk" path="res://scripts/player/skin_manager.gd" id="9_5gtgg"]
+[ext_resource type="Script" uid="uid://dbnu28j8wpmw8" path="res://scripts/player/camera_controller.gd" id="10_h17s1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_gmlin"]
 size = Vector2(12, 31)
@@ -381,8 +382,10 @@ autoplay = "idle"
 [node name="Camera2D" type="Camera2D" parent="." unique_id=1173401302 groups=["camera"]]
 zoom = Vector2(3, 3)
 position_smoothing_enabled = true
+position_smoothing_speed = 50.0
 drag_vertical_enabled = true
-drag_top_margin = 0.4
+drag_top_margin = 0.5
+drag_bottom_margin = 0.0
 script = ExtResource("3_gmlin")
 
 [node name="ShootPoint" type="Marker2D" parent="." unique_id=1899347454]
@@ -405,6 +408,9 @@ script = ExtResource("8_qek5x")
 
 [node name="SkinManager" type="Node" parent="." unique_id=1463191861]
 script = ExtResource("9_5gtgg")
+
+[node name="CameraController" type="Node" parent="." unique_id=706113993]
+script = ExtResource("10_h17s1")
 
 [connection signal="area_entered" from="Detector" to="." method="_on_area_entered"]
 [connection signal="area_shape_entered" from="Detector" to="." method="_on_shape_entered"]

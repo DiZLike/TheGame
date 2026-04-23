@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://by0xnynw17f8m"]
 
-[ext_resource type="Script" uid="uid://v07p0gaftjbd" path="res://scenes/spawners/enemy/destroy_platform_spawner.gd" id="1_32142"]
+[ext_resource type="Script" uid="uid://v07p0gaftjbd" path="res://scenes/platforms/destroy_platform_spawner.gd" id="1_32142"]
 [ext_resource type="Texture2D" uid="uid://dvl6harcpp0nb" path="res://sprites/platforms/mario_platform2.png" id="2_ddk8a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1fbfd"]
