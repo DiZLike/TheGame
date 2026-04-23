@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://c6j6jf431hggb"]
+
+[ext_resource type="Script" uid="uid://bb2abstkhafe2" path="res://scripts/enemies/annoying_flyer.gd" id="1_ge1qn"]
+[ext_resource type="Texture2D" uid="uid://cw1j2vhlaysjn" path="res://sprites/bullets/enemy/spritesheet.png" id="1_qumvg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ge1qn"]
+atlas = ExtResource("1_qumvg")
+region = Rect2(12, 12, 8, 8)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hc5vo"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ge1qn")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_kehhl"]
+radius = 4.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ge1qn"]
+radius = 78.31347
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hc5vo"]
+radius = 7.071068
+
+[node name="AnnoyingFlyer" type="CharacterBody2D" unique_id=689590160 groups=["enemy"]]
+z_index = 10
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_ge1qn")
+follow_speed = 100.0
+wander_speed = 150.0
+min_distance = 50.0
+max_distance = 250.0
+preferred_distance = 65.0
+avoidance_strength = 500.0
+vertical_offset_range = Vector2(0, 0)
+horizontal_offset_range = Vector2(0, 0)
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=443474681]
+sprite_frames = SubResource("SpriteFrames_hc5vo")
+animation = &"idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1209791273]
+shape = SubResource("CircleShape2D_kehhl")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1937320574]
+rect = Rect2(-4, -4, 8, 8)
+
+[node name="DetectionArea" type="Area2D" parent="." unique_id=1674311106]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1347071851]
+shape = SubResource("CircleShape2D_ge1qn")
+
+[node name="AvoidanceArea" type="Area2D" parent="." unique_id=1221823677]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AvoidanceArea" unique_id=821921150]
+shape = SubResource("CircleShape2D_hc5vo")
