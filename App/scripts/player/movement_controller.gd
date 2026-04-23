@@ -29,6 +29,8 @@ const JUMP_COLLIDER = {"pos": Vector2(0, 14), "scale": Vector2(0, 0.5)}
 @onready var collision_shape: CollisionShape2D = $"../CollisionShape2D"
 @onready var damage_collision: CollisionShape2D = $"../Detector/CollisionShape2D"
 
+var sound_jump = preload("res://data/audio/sounds/player/jump.wav")
+
 func _ready():
 	default_collider_pos = collision_shape.position
 	default_collider_scale = collision_shape.scale
@@ -62,6 +64,7 @@ func handle_jump(jump_pressed: bool) -> void:
 	if not can_move:
 		return
 	if jump_pressed and player.is_on_floor() and not is_crouching:
+		AudioManager.play_sfx(sound_jump, 1, player.global_position)
 		player.velocity.y = JUMP_VELOCITY
 		is_jumping = true
 		jumped.emit()
@@ -70,9 +73,13 @@ func reset_jump_on_landing() -> void:
 	if player.is_on_floor() and is_jumping:
 		is_jumping = false
 		landed.emit()
+		
+func reset_jump_force():
+	player.velocity.y = 0
+	is_jumping = false
 
 func _set_collider(pos: Vector2, scl: Vector2) -> void:
-	if scl.x: 
+	if scl.x:
 		collision_shape.scale.x = scl.x
 		damage_collision.scale.x = scl.x
 	if scl.y: 

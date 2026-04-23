@@ -38,8 +38,8 @@ func _01_2_activate() -> void:
 	var trig: DialogueTrigger = $Environment/DialogueTriggers/DTrig2
 	trig.activate()
 
-func weapon_training_enable() -> void:
-	GameManager.dialogue_trig["weapon_training_enable"] = true
+func intro_dialogues_completed() -> void:
+	GameManager._player_data["game"]["intro_dialogues_completed"] = true
 	_restore_level_music()
 #endregion
 

@@ -17,8 +17,8 @@ const WeaponsType = preload("res://scripts/weapon_types.gd")
 # ============================================
 # КОМПОНЕНТЫ
 # ============================================
-@onready var sound_weapon: AudioStream = preload("res://data/audio/sounds/pickups/weapon.mp3")
-@onready var sound_upgrade: AudioStream = preload("res://data/audio/sounds/pickups/upgrade.mp3")
+@onready var sound_weapon: AudioStream = preload("res://data/audio/sounds/pickups/weapon.wav")
+@onready var sound_upgrade: AudioStream = preload("res://data/audio/sounds/pickups/upgrade.wav")
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var collision: CollisionShape2D = $CollisionShape2D
 

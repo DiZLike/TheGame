@@ -63,7 +63,7 @@ func _execute_attack() -> void:
 	
 	# Направление к игроку
 	var direction = (_player.global_position - global_position).normalized()
-	
+	AudioManager.play_sfx(shot_sound, 1, global_position)
 	# Устанавливаем параметры пули
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)

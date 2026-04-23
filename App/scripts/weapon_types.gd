@@ -37,7 +37,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.DEFAULT: {
 		"name": "D - Стандартная пушка",
-		"sound": "res://data/audio/sounds/player_weapon/weapon_default.ogg",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_default.wav",
 		"levels": [
 			{"damage": 20, "magazine_size": 3, "reload_time": 0.8, "shoot_delay": 0.128, "bullet_speed": 325, "spread_count": 1, "spread_angle": 0},
 			{"damage": 20, "magazine_size": 3, "reload_time": 0.6, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
@@ -53,7 +53,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.MACHINEGUN: {
 		"name": "M - Пулемёт",
-		"sound": "res://data/audio/sounds/player_weapon/weapon_machinegun.ogg",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_machinegun.wav",
 		"levels": [
 			{"damage": 10, "magazine_size": 30, "reload_time": 3, "shoot_delay": 0.15, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0},
 			{"damage": 10, "magazine_size": 35, "reload_time": 3, "shoot_delay": 0.10, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0},
@@ -69,7 +69,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.SPREADGUN: {
 		"name": "S - Спредган",
-		"sound": "res://data/audio/sounds/player_weapon/weapon_spread.ogg",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_spread.wav",
 		"levels": [
 			{"damage": 10, "magazine_size": 1, "reload_time": 0.6, "shoot_delay": 0.128, "bullet_speed": 350, "spread_count": 3, "spread_angle": 15},
 			{"damage": 10, "magazine_size": 2, "reload_time": 0.55, "shoot_delay": 0.128, "bullet_speed": 400, "spread_count": 3, "spread_angle": 20},
@@ -85,7 +85,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.ROCKET: {
 		"name": "R - Ракеты",
-		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.ogg",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.wav",
 		"levels": [
 			{"damage": 30, "magazine_size": 1, "reload_time": 0.7, "shoot_delay": 0.7, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "explosion_radius": 12},
 			{"damage": 30, "magazine_size": 2, "reload_time": 0.8, "shoot_delay": 0.7, "bullet_speed": 350, "spread_count": 1, "spread_angle": 0, "explosion_radius": 18},
@@ -101,7 +101,7 @@ const WEAPON_DATA = {
 	# ------------------------------------------------------------
 	WeaponType.HOMING: {
 		"name": "H - Самонаводящиеся",
-		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.ogg",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_rocket.wav",
 		"levels": [
 			{"damage": 20, "magazine_size": 2, "reload_time": 2, "flight_time": 2.0, "shoot_delay": 0.4, "bullet_speed": 250, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.06},
 			{"damage": 20, "magazine_size": 2, "reload_time": 1.8, "flight_time": 2.0, "shoot_delay": 0.35, "bullet_speed": 300, "spread_count": 1, "spread_angle": 0, "homing_strength": 0.08},
@@ -112,7 +112,7 @@ const WEAPON_DATA = {
 		"overload_name": "РОЙ"
 	},
 	WeaponType.TESLA: {
-		"sound": "res://data/audio/sounds/player_weapon/weapon_laser.ogg",
+		"sound": "res://data/audio/sounds/player_weapon/weapon_laser.wav",
 		"levels": [
 			{
 				"damage": 15,

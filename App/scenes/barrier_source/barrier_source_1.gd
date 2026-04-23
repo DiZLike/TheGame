@@ -17,6 +17,7 @@ class_name Source
 
 # === РЕСУРСЫ ===
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
+var sound_destroy: AudioStream = preload("res://data/audio/sounds/enemy/source_destroy.wav")
 var animated_sprite: AnimatedSprite2D
 
 
@@ -116,7 +117,7 @@ func die():
 
 func _on_destroyed():
 	BarrierSourceManager.report_death(group_name, name)
-
+	AudioManager.play_sfx(sound_destroy, 1, global_position)
 
 func get_status() -> Dictionary:
 	return {

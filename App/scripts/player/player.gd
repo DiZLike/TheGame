@@ -21,6 +21,8 @@ signal coin_picked_up()
 @onready var shield_effect: ShieldEffect = $ShieldEffect
 @onready var skin_manager: SkinManager = $SkinManager
 
+var sound_death = preload("res://data/audio/sounds/player/death.wav")
+
 # Флаги
 var can_move: bool = true
 var is_invincible: bool = false
@@ -79,7 +81,7 @@ func take_control_away(use_shield: bool = false):
 	movement_controller.can_move = false
 	can_move = false
 	is_invincible = true
-	
+	movement_controller.reset_jump_force()
 	if use_shield:
 		shield_effect.create_shield()
 	else:
@@ -95,6 +97,7 @@ func restore_control():
 func take_damage():
 	if is_invincible or respawn_controller.is_invincible:
 		return
+	AudioManager.play_sfx(sound_death, 1, global_position)
 	GameManager.remove_lives(1)
 	if GameManager.get_lives() >= 0:
 		respawn_controller.start_respawn()

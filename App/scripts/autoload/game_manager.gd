@@ -11,6 +11,8 @@ signal inventory_loaded()
 
 const WeaponsType = preload("res://scripts/weapon_types.gd")
 
+var sound_life = preload("res://data/audio/sounds/life/life.wav")
+
 # ============================================
 # ПУБЛИЧНЫЕ ПЕРЕМЕННЫЕ (для удобного доступа)
 # ============================================
@@ -37,6 +39,7 @@ var _player_data: Dictionary = {
 	},
 	"skin": 2,
 	"game": {
+		"intro_dialogues_completed": false,
 		"weapon_training_completed": false,
 		"coin_collection_started": false
 	},
@@ -46,7 +49,35 @@ var _player_data: Dictionary = {
 	"removed_bugs": []
 }
 
-var dialogue_trig: Dictionary = {}
+# ============================================
+# СБРОС ПРОГРЕССА (новая игра)
+# ============================================
+
+func reset_game() -> void:
+	_player_data = {
+		"lives": 4,
+		"score": 0,
+		"weapon": {
+			"type": WeaponsType.WeaponType.DEFAULT,
+			"level": 0
+		},
+		"game": {
+			"intro_dialogues_completed": false,
+			"weapon_training_completed": false,
+			"coin_collection_started": false
+		},
+		"inventory": {},
+		"collected_items": [],
+		"triggered_dialogues": [],
+		"removed_bugs": []
+	}
+	
+	ScoreManager.reset_score()
+	clear_inventory()
+	_apply_weapon_settings()
+	
+	lives_changed.emit(_player_data["lives"], 0)
+	ScoreManager.score_changed.emit(0)
 
 # ============================================
 # БАЗОВЫЕ МЕТОДЫ
@@ -87,7 +118,7 @@ func _connect_signals() -> void:
 
 func register_player(player_node: Player) -> void:
 	player = player_node
-	InventoryManager.add_item_by_id("weapon_d")
+	change_weapon(_player_data["weapon"]["type"])
 	player.change_skin(_player_data["skin"])
 
 # ============================================
@@ -108,6 +139,7 @@ func set_lives(value: int) -> void:
 
 
 func add_lives(amount: int = 1) -> int:
+	AudioManager.play_sfx(sound_life)
 	set_lives(_player_data["lives"] + amount)
 	return _player_data["lives"]
 
@@ -287,41 +319,13 @@ func delete_save() -> void:
 	if _has_save_file():
 		DirAccess.remove_absolute(SAVE_PATH)
 
-
-# ============================================
-# СБРОС ПРОГРЕССА (новая игра)
-# ============================================
-
-func reset_game() -> void:
-	_player_data = {
-		"lives": 4,
-		"score": 0,
-		"weapon": {
-			"type": WeaponsType.WeaponType.DEFAULT,
-			"level": 0
-		},
-		"game": {
-			"weapon_training_completed": false
-		},
-		"inventory": {},
-		"collected_items": [],
-		"triggered_dialogues": []
-	}
-	
-	ScoreManager.score = 0
-	clear_inventory()
-	_apply_weapon_settings()
-	
-	lives_changed.emit(_player_data["lives"], 0)
-	ScoreManager.score_changed.emit(0)
-
 # ============================================
 # ОБРАБОТЧИКИ СИГНАЛОВ
 # ============================================
 
 
 
-func _on_score_manager_changed(new_score: int) -> void:
+func _on_score_manager_changed(new_score: int, old_score: int) -> void:
 	_player_data["score"] = new_score
 	score_changed.emit(new_score)
 

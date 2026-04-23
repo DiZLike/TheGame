@@ -12,6 +12,9 @@ var player: Player
 var is_teleporting: bool = false
 var fade_time = 0.7
 
+var sound_teleport: AudioStream = preload("res://data/audio/sounds/teleport/teleport1.wav")
+var sound_door: AudioStream = preload("res://data/audio/sounds/teleport/portal_door2.wav")
+
 # Сигналы для связи с уровнем
 signal fade_out_requested(duration: float)
 signal fade_in_requested(duration: float)
@@ -37,7 +40,9 @@ func enter_portal() -> void:
 	player.take_control_away(false)
 	
 	anim.play("opening")
+	AudioManager.play_sfx(sound_door, 1, global_position)
 	await anim.animation_finished
+	AudioManager.play_sfx(sound_teleport)
 	
 	fade_out_requested.emit(fade_time)
 	#await get_tree().create_timer(1.0).timeout
@@ -65,6 +70,7 @@ func exit_portal() -> void:
 	player.restore_control()
 	
 	anim.play("closing")
+	AudioManager.play_sfx(sound_door, 1, global_position)
 	await anim.animation_finished
 	
 	await get_tree().create_timer(0.3).timeout

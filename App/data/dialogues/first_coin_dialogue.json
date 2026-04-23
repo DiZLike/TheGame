@@ -1,0 +1,286 @@
+{
+  "Dialogues": [
+	{
+	  "Id": "d1",
+	  "Speaker": "Алекс",
+	  "Text": "Так. Стоп-кадр. Я знаю этот спрайт. Это же монета из Марио. Здесь. В джунглях, где всё хочет меня убить.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d2",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d2",
+	  "Speaker": "Null",
+	  "Text": "Монета. Чужой объект. Код не повреждён, но и не к месту.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d3",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d3",
+	  "Speaker": "Алекс",
+	  "Text": "Серьёзно? Монетка из Марио? В Контре?.. Корр, ты вообще понимаешь, что смешиваешь?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d4",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d4",
+	  "Speaker": "Глитч",
+	  "Text": "Декорация. Сувенир из мира, где трубы водопроводные, а грибы дают рост. Я подумал: почему в этом унылом милитари-аду не может быть маленькой золотой радости?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d5",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d5",
+	  "Speaker": "Алекс",
+	  "Text": "Твоя \"золотая радость\" — это чит-код на вылет в главное меню, я угадал?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d6",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d6",
+	  "Speaker": "Глитч",
+	  "Text": "Скучный прогноз. Если подумать логически — с чего бы мне взрывать уровень из-за одной монетки? Это… неэлегантно. Она просто даёт +1 к твоему воображаемому счёту. И напоминает, что ты не в своём мире.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d7",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d7",
+	  "Speaker": "Алекс",
+	  "Text": "Ну, раз она бессмысленная, значит — моя. Люблю бессмысленные вещи. Особенно назло тебе.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d8",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d8",
+	  "Speaker": "Null",
+	  "Text": "Зафиксировано: при подборе произошла микро-ресинхронизация уровня. Искажение фона уменьшилось на 0.004%. В пределах статистической погрешности. Но изменение есть.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d9",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d9",
+	  "Speaker": "Алекс",
+	  "Text": "То есть монетка что-то делает?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d10",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d10",
+	  "Speaker": "Null",
+	  "Text": "Я зафиксировал факт. Выводы оставлю тебе. Я — Null. Я констатирую, не интерпретирую.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d11",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d11",
+	  "Speaker": "Глитч",
+	  "Text": "Это слуховая галлюцинация твоего жалкого остаточного кода. Ничего не изменилось. Монетка — просто картинка.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d12",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d12",
+	  "Speaker": "Алекс",
+	  "Text": "Он нервничает. Null, когда Глитч начинает оправдываться — это что-то значит?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d13",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d13",
+	  "Speaker": "Null",
+	  "Text": "Это значит, что произошло нечто за пределами его текущей симуляции. Дальнейшая интерпретация — твоя.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d14",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d14",
+	  "Speaker": "Алекс",
+	  "Text": "Значит, если я насобираю побольше таких \"сувениров\", этот цифровой клоун начнёт нервничать ещё сильнее?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d15",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d15",
+	  "Speaker": "Null",
+	  "Text": "Возможно. Или нет. Я не провожу корреляционный анализ. Я просто вижу аномалию. А где есть аномалия — там есть… что-то.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d16",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d16",
+	  "Speaker": "Алекс",
+	  "Text": "Слышишь, Корр? Я тут, кажется, нашёл новое хобби. Раньше я коллекционировал ачивки. Теперь буду коллекционировать твои ошибки.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d17",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d17",
+	  "Speaker": "Глитч",
+	  "Text": "Сколько бы ты ни собрал — это не изменит финала. Финал уже написан. Это моя игра. Но… если тебе нравится подбирать мусор в чужом лесу — воля твоя. Только не говори потом, что я не предупреждал, когда найдёшь монетку, которая кусается.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d18",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d18",
+	  "Speaker": "Алекс",
+	  "Text": "Null, веди счёт. Сам разберусь, что к чему.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d19",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d19",
+	  "Speaker": "Null",
+	  "Text": "Счёт активирован. Текущий баланс: 1 монета. Эффект: неопределённый. Рекомендую продолжать сбор для накопления статистических данных.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d20",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d20",
+	  "Speaker": "Алекс",
+	  "Text": "То есть ты понятия не имеешь, зачем они нужны?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d21",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d21",
+	  "Speaker": "Null",
+	  "Text": "Я Null. Моя задача — фиксировать. Твоя задача — знать. Или не знать. Какая разница. Идём дальше.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d22",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d22",
+	  "Speaker": "Алекс",
+	  "Text": "Ладно. Погнали. Посмотрим, что будет, когда наберётся… скажем, штук сто.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d23",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d23",
+	  "Speaker": "Null",
+	  "Text": "Сто — это много. Ты уверен, что доживёшь до ста?",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d24",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d24",
+	  "Speaker": "Алекс",
+	  "Text": "Null, ты когда-нибудь слышал о понятии \"поддержка\"?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d25",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d25",
+	  "Speaker": "Null",
+	  "Text": "Да. Это когда говорят \"ты справишься\". Я не говорю. Я говорю \"ты справишься, наверное\". Иди собирай. Я посчитаю.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "",
+	  "GlitchEnabled": true
+	}
+  ],
+  "Metadata": {
+	"Chapter": 1,
+	"Level": "1-1",
+	"Title": "Corrupted Jungle — Collectibles",
+	"Background": "res://assets/backgrounds/default.png",
+	"Music": "res://assets/music/default.ogg"
+  }
+}

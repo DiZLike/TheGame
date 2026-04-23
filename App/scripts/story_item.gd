@@ -28,5 +28,5 @@ func pick_up() -> void:
 		push_error("Failed to add item to inventory: ", id)
 
 func _play_pickup_effect() -> void:
-	AudioManager.play_sfx(sound)
+	AudioManager.play_sfx(sound, 1, global_position)
 	pass

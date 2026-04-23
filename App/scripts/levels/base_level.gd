@@ -154,22 +154,20 @@ func complete_weapon_training() -> void:
 	GameManager._player_data["game"]["weapon_training_completed"] = true
 
 func _on_weapon_picked_up() -> void:
-	if is_first_weapon_pickup():
+	if is_first_weapon_pickup() and GameManager._player_data["game"]["intro_dialogues_completed"]:
 		_show_training_dialogue()
 
-func _on_coin_picked_up() -> void:
-	pass
-
 func _show_training_dialogue() -> void:
-	if not GameManager.dialogue_trig.get("weapon_training_enable", false):
-		return
-	
 	if is_weapon_training_completed():
 		return
-	
 	complete_weapon_training()
 	show_dialogue("/level_01/03_weapon_tutorial", "d1", false)
 #endregion
+
+func _on_coin_picked_up() -> void:
+	if not GameManager._player_data["game"]["coin_collection_started"]:
+		show_dialogue("first_coin_dialogue", "d1", true)
+		GameManager._player_data["game"]["coin_collection_started"] = true
 
 #region Виртуальные методы (для переопределения)
 func _on_level_specific_ready() -> void:

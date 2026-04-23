@@ -54,7 +54,9 @@ var _last_bullet_type: String = ""         # Тип пули, которой у�
 
 # === РЕСУРСЫ ===
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
-var hit_sound: AudioStream = preload("res://data/audio/sounds/enemy_hit/enemy_hit.mp3")
+var hit_sound: AudioStream = preload("res://data/audio/sounds/enemy/enemy_hit.wav")
+var death_sound: AudioStream = preload("res://data/audio/sounds/enemy/death1.wav")
+var shot_sound: AudioStream = preload("res://data/audio/sounds/enemy/shot1.wav")
 
 
 # ============================================
@@ -220,7 +222,7 @@ func _on_death(bullet_type: String) -> void:
 	"""
 	ScoreManager.add_score(score)
 	_is_exploding = true
-	
+	AudioManager.play_sfx(death_sound, 1, global_position)
 	# Даем дочернему классу возможность выполнить действия перед взрывом
 	_before_explode()
 	

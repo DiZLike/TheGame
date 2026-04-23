@@ -25,6 +25,8 @@ var direction: Vector2:
 var _on_hit: bool = false
 var spawn_only_if_player_doesnt_have: bool = false
 
+var death_sound: AudioStream = preload("res://data/audio/sounds/enemy/death1.wav")
+
 func _ready():
 	if weapon_type == WeaponsType.WeaponType.DEFAULT:
 		pickup = preload("res://scenes/pickups/d_pickup.tscn")
@@ -53,6 +55,7 @@ func _physics_process(delta):
 	
 @warning_ignore("unused_parameter")
 func on_hit(damage: int, bullet: String):
+	AudioManager.play_sfx(death_sound, 1, global_position)
 	call_deferred("pickup_spawn")
 
 func pickup_spawn():

@@ -29,15 +29,15 @@ func _ready() -> void:
 	WeaponManager.connect("ammo_changed", on_ammo_changed)
 	
 	update_lives_display(GameManager.get_lives())
-	update_score_display(ScoreManager.get_score())
+	update_score_display(ScoreManager.get_score(), 0)
 	update_weapon_display(GameManager.get_current_weapon(), GameManager.get_current_weapon_level())
 	update_ammo_display(WeaponManager.get_current_ammo(), WeaponManager.get_max_ammo())
 
 func _on_lives_changed(new_lives: int, old_lives: int):
 	update_lives_display(new_lives)
 
-func _on_score_changed(new_score: int):
-	update_score_display(new_score)
+func _on_score_changed(new_score: int, old_score: int):
+	update_score_display(new_score, old_score)
 	
 func _on_weapon_changed(weapon_type: WeaponsType.WeaponType, level: int):
 	update_weapon_display(weapon_type, level)
@@ -54,7 +54,7 @@ func update_lives_display(lives: int) -> void:
 	medal3.visible = lives >= 3
 	medal4.visible = lives >= 4
 
-func update_score_display(new_score: int):
+func update_score_display(new_score: int, old_score: int):
 	score_label.text = str(new_score).pad_zeros(7)
 	
 func update_weapon_display(weapon_type: WeaponsType.WeaponType, level: int) -> void:

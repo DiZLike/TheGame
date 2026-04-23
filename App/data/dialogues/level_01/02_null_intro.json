@@ -249,7 +249,7 @@
 	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
 	  "Sound": "",
 	  "OnStartMethods": null,
-	  "OnEndMethods": "weapon_training_enable",
+	  "OnEndMethods": "intro_dialogues_completed",
 	  "Next": "",
 	  "GlitchEnabled": false
 	}

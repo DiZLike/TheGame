@@ -15,6 +15,7 @@ var shooter: Node2D = null
 var speed: float = 300.0
 var damage: int = 1
 var bullet_type: String = "default"  # Тип пули (для врагов)
+var sound_tile_destroy: AudioStream = preload("res://data/audio/sounds/explosions/tile_destroy.wav")
 
 # === ДОПОЛНИТЕЛЬНЫЕ НАСТРОЙКИ ===
 var auto_delete_on_exit: bool = true  # Удалять при выходе за экран
@@ -152,6 +153,7 @@ func _on_other_collision(body: Node2D) -> void:
 			_create_tile_explosion(cell_center, body, closest_coord)
 			
 			# Удаляем тайл
+			AudioManager.play_sfx(sound_tile_destroy, 1, global_position)
 			body.set_cell(closest_coord, -1)
 			queue_free()
 
