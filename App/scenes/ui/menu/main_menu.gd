@@ -83,13 +83,13 @@ func _unhandled_input(event: InputEvent) -> void:
 	if not visible:
 		return
 	
-	if event.is_action_pressed("ui_up"):
+	if event.is_action_pressed("move_up"):
 		current_button_index = _find_next_active_button(-1)
 		_update_visual_focus()
-	elif event.is_action_pressed("ui_down"):
+	elif event.is_action_pressed("move_down"):
 		current_button_index = _find_next_active_button(1)
 		_update_visual_focus()
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		# Выполняем действие только если кнопка не заблокирована
 		var button = buttons[current_button_index]
 		if not button.disabled:

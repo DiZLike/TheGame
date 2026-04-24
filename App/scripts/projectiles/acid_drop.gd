@@ -18,7 +18,7 @@ var _velocity: Vector2 = Vector2.ZERO             # Текущая скорос�
 
 # === РЕСУРСЫ ===
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
-var splash_sound: AudioStream = preload("res://data/audio/sounds/enemy/death1.wav")
+var splash_sound: AudioStream = preload("res://data/audio/sounds/enemy/acid.wav")
 
 
 # ============================================

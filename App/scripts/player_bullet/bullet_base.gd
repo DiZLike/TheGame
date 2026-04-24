@@ -153,7 +153,7 @@ func _on_other_collision(body: Node2D) -> void:
 			_create_tile_explosion(cell_center, body, closest_coord)
 			
 			# Удаляем тайл
-			AudioManager.play_sfx(sound_tile_destroy, 1, global_position)
+			AudioManager.play_sfx(sound_tile_destroy, 1, 1, global_position)
 			body.set_cell(closest_coord, -1)
 			queue_free()
 

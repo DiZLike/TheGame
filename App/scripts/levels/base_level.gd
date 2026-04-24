@@ -3,8 +3,9 @@ class_name BaseLevel
 
 #region Экспортируемые переменные
 @export var level_music: AudioStream
-@export var ambient_music: AudioStream
 #endregion
+
+var ambient_music: AudioStream
 
 #region Узлы (onready)
 @onready var glitch_layer: Control = $UI/MiniMap/GlitchLayer
@@ -20,9 +21,9 @@ func _ready() -> void:
 	_setup_fade_overlay()  # Инициализация затемнения
 	_setup_portals()       # Подключение порталов
 	_setup_dialogue_signals()
-	_setup_music()
 	_setup_player_signals()
 	_on_level_specific_ready()
+	_setup_music()
 
 func _input(event: InputEvent) -> void:
 	if GameManager.is_paused:

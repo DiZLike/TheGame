@@ -259,42 +259,42 @@ func _unhandled_input(event: InputEvent) -> void:
 		MenuSection.ITEMS:
 			_handle_items_input(event)
 	
-	if event.is_action_pressed("ui_cancel"):
+	if event.is_action_pressed("shoot"):
 		_on_resume_pressed()
 
 
 func _handle_buttons_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_up"):
+	if event.is_action_pressed("move_up"):
 		current_button_index = max(0, current_button_index - 1)
 		_update_visual_focus()
-	elif event.is_action_pressed("ui_down"):
+	elif event.is_action_pressed("move_down"):
 		current_button_index = min(buttons.size() - 1, current_button_index + 1)
 		_update_visual_focus()
-	elif event.is_action_pressed("ui_right"):
+	elif event.is_action_pressed("move_right"):
 		current_section = MenuSection.WEAPON
 		current_weapon_index = 0
 		_update_visual_focus()
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		_execute_button_action(buttons[current_button_index])
 	elif event.is_action_pressed("shoot"):
 		_on_resume_pressed()
 
 
 func _handle_weapon_input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_left"):
+	if event.is_action_pressed("move_left"):
 		current_section = MenuSection.BUTTONS
 		_update_visual_focus()
-	elif event.is_action_pressed("ui_right"):
+	elif event.is_action_pressed("move_right"):
 		if item_slots.size() > 0:
 			current_section = MenuSection.ITEMS
 			current_item_index = 0
 			_update_visual_focus()
-	elif event.is_action_pressed("ui_down"):
+	elif event.is_action_pressed("move_down"):
 		if item_slots.size() > 0:
 			current_section = MenuSection.ITEMS
 			current_item_index = 0
 			_update_visual_focus()
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		var result = InventoryManager.use_item(WEAPON_SLOT_INDEX)
 		print(result.message)
 		_update_slot_display(weapon_slots[0], WEAPON_SLOT_INDEX, false)
@@ -334,7 +334,7 @@ func _handle_items_input(event: InputEvent) -> void:
 			current_item_index += 1
 		_update_visual_focus()
 		
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		var inventory_index = current_item_index + 1
 		var result = InventoryManager.use_item(inventory_index)
 		print(result.message)

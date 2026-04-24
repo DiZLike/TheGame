@@ -8,6 +8,9 @@ enum InputAction {
 	MOVE_DOWN,
 	JUMP,
 	SHOOT,
+	ACCEPT,
+	LOOK_UP,
+	LOOK_DOWN,
 	MENU
 }
 
@@ -28,6 +31,9 @@ const DEFAULT_KEYBOARD = {
 	InputAction.MOVE_DOWN: KEY_S,
 	InputAction.JUMP: KEY_KP_3,
 	InputAction.SHOOT: KEY_KP_1,
+	InputAction.ACCEPT: KEY_KP_4,
+	InputAction.LOOK_UP: KEY_KP_5,
+	InputAction.LOOK_DOWN: KEY_KP_2,
 	InputAction.MENU: KEY_ESCAPE
 }
 
@@ -38,6 +44,9 @@ const DEFAULT_GAMEPAD = {
 	InputAction.MOVE_DOWN: { "type": "button", "index": JOY_BUTTON_DPAD_DOWN },
 	InputAction.JUMP: { "type": "button", "index": JOY_BUTTON_A },
 	InputAction.SHOOT: { "type": "button", "index": JOY_BUTTON_X },
+	InputAction.ACCEPT: { "type": "button", "index": JOY_BUTTON_Y },
+	InputAction.LOOK_UP: { "type": "button", "index": JOY_BUTTON_RIGHT_SHOULDER },
+	InputAction.LOOK_DOWN: { "type": "button", "index": JOY_BUTTON_LEFT_SHOULDER },
 	InputAction.MENU: { "type": "button", "index": JOY_BUTTON_START }
 }
 
@@ -250,6 +259,9 @@ func get_action_display_name(action: InputAction) -> String:
 		InputAction.MOVE_DOWN: "ВНИЗ",
 		InputAction.JUMP: "ПРЫЖОК",
 		InputAction.SHOOT: "ВЫСТРЕЛ",
+		InputAction.ACCEPT: "ПРИНЯТЬ",
+		InputAction.LOOK_UP: "СМОТРЕТЬ ВВЕРХ",
+		InputAction.LOOK_DOWN: "СМОТРЕТЬ ВНИЗ",
 		InputAction.MENU: "ПАУЗА"
 	}
 	return names.get(action, "UNKNOWN")

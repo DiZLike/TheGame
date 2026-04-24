@@ -99,7 +99,7 @@ func restore_control():
 func take_damage():
 	if is_invincible or respawn_controller.is_invincible:
 		return
-	AudioManager.play_sfx(sound_death, 1, global_position)
+	AudioManager.play_sfx(sound_death, 1, 1, global_position)
 	GameManager.remove_lives(1)
 	if GameManager.get_lives() >= 0:
 		respawn_controller.start_respawn()

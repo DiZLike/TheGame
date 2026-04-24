@@ -117,7 +117,7 @@ func die():
 
 func _on_destroyed():
 	BarrierSourceManager.report_death(group_name, name)
-	AudioManager.play_sfx(sound_destroy, 1, global_position)
+	AudioManager.play_sfx(sound_destroy, 1, 1, global_position)
 
 func get_status() -> Dictionary:
 	return {

@@ -64,7 +64,7 @@ func handle_jump(jump_pressed: bool) -> void:
 	if not can_move:
 		return
 	if jump_pressed and player.is_on_floor() and not is_crouching:
-		AudioManager.play_sfx(sound_jump, 1, player.global_position)
+		AudioManager.play_sfx(sound_jump, 1, 1, player.global_position)
 		player.velocity.y = JUMP_VELOCITY
 		is_jumping = true
 		jumped.emit()

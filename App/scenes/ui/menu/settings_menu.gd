@@ -275,7 +275,7 @@ func _handle_sliders_input(event: InputEvent) -> void:
 		slider.value = min(slider.max_value, slider.value + slider.step)
 		get_viewport().set_input_as_handled()
 		
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		# Enter на слайдере — переход к кнопкам
 		current_section = MenuSection.BUTTONS
 		current_button_index = 0
@@ -299,6 +299,6 @@ func _handle_buttons_input(event: InputEvent) -> void:
 		_update_visual_focus()
 		get_viewport().set_input_as_handled()
 		
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		buttons[current_button_index].emit_signal("pressed")
 		get_viewport().set_input_as_handled()

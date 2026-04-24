@@ -6,7 +6,7 @@
 	  "Text": "Чем ниже — тем веселее. Где голубая вода из оригинала?",
 	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
 	  "Sound": "",
-	  "OnStartMethods": null,
+	  "OnStartMethods": "acid_underground_startrd",
 	  "OnEndMethods": null,
 	  "Next": "d2",
 	  "GlitchEnabled": false
@@ -128,7 +128,7 @@
 	  "Portrait": "res://sprites/portraits/null/null_01.png",
 	  "Sound": "",
 	  "OnStartMethods": null,
-	  "OnEndMethods": null,
+	  "OnEndMethods": "acid_underground_completed",
 	  "Next": "end",
 	  "GlitchEnabled": true
 	}

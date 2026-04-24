@@ -5,7 +5,6 @@
 [ext_resource type="PackedScene" uid="uid://bjklp0s2pk6fb" path="res://scenes/player/player.tscn" id="2_jirdo"]
 [ext_resource type="PackedScene" uid="uid://brjseglgmb5bk" path="res://scenes/effects/glitch/glitch_layer.tscn" id="2_kx6l7"]
 [ext_resource type="PackedScene" uid="uid://cqi2vqepj10lg" path="res://scenes/ui/dialogue_box.tscn" id="2_l53as"]
-[ext_resource type="AudioStream" uid="uid://bbemnoyxbut5i" path="res://data/audio/ambient/01395_nes.wav" id="3_4knja"]
 [ext_resource type="Script" uid="uid://d2em87pulur2p" path="res://scripts/mini_map.gd" id="3_btoec"]
 [ext_resource type="PackedScene" uid="uid://b731nj4rtlwam" path="res://scenes/effects/glitch/glitch_area.tscn" id="3_gwceb"]
 [ext_resource type="PackedScene" uid="uid://474070rkqdn4" path="res://scenes/ui/menu/game_menu.tscn" id="3_w75he"]
@@ -878,7 +877,6 @@ sources/0 = SubResource("TileSetAtlasSource_voubc")
 [node name="Level1" type="Node2D" unique_id=871521492]
 script = ExtResource("1_bt44k")
 level_music = ExtResource("2_0fu15")
-ambient_music = ExtResource("3_4knja")
 
 [node name="UI" type="CanvasLayer" parent="." unique_id=1121407613]
 layer = 10
@@ -1395,7 +1393,7 @@ max_throw_force = 200.0
 score = 250
 
 [node name="Player" parent="." unique_id=1043132733 instance=ExtResource("2_jirdo")]
-position = Vector2(2821, 1110)
+position = Vector2(140, 396)
 
 [node name="CameraBorders" type="Node2D" parent="." unique_id=362354054]
 

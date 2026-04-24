@@ -133,7 +133,7 @@ func _execute_attack() -> void:
 		# Устанавливаем параметры пули
 		if bullet.has_method("set_shooter"):
 			bullet.set_shooter(self)
-		AudioManager.play_sfx(shot_sound, 1, global_position)
+		AudioManager.play_sfx(shot_sound, 1, 1, global_position)
 		bullet.set("direction", final_direction)
 		bullet.set("speed", bullet_speed)
 

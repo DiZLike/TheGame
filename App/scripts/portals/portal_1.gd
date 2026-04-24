@@ -40,7 +40,7 @@ func enter_portal() -> void:
 	player.take_control_away(false)
 	
 	anim.play("opening")
-	AudioManager.play_sfx(sound_door, 1, global_position)
+	AudioManager.play_sfx(sound_door, 1, 1, global_position)
 	await anim.animation_finished
 	AudioManager.play_sfx(sound_teleport)
 	
@@ -70,7 +70,7 @@ func exit_portal() -> void:
 	player.restore_control()
 	
 	anim.play("closing")
-	AudioManager.play_sfx(sound_door, 1, global_position)
+	AudioManager.play_sfx(sound_door, 1, 1, global_position)
 	await anim.animation_finished
 	
 	await get_tree().create_timer(0.3).timeout

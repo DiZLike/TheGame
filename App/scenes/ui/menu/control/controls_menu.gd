@@ -81,6 +81,9 @@ func _create_action_items() -> void:
 		InputManager.InputAction.MOVE_DOWN,
 		InputManager.InputAction.JUMP,
 		InputManager.InputAction.SHOOT,
+		InputManager.InputAction.ACCEPT,
+		InputManager.InputAction.LOOK_UP,
+		InputManager.InputAction.LOOK_DOWN,
 		InputManager.InputAction.MENU
 	]
 	
@@ -410,7 +413,7 @@ func _handle_actions_input(event: InputEvent) -> void:
 		_update_visual_focus()
 		get_viewport().set_input_as_handled()
 	
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		var item = binding_items[current_action_index]
 		if current_binding_column == 0:
 			_start_rebind(item.action, InputManager.BindingType.KEYBOARD)
@@ -446,6 +449,6 @@ func _handle_bottom_input(event: InputEvent) -> void:
 		_update_visual_focus()
 		get_viewport().set_input_as_handled()
 	
-	elif event.is_action_pressed("jump"):
+	elif event.is_action_pressed("jump") or event.is_action_pressed("accept"):
 		bottom_buttons[current_bottom_index].emit_signal("pressed")
 		get_viewport().set_input_as_handled()

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bbemnoyxbut5i"
-path="res://.godot/imported/01395_nes.wav-41a2e6c9e1fa334985447995d5dc25ac.sample"
+path="res://.godot/imported/jungle.wav-808c4f123468c42d27d452e80d725f83.sample"
 
 [deps]
 
-source_file="res://data/audio/ambient/01395_nes.wav"
-dest_files=["res://.godot/imported/01395_nes.wav-41a2e6c9e1fa334985447995d5dc25ac.sample"]
+source_file="res://data/audio/ambient/jungle.wav"
+dest_files=["res://.godot/imported/jungle.wav-808c4f123468c42d27d452e80d725f83.sample"]
 
 [params]
 

@@ -20,6 +20,8 @@ var music_player: AudioStreamPlayer
 var sfx_pool: Array[AudioStreamPlayer2D] = []
 var ui_player: AudioStreamPlayer  # Отдельный плеер для UI звуков
 
+var current_music_volume: float = 0
+
 # === ТЕКУЩИЕ ЗНАЧЕНИЯ ГРОМКОСТИ (0.0 - 1.0) ===
 var master_volume: float = DEFAULT_MASTER_VOLUME:
 	set(value):
@@ -142,7 +144,7 @@ func _get_free_sfx_player() -> AudioStreamPlayer2D:
 ## @param sfx: AudioStream - звуковой ресурс
 ## @param pitch_scale: float - изменение высоты тона (1.0 = нормально)
 ## @param position: Vector2 - позиция для 2D звука
-func play_sfx(sfx: AudioStream, pitch_scale: float = 1.0, position: Vector2 = Vector2.ZERO) -> void:
+func play_sfx(sfx: AudioStream, volume: float = 1.0, pitch_scale: float = 1.0, position: Vector2 = Vector2.ZERO) -> void:
 	if not sfx:
 		return
 	
@@ -157,7 +159,7 @@ func play_sfx(sfx: AudioStream, pitch_scale: float = 1.0, position: Vector2 = Ve
 	# Настраиваем параметры
 	player.stream = sfx
 	player.pitch_scale = pitch_scale
-	player.volume_db = linear_to_db(sfx_volume * master_volume)
+	player.volume_db = linear_to_db(sfx_volume * master_volume * volume)  # Добавили volume
 	
 	# 2D позиция
 	if position != Vector2.ZERO:
@@ -207,6 +209,9 @@ func is_any_sfx_playing() -> bool:
 # === УПРАВЛЕНИЕ МУЗЫКОЙ ===
 
 ## Установить фоновую музыку
+# === УПРАВЛЕНИЕ МУЗЫКОЙ (исправленная версия) ===
+
+## Установить фоновую музыку
 func set_music(music: AudioStream, fade_in_time: float = 0.0) -> void:
 	if not music:
 		return
@@ -214,21 +219,28 @@ func set_music(music: AudioStream, fade_in_time: float = 0.0) -> void:
 	if music == current_music and music_player.playing:
 		return
 	
-	current_music = music
+	# Если уже играет другая музыка, делаем кроссфейд
+	if music_player.playing and current_music:
+		_crossfade_music(music, fade_in_time)
+		return
 	
-	# Убеждаемся, что плеер использует правильную шину
+	current_music = music
 	music_player.bus = MUSIC_BUS
 	
 	if fade_in_time > 0:
-		# Плавное появление
-		is_music_fading = true
-		var _original_volume_db = music_player.volume_db
-		music_player.volume_db = linear_to_db(0.0)
+		# Сохраняем целевую громкость
+		var target_volume_db = linear_to_db(music_volume * master_volume)
+		
+		# Начинаем с нулевой громкости
+		music_player.volume_db = linear_to_db(0.001)  # -60 dB, практически тишина
 		music_player.stream = music
 		music_player.play()
 		
+		is_music_fading = true
 		var tween = create_tween()
-		tween.tween_property(music_player, "volume_db", linear_to_db(music_volume * master_volume), fade_in_time)
+		tween.tween_property(music_player, "volume_db", target_volume_db, fade_in_time)
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween.set_trans(Tween.TRANS_SINE)
 		await tween.finished
 		is_music_fading = false
 	else:
@@ -239,17 +251,117 @@ func set_music(music: AudioStream, fade_in_time: float = 0.0) -> void:
 
 ## Остановить музыку с затуханием
 func stop_music(fade_out_time: float = 0.0) -> void:
+	if not music_player.playing:
+		current_music = null
+		return
+	
 	if fade_out_time > 0:
+		# Сохраняем текущую громкость для восстановления
+		var saved_volume_db = music_player.volume_db
+		
 		is_music_fading = true
 		var tween = create_tween()
-		tween.tween_property(music_player, "volume_db", linear_to_db(0.0), fade_out_time)
+		tween.tween_property(music_player, "volume_db", linear_to_db(0.001), fade_out_time)
+		tween.set_ease(Tween.EASE_IN_OUT)
+		tween.set_trans(Tween.TRANS_SINE)
 		await tween.finished
+		
+		# Останавливаем и восстанавливаем громкость
 		music_player.stop()
+		music_player.volume_db = saved_volume_db
 		is_music_fading = false
 	else:
 		music_player.stop()
 	
 	current_music = null
+
+
+## Кроссфейд между треками
+func _crossfade_music(new_music: AudioStream, fade_time: float) -> void:
+	if fade_time <= 0:
+		# Без кроссфейда — просто переключаем
+		music_player.stream = new_music
+		music_player.play()
+		current_music = new_music
+		return
+	
+	# Сохраняем громкость текущего трека
+	var old_volume_db = music_player.volume_db
+	var target_volume_db = linear_to_db(music_volume * master_volume)
+	
+	# Создаём временный плеер для нового трека
+	var new_player = AudioStreamPlayer.new()
+	new_player.bus = MUSIC_BUS
+	new_player.stream = new_music
+	new_player.volume_db = linear_to_db(0.001)  # Почти тишина
+	add_child(new_player)
+	new_player.play()
+	
+	is_music_fading = true
+	
+	# Параллельно уменьшаем старый и увеличиваем новый
+	var tween = create_tween()
+	tween.set_parallel(true)
+	
+	# Фейд-аут старого трека
+	tween.tween_property(music_player, "volume_db", linear_to_db(0.001), fade_time)
+	
+	# Фейд-ин нового трека
+	tween.tween_property(new_player, "volume_db", target_volume_db, fade_time)
+	
+	await tween.finished
+	
+	# Останавливаем старый плеер и восстанавливаем его громкость
+	music_player.stop()
+	music_player.volume_db = old_volume_db
+	
+	# Переносим новый трек в основной плеер
+	music_player.stream = new_music
+	music_player.volume_db = target_volume_db
+	music_player.play()
+	
+	# Удаляем временный плеер
+	new_player.stop()
+	new_player.queue_free()
+	
+	current_music = new_music
+	is_music_fading = false
+
+
+## Плавно изменить громкость музыки (для паузы/меню)
+func fade_music_volume(target_volume: float, duration: float) -> void:
+	if not music_player.playing:
+		return
+	
+	if is_music_fading:
+		return
+	
+	is_music_fading = true
+	var tween = create_tween()
+	tween.tween_property(music_player, "volume_db", linear_to_db(target_volume), duration)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	await tween.finished
+	is_music_fading = false
+
+
+## Восстановить громкость музыки после паузы/меню
+func restore_music_volume(duration: float) -> void:
+	if not music_player.playing:
+		return
+	
+	if is_music_fading:
+		return
+	
+	var target_volume_db = linear_to_db(music_volume * master_volume)
+	
+	is_music_fading = true
+	var tween = create_tween()
+	tween.tween_property(music_player, "volume_db", target_volume_db, duration)
+	tween.set_ease(Tween.EASE_IN_OUT)
+	tween.set_trans(Tween.TRANS_SINE)
+	await tween.finished
+	is_music_fading = false
 
 
 ## Поставить музыку на паузу

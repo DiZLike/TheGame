@@ -612,7 +612,7 @@ func _input(event):
 	if current_index >= current_dialogue.size():
 		return
 	
-	if event.is_action_pressed("jump") and not event.is_echo():
+	if event.is_action_pressed("jump") or event.is_action_pressed("accept") and not event.is_echo():
 		if is_typing:
 			_skip_typing()
 		else:

@@ -4,6 +4,9 @@ extends BaseLevel
 const ENEMY_SCHOOLBOY: String = "res://scenes/enemy/schoolboy.tscn"
 #endregion
 
+var ambient_jungle: AudioStream = preload("res://data/audio/ambient/jungle.wav")
+var ambient_acid: AudioStream = preload("res://data/audio/ambient/acid.ogg")
+
 #region Жизненный цикл
 func _ready() -> void:
 	super._ready()
@@ -13,6 +16,7 @@ func _ready() -> void:
 
 #region Переопределённые виртуальные методы
 func _on_level_specific_ready() -> void:
+	ambient_music = ambient_jungle
 	_setup_barrier_signals()
 #endregion
 
@@ -40,7 +44,13 @@ func _01_2_activate() -> void:
 
 func intro_dialogues_completed() -> void:
 	GameManager._player_data["game"]["intro_dialogues_completed"] = true
-	_restore_level_music()
+	_play_level_music()
+	
+func acid_underground_startrd() -> void:
+	AudioManager._crossfade_music(ambient_acid, 0.3)
+	
+func acid_underground_completed() -> void:
+	AudioManager._crossfade_music(level_music, 0.3)
 #endregion
 
 #region Вспомогательные методы (private)
@@ -58,10 +68,8 @@ func _spawn_enemy_at_marker(marker: Node2D, direction: String) -> Node2D:
 	
 	return enemy
 
-func _restore_level_music() -> void:
-	AudioManager.stop_music()
-	if level_music:
-		AudioManager.set_music(level_music)
+func _play_level_music() -> void:
+	AudioManager._crossfade_music(level_music, 0.3)
 #endregion
 
 #region Обработчики сигналов

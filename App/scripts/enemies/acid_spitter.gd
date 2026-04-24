@@ -23,7 +23,7 @@ class_name AcidSpitter
 func _ready() -> void:
 	if not projectile_scene:
 		projectile_scene = preload("res://scenes/bullets/enemy/acid_drop.tscn")
-	
+	shot_sound = preload("res://data/audio/sounds/enemy/acid.wav")
 	super._ready()
 	
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("idle"):

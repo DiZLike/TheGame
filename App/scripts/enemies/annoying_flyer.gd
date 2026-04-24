@@ -270,7 +270,7 @@ func _update_buzz_sound(delta: float) -> void:
 	_buzz_timer += delta
 	if _buzz_timer >= _buzz_interval:
 		_buzz_timer = 0.0
-		AudioManager.play_sfx(buzz_sound, 0.3, global_position)
+		AudioManager.play_sfx(buzz_sound, 1, 1, global_position)
 
 
 # ============================================

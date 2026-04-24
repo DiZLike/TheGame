@@ -9,7 +9,7 @@ var _hit_enemy: Node2D = null
 
 func _ready() -> void:
 	auto_delete_on_exit = false
-	life_time = 3
+	life_time = 2
 	bullet_type = "rocket"
 	speed = 200.0
 	super()

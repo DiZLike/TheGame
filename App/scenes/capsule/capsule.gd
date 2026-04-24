@@ -55,7 +55,7 @@ func _physics_process(delta):
 	
 @warning_ignore("unused_parameter")
 func on_hit(damage: int, bullet: String):
-	AudioManager.play_sfx(death_sound, 1, global_position)
+	AudioManager.play_sfx(death_sound, 1, 1, global_position)
 	call_deferred("pickup_spawn")
 
 func pickup_spawn():

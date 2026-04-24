@@ -102,8 +102,7 @@ func _execute_attack() -> void:
 		var throw_velocity = _get_random_throw_velocity()
 		_create_projectile(throw_velocity, spawn_pos)
 	
-	AudioManager.play_sfx(shot_sound, 0.8, global_position)
-
+	AudioManager.play_sfx(shot_sound, 0.2, 1, global_position)
 
 func _get_random_drops_count() -> int:
 	"""

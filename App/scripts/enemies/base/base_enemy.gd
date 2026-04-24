@@ -219,7 +219,7 @@ func _on_damaged(bullet_type: String) -> void:
 	Вызывается при получении урона (но не смерти).
 	Проигрывает звук попадания.
 	"""
-	AudioManager.play_sfx(hit_sound, 1, global_position)
+	AudioManager.play_sfx(hit_sound, 1, 1, global_position)
 
 func _on_death(bullet_type: String) -> void:
 	"""
@@ -228,7 +228,7 @@ func _on_death(bullet_type: String) -> void:
 	"""
 	ScoreManager.add_score(score)
 	_is_exploding = true
-	AudioManager.play_sfx(death_sound, 1, global_position)
+	AudioManager.play_sfx(death_sound, 1, 1, global_position)
 	# Даем дочернему классу возможность выполнить действия перед взрывом
 	_before_explode()
 	
