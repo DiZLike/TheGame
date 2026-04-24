@@ -62,7 +62,9 @@ func _find_spawn() -> Vector2:
 	var min_distance = INF
 	
 	for child in spawn_points.get_children():
-		if child is Node2D:
+		if child is SpawnPoint:
+			if not child.active:
+				continue
 			var dist = player.global_position.distance_to(child.global_position)
 			if dist < min_distance:
 				min_distance = dist

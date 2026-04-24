@@ -99,6 +99,9 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 
+func _on_detector_body_entered(body: Node2D) -> void:
+	if body.is_in_group("terrain_deadly"):
+		on_hit(999, "default")
 
 # ============================================
 # ПРОВЕРКИ ОКРУЖЕНИЯ

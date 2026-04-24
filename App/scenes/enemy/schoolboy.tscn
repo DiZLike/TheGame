@@ -38,10 +38,15 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4pbkp"]
 size = Vector2(20, 17.286184)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cel5s"]
+size = Vector2(11, 32)
+
 [node name="Schoolboy" type="CharacterBody2D" unique_id=408180171 groups=["enemy"]]
 z_index = 10
 collision_layer = 4
 script = ExtResource("1_4pbkp")
+health = 1
+auto_remove = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2136999294]
 position = Vector2(-0.5, -1)
@@ -67,3 +72,13 @@ collision_layer = 0
 position = Vector2(0, -3.1375003)
 scale = Vector2(0.7, 1.52)
 shape = SubResource("RectangleShape2D_4pbkp")
+
+[node name="Detector" type="Area2D" parent="." unique_id=1112744980]
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=350063203]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_cel5s")
+
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

@@ -1,3 +1,4 @@
+@tool
 extends StaticEnemy
 class_name SpitterEnemy
 
@@ -10,18 +11,38 @@ class_name SpitterEnemy
 
 # === НАСТРОЙКИ СНАРЯДОВ ===
 @export var projectile_scene: PackedScene          # Сцена снаряда (переопределить в дочернем)
-@export var projectile_gravity: float = 500.0      # Гравитация снаряда
+@export var projectile_gravity: float = 500.0:      # Гравитация снаряда
+	set(value):
+		projectile_gravity = value
+		queue_redraw()
 
 # === ДИАПАЗОН СИЛЫ БРОСКА ===
-@export var min_throw_force: float = 150.0         # Минимальная вертикальная скорость
-@export var max_throw_force: float = 250.0         # Максимальная вертикальная скорость
+@export var min_throw_force: float = 150.0:         # Минимальная вертикальная скорость
+	set(value):
+		min_throw_force = value
+		queue_redraw()
+
+@export var max_throw_force: float = 250.0:         # Максимальная вертикальная скорость
+	set(value):
+		max_throw_force = value
+		queue_redraw()
 
 # === БОКОВОЙ РАЗБРОС ===
-@export var horizontal_spread: float = 50.0        # Максимальное отклонение по X (+/-)
+@export var horizontal_spread: float = 50.0:        # Максимальное отклонение по X (+/-)
+	set(value):
+		horizontal_spread = value
+		queue_redraw()
 
 # === КОЛИЧЕСТВО КАПЕЛЬ ЗА АТАКУ ===
-@export var min_drops_per_attack: int = 2          # Минимальное количество капель
-@export var max_drops_per_attack: int = 4          # Максимальное количество капель
+@export var min_drops_per_attack: int = 2:          # Минимальное количество капель
+	set(value):
+		min_drops_per_attack = value
+		queue_redraw()
+
+@export var max_drops_per_attack: int = 4:          # Максимальное количество капель
+	set(value):
+		max_drops_per_attack = value
+		queue_redraw()
 
 
 # ============================================
@@ -31,6 +52,36 @@ class_name SpitterEnemy
 func _ready() -> void:
 	_attack_pattern = "spread"
 	super._ready()
+
+
+# ============================================
+# ВИЗУАЛИЗАЦИЯ В РЕДАКТОРЕ (БАЗОВАЯ)
+# ============================================
+
+func _draw() -> void:
+	if not Engine.is_editor_hint():
+		return
+	
+	# Точка спавна по умолчанию (в локальных координатах)
+	var spawn_pos = _get_spawn_position() - global_position
+	
+	# Рисуем точку спавна
+	draw_circle(spawn_pos, 5, Color.RED)
+
+	
+	# Вызываем дочернюю визуализацию
+	_draw_editor_visualization()
+
+
+# ============================================
+# ВИРТУАЛЬНЫЙ МЕТОД ДЛЯ ДОЧЕРНЕЙ ВИЗУАЛИЗАЦИИ
+# ============================================
+
+func _draw_editor_visualization() -> void:
+	"""
+	Переопределите в дочерних классах для добавления специфичной визуализации.
+	"""
+	pass
 
 
 # ============================================
@@ -53,6 +104,7 @@ func _execute_attack() -> void:
 	
 	AudioManager.play_sfx(shot_sound, 0.8, global_position)
 
+
 func _get_random_drops_count() -> int:
 	"""
 	Генерирует случайное количество капель для атаки.
@@ -60,6 +112,7 @@ func _get_random_drops_count() -> int:
 	var random = RandomNumberGenerator.new()
 	random.randomize()
 	return random.randi_range(min_drops_per_attack, max_drops_per_attack)
+
 
 func _get_random_throw_velocity() -> Vector2:
 	"""
@@ -73,11 +126,13 @@ func _get_random_throw_velocity() -> Vector2:
 	
 	return Vector2(horizontal, vertical)
 
+
 func _get_spawn_position() -> Vector2:
 	"""
 	Возвращает позицию спавна снаряда.
 	"""
 	return global_position
+
 
 func _create_projectile(velocity: Vector2, spawn_position: Vector2) -> void:
 	"""

@@ -11,9 +11,6 @@ var borders = {
 }
 
 func _ready():
-	position_smoothing_enabled = true
-	position_smoothing_speed = 5.0
-	
 	find_borders_in_scene()
 
 func _on_borders_ready(left_x, right_x, top_y, bottom_y):

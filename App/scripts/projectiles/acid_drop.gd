@@ -99,9 +99,6 @@ func _explode() -> void:
 		else:
 			explosion.explode_from_animated_sprite(null, global_position, explosion_force)
 	
-	if splash_sound:
-		AudioManager.play_sfx(splash_sound, 0.7, global_position)
-	
 	queue_free()
 
 

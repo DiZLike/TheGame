@@ -51,7 +51,6 @@ var _buzz_interval: float = 3.0
 
 func _ready() -> void:
 	# Устанавливаем параметры ДО вызова родительского _ready()
-	health = 2  # Мало здоровья, легко убить
 	_attack_pattern = "none"
 	_movement_type = "fly"
 	explosion_force = 30.0

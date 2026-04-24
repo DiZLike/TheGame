@@ -16,6 +16,7 @@ class_name BaseEnemy
 @export var health: int = 100              # Здоровье врага
 @export var score: int = 0                 # Очки за уничтожение (0 = авто-расчёт)
 @export var explosion_force: float = 50.0  # Базовая сила взрыва (может меняться от типа пули)
+@export var auto_remove: bool = false
 
 # === НАСТРОЙКИ БАЛАНСА ===
 const SCORE_BASE: int = 50                     # Базовая награда
@@ -173,6 +174,11 @@ func _on_deactivate() -> void:
 	Вызывается при деактивации врага.
 	Переопределяется в дочерних классах.
 	"""
+	if not auto_remove:
+		return
+	await get_tree().create_timer(3).timeout
+	if not _is_active:
+		queue_free()
 	pass
 
 

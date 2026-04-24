@@ -8,6 +8,8 @@ var _hit_enemy: Node2D = null
 @onready var animated_sprite: AnimatedSprite2D = $AnimatedSprite2D
 
 func _ready() -> void:
+	auto_delete_on_exit = false
+	life_time = 3
 	bullet_type = "rocket"
 	speed = 200.0
 	super()

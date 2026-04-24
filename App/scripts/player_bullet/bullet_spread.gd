@@ -2,6 +2,7 @@ extends BulletBase
 class_name BulletSpread
 
 func _ready() -> void:
+	auto_delete_on_exit = false
+	life_time = 3
 	bullet_type = "spread"
-	life_time = 5.0  # Автоматическое удаление через 5 секунд
 	super()

@@ -1,4 +1,5 @@
 extends Node2D
+class_name SpawnPoint
 
 var active: bool = false
 @onready var sprite: AnimatedSprite2D = $AnimatedSprite2D

@@ -40,6 +40,7 @@ preferred_distance = 65.0
 avoidance_strength = 500.0
 vertical_offset_range = Vector2(0, 0)
 horizontal_offset_range = Vector2(0, 0)
+health = 1
 
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=443474681]
 sprite_frames = SubResource("SpriteFrames_hc5vo")
@@ -52,11 +53,13 @@ shape = SubResource("CircleShape2D_kehhl")
 rect = Rect2(-4, -4, 8, 8)
 
 [node name="DetectionArea" type="Area2D" parent="." unique_id=1674311106]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea" unique_id=1347071851]
 shape = SubResource("CircleShape2D_ge1qn")
 
 [node name="AvoidanceArea" type="Area2D" parent="." unique_id=1221823677]
+visible = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AvoidanceArea" unique_id=821921150]
 shape = SubResource("CircleShape2D_hc5vo")
