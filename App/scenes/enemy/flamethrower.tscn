@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://c08vu1jpb6vvg"]
+
+[ext_resource type="Script" uid="uid://7paei1v1x3fw" path="res://scripts/enemies/flamethrower.gd" id="1_v6rw7"]
+[ext_resource type="PackedScene" uid="uid://s61qrmify58q" path="res://scenes/bullets/enemy/flamethrower_bullet.tscn" id="2_02a0x"]
+[ext_resource type="Texture2D" uid="uid://bfono6ewjmy7w" path="res://sprites/enemy/batman/flamethrower/spritesheet.png" id="2_pgkmj"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02a0x"]
+atlas = ExtResource("2_pgkmj")
+region = Rect2(2, 2, 19, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5jlh7"]
+atlas = ExtResource("2_pgkmj")
+region = Rect2(23, 2, 19, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrt1e"]
+atlas = ExtResource("2_pgkmj")
+region = Rect2(2, 28, 19, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_eiq7f"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_02a0x")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5jlh7")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 12.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrt1e")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_demfr"]
+size = Vector2(14, 22)
+
+[node name="Flamethrower" type="CharacterBody2D" unique_id=654068676 groups=["enemy"]]
+z_index = 10
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_v6rw7")
+bullet_scene = ExtResource("2_02a0x")
+attack_delay = 0.1
+attacks_per_cycle = 6
+health = 80
+score = 150
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=1394046241]
+sprite_frames = SubResource("SpriteFrames_eiq7f")
+animation = &"attack"
+autoplay = "idle"
+frame_progress = 0.4940225
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1468934423]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_demfr")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1801195857]
+rect = Rect2(-8, -11, 15, 23)
+
+[node name="ShootingPoint" type="Marker2D" parent="." unique_id=677160378]
+position = Vector2(-17, 0)

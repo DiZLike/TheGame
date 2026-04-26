@@ -15,22 +15,10 @@ var fireball_scene: PackedScene = preload("res://scenes/bullets/enemy/fireball1.
 
 func _ready() -> void:
 	# Устанавливаем параметры ДО вызова родительского _ready()
-	health = 100
 	_attack_pattern = "spread"    # Веер фаерболов с разбросом
 	_movement_type = "none"       # Стоит на месте
 	
-	# Параметры атаки
-	attack_interval = 2.5
-	attack_delay = 0.4
-	explosion_force = 50.0
-	
 	super._ready()
-	
-	# Остальные параметры
-	min_fireballs = 1
-	max_fireballs = 3
-	min_throw_force = 250.0
-	max_throw_force = 300.0
 
 func _physics_process(delta: float) -> void:
 	if _is_exploding:
@@ -63,7 +51,7 @@ func _execute_attack() -> void:
 	
 	var direction_to_player = (_player.global_position - global_position).normalized()
 	var throw_force = randf_range(min_throw_force, max_throw_force)
-	var vertical_force = randf_range(-250.0, -100.0)
+	var vertical_force = randf_range(-300.0, -100.0)
 	var throw_vector = Vector2(direction_to_player.x * throw_force, vertical_force)
 	
 	fireball.apply_force(throw_vector)

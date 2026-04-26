@@ -1,0 +1,62 @@
+[gd_scene format=3 uid="uid://s61qrmify58q"]
+
+[ext_resource type="Script" uid="uid://qlih6piisenm" path="res://scripts/projectiles/flamethrower_bullet.gd" id="1_e14vv"]
+[ext_resource type="Texture2D" uid="uid://cw1j2vhlaysjn" path="res://sprites/bullets/enemy/spritesheet.png" id="2_dqb4j"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e14vv"]
+atlas = ExtResource("2_dqb4j")
+region = Rect2(2, 34, 16, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqb4j"]
+atlas = ExtResource("2_dqb4j")
+region = Rect2(20, 34, 16, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_sdb6v"]
+atlas = ExtResource("2_dqb4j")
+region = Rect2(38, 34, 16, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_03ix0"]
+atlas = ExtResource("2_dqb4j")
+region = Rect2(56, 34, 16, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iopx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_e14vv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_dqb4j")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_sdb6v")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_03ix0")
+}],
+"loop": false,
+"name": &"default",
+"speed": 6.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e14vv"]
+size = Vector2(43.53741, 21.768705)
+
+[node name="FlamethrowerBullet" type="Area2D" unique_id=1318997729 groups=["enemy_bullet"]]
+z_index = 10
+scale = Vector2(0.75, 0.75)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("1_e14vv")
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=835613379]
+sprite_frames = SubResource("SpriteFrames_iopx8")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=324349400]
+position = Vector2(-1.5894572e-07, -1.9868216e-07)
+scale = Vector2(0.245, 0.245)
+shape = SubResource("RectangleShape2D_e14vv")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=58992279]
+rect = Rect2(-2.6666667, -2.6666667, 5.333334, 5.333334)

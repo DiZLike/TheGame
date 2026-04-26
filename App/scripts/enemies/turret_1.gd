@@ -23,10 +23,6 @@ func _ready() -> void:
 
 	super._ready()
 
-	# Остальные параметры
-	rotation_speed = 1.0
-	bullet_speed = 175.0
-
 func _physics_process(delta: float) -> void:
 	if _is_exploding:
 		return

@@ -51,6 +51,7 @@ size = Vector2(23, 29)
 z_index = 10
 collision_layer = 4
 script = ExtResource("1_hh53n")
+max_throw_force = 1000.0
 
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=20130838]
 sprite_frames = SubResource("SpriteFrames_sms7k")
