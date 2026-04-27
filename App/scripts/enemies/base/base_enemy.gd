@@ -111,12 +111,6 @@ func _calculate_and_set_score() -> void:
 	"""
 	if score == 0:
 		score = calculate_score()
-		print("=== " + name + " Score Calculation ===")
-		print("  Raw total: " + str(SCORE_BASE + health * SCORE_HP_MULTIPLIER + 
-			  SCORE_ATTACK_PATTERN_BONUS.get(_attack_pattern, 0) + 
-			  SCORE_MOVEMENT_BONUS.get(_movement_type, 0)))
-		print("  Final score: " + str(score))
-		print("==============================")
 
 func calculate_score() -> int:
 	"""

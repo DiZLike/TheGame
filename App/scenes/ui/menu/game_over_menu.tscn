@@ -1,0 +1,229 @@
+[gd_scene format=3 uid="uid://dhqet5ds5c82q"]
+
+[ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="1_font"]
+[ext_resource type="Script" uid="uid://cwxnfqpok6b4w" path="res://scenes/ui/menu/game_over_menu.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://cxyvokmb6iyd5" path="res://backgrounds/image-9.png" id="2_bg"]
+[ext_resource type="PackedScene" uid="uid://47bfov555uuo" path="res://scenes/effects/glitch/glitch_effect.tscn" id="3_glitch"]
+
+[sub_resource type="StyleBoxFlat" id="BorderlessPanel"]
+bg_color = Color(0, 0, 0, 0.85)
+
+[sub_resource type="StyleBoxFlat" id="ScoreBorder"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 0.1, 0.1, 1)
+
+[sub_resource type="StyleBoxFlat" id="ButtonNormalStyle"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 1, 1, 0.3)
+
+[sub_resource type="StyleBoxFlat" id="ButtonFocusStyle"]
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.84, 0, 1)
+
+[node name="GameOverMenu" type="CanvasLayer" unique_id=1045441976]
+process_mode = 2
+layer = 128
+script = ExtResource("1_script")
+
+[node name="ColorRect" type="TextureRect" parent="." unique_id=316161571]
+modulate = Color(0.3, 0.1, 0.1, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource("2_bg")
+
+[node name="GlitchEffect" parent="ColorRect" unique_id=331320999 instance=ExtResource("3_glitch")]
+modulate = Color(1, 0.2, 0.2, 0.4)
+z_index = -1
+layout_mode = 0
+offset_right = 1284.0
+offset_bottom = 724.0
+
+[node name="BackgroundOverlay" type="ColorRect" parent="." unique_id=559508104]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color(0.6, 0, 0, 0.15)
+
+[node name="MarginContainer" type="MarginContainer" parent="." unique_id=52554844]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -250.0
+offset_top = -200.0
+offset_right = 250.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 0
+
+[node name="GameOverPanel" type="Panel" parent="MarginContainer" unique_id=421881691]
+custom_minimum_size = Vector2(500, 400)
+layout_mode = 2
+theme_override_styles/panel = SubResource("BorderlessPanel")
+
+[node name="PanelMargin" type="MarginContainer" parent="MarginContainer/GameOverPanel" unique_id=434435884]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 10
+
+[node name="MainVBox" type="VBoxContainer" parent="MarginContainer/GameOverPanel/PanelMargin" unique_id=936771756]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 18
+
+[node name="GameOverTitle" type="Label" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox" unique_id=86632590]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.1, 0.1, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 22
+text = "G A M E   O V E R"
+horizontal_alignment = 1
+
+[node name="TopDivider" type="HSeparator" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox" unique_id=741384977]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ScoreContainer" type="VBoxContainer" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox" unique_id=2047979669]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ScoreBorderBox" type="Panel" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer" unique_id=732145892]
+layout_mode = 2
+theme_override_styles/panel = SubResource("ScoreBorder")
+
+[node name="ScoreMargin" type="MarginContainer" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox" unique_id=938462717]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 8
+
+[node name="ScoreGrid" type="VBoxContainer" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin" unique_id=573941064]
+layout_mode = 2
+theme_override_constants/separation = 6
+
+[node name="ScoreRow" type="HBoxContainer" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid" unique_id=1485347909]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ScoreLabel" type="Label" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid/ScoreRow" unique_id=926451740]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 10
+text = "SCORE"
+
+[node name="ScoreValue" type="Label" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid/ScoreRow" unique_id=158269812]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 11
+text = "00000000"
+horizontal_alignment = 2
+
+[node name="BestRow" type="HBoxContainer" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid" unique_id=1207215333]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="BestLabel" type="Label" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid/BestRow" unique_id=19909804]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.8, 0.8, 0.8, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 10
+text = "HI-SCORE"
+
+[node name="BestScoreValue" type="Label" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid/BestRow" unique_id=6215125]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.84, 0, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 11
+text = "00000000"
+horizontal_alignment = 2
+
+[node name="NewRecordBlink" type="Label" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ScoreContainer/ScoreBorderBox/ScoreMargin/ScoreGrid" unique_id=1290152812]
+visible = false
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.3, 0.3, 1)
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 8
+text = "! NEW RECORD !"
+horizontal_alignment = 1
+
+[node name="BottomDivider" type="HSeparator" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox" unique_id=1225938602]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="ButtonsContainer" type="VBoxContainer" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox" unique_id=1121647748]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ContinueButton" type="Button" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ButtonsContainer" unique_id=1177590494]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormalStyle")
+theme_override_styles/hover = SubResource("ButtonNormalStyle")
+theme_override_styles/focus = SubResource("ButtonFocusStyle")
+text = "ПРОДОЛЖИТЬ"
+
+[node name="LoadButton" type="Button" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ButtonsContainer" unique_id=1475543428]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormalStyle")
+theme_override_styles/hover = SubResource("ButtonNormalStyle")
+theme_override_styles/focus = SubResource("ButtonFocusStyle")
+text = "ЗАГРУЗИТЬ"
+
+[node name="QuitButton" type="Button" parent="MarginContainer/GameOverPanel/PanelMargin/MainVBox/ButtonsContainer" unique_id=1882699752]
+custom_minimum_size = Vector2(0, 38)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_font")
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ButtonNormalStyle")
+theme_override_styles/hover = SubResource("ButtonNormalStyle")
+theme_override_styles/focus = SubResource("ButtonFocusStyle")
+text = "ВЫХОД"

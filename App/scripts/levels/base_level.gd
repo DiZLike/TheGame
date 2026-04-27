@@ -11,13 +11,18 @@ var ambient_music: AudioStream
 @onready var glitch_layer: Control = $UI/MiniMap/GlitchLayer
 @onready var dialogue_box: DialogueBox = $UI/DialogLayer
 @onready var game_menu: CanvasLayer = $UI/GameMenu
+@onready var game_over_menu: CanvasLayer = $UI/GameOverMenu
 @onready var player: Player = $Player
 @onready var lives_panel: CanvasLayer = $UI/LivesPanel
 @onready var fade_overlay: ColorRect = $UI/FadeOverlay
 #endregion
 
+var level_destroy: bool = false
+
 #region Жизненный цикл
 func _ready() -> void:
+	GameManager.register_level(self)
+	GameManager.save_cont_player_data()
 	_setup_fade_overlay()  # Инициализация затемнения
 	_setup_portals()       # Подключение порталов
 	_setup_dialogue_signals()
@@ -70,12 +75,18 @@ func _setup_player_signals() -> void:
 			player.respawn_controller.fade_in_requested.connect(_on_respawn_fade_in)
 #endregion
 
-#region Управление игрой (пауза)
+#region Управление игрой
 func _pause_game() -> void:
 	get_tree().paused = true
 	GameManager.is_paused = true
 	if game_menu:
 		game_menu.visible = true
+
+func game_over() -> void:
+	get_tree().paused = true
+	GameManager.is_paused = true
+	if game_over_menu:
+		game_over_menu.visible = true
 #endregion
 
 #region Визуальные эффекты

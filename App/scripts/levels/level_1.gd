@@ -9,6 +9,8 @@ var ambient_acid: AudioStream = preload("res://data/audio/ambient/acid.ogg")
 
 #region Жизненный цикл
 func _ready() -> void:
+	print("Загрузка уровня")
+	GameManager.set_current_level("res://levels/level_1.scn")
 	super._ready()
 	# Дополнительная инициализация не требуется, 
 	# _on_level_specific_ready вызывается в базовом классе
@@ -74,8 +76,14 @@ func _play_level_music() -> void:
 
 #region Обработчики сигналов
 func barrier_1_group_destroyed(group_name: String) -> void:
+	if level_destroy:
+		return
 	if group_name == "b1":
+		var bug = $Environment/Bags/Bug
+		var capsule = $Environment/SpawnersCapsule/CapsuleSpawner6
 		show_dialogue("/level_01/null_hint_barrier_01_destroy", "d1", false)
-		$Environment/SpawnersCapsule/CapsuleSpawner6.queue_free()
-		$Environment/Bags/Bug.remove()
+		if capsule:
+			capsule.queue_free()
+		if bug:
+			bug.remove()
 #endregion

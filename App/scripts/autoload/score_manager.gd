@@ -9,14 +9,16 @@ const LIFE_THRESHOLD: int = 20000
 
 ## Текущий счет
 var score: int = 0
+var record: int = 0
 
 ## Количество уже выданных жизней (для отслеживания порогов)
 var _lives_awarded: int = 0
 
-
 func add_score(add: int) -> int:
 	if add <= 0:
 		return score
+	if score > record:
+		record = score
 	
 	var old_score = score
 	score += add
@@ -27,6 +29,10 @@ func add_score(add: int) -> int:
 	score_changed.emit(score, old_score)
 	return score
 
+func set_score(new_score: int) -> int:
+	score = new_score
+	score_changed.emit(new_score, score)
+	return score
 
 func get_score() -> int:
 	return score

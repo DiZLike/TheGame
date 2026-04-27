@@ -9,6 +9,7 @@ signal game_saved()
 signal game_loaded()
 signal inventory_loaded()
 
+const DEFAULT_LIVES = 2
 const WeaponsType = preload("res://scripts/weapon_types.gd")
 
 var sound_life = preload("res://data/audio/sounds/life/life.wav")
@@ -25,13 +26,14 @@ var is_paused: bool = false:
 
 ## Ссылки на основные узлы (публичные для удобства)
 var player: Player = null
+var level: BaseLevel = null
 
 # ============================================
 # ПРИВАТНЫЕ ПЕРЕМЕННЫЕ
 # ============================================
 
 var _player_data: Dictionary = {
-	"lives": 4,
+	"lives": DEFAULT_LIVES,
 	"score": 0,
 	"weapon": {
 		"type": WeaponsType.WeaponType.DEFAULT,
@@ -39,6 +41,7 @@ var _player_data: Dictionary = {
 	},
 	"skin": 2,
 	"game": {
+		"current_level": "",
 		"intro_dialogues_completed": false,
 		"weapon_training_completed": false,
 		"coin_collection_started": false
@@ -48,6 +51,8 @@ var _player_data: Dictionary = {
 	"triggered_dialogues": [],
 	"removed_bugs": []
 }
+var _player_data_cont: Dictionary = {
+}
 
 # ============================================
 # СБРОС ПРОГРЕССА (новая игра)
@@ -55,13 +60,14 @@ var _player_data: Dictionary = {
 
 func reset_game() -> void:
 	_player_data = {
-		"lives": 4,
+		"lives": DEFAULT_LIVES,
 		"score": 0,
 		"weapon": {
 			"type": WeaponsType.WeaponType.DEFAULT,
 			"level": 0
 		},
 		"game": {
+			"current_level": "1",
 			"intro_dialogues_completed": false,
 			"weapon_training_completed": false,
 			"coin_collection_started": false
@@ -77,7 +83,28 @@ func reset_game() -> void:
 	_apply_weapon_settings()
 	
 	lives_changed.emit(_player_data["lives"], 0)
-	ScoreManager.score_changed.emit(0)
+	ScoreManager.set_score(_player_data["score"])
+
+func save_cont_player_data() -> void:
+	_player_data_cont = _player_data.duplicate()
+	
+func load_cont_player_dala() -> void:
+	_player_data = _player_data_cont.duplicate()
+	# Восстанавливаем состояние менеджеров
+	ScoreManager.set_score(_player_data["score"])
+	_load_inventory_from_data()
+	_apply_weapon_settings()
+		
+	# Оповещаем UI
+	lives_changed.emit(_player_data["lives"], _player_data["lives"])
+		
+	game_loaded.emit()
+	
+func set_current_level(level: String) -> void:
+	_player_data["game"]["current_level"] = level
+	
+func get_current_level() -> String:
+	return _player_data["game"]["current_level"]
 
 # ============================================
 # БАЗОВЫЕ МЕТОДЫ
@@ -115,6 +142,9 @@ func _connect_signals() -> void:
 # ============================================
 # РЕГИСТРАЦИЯ УЗЛОВ (упрощённый API)
 # ============================================
+
+func register_level(level_node: BaseLevel) -> void:
+	level = level_node
 
 func register_player(player_node: Player) -> void:
 	player = player_node
@@ -323,24 +353,17 @@ func delete_save() -> void:
 # ОБРАБОТЧИКИ СИГНАЛОВ
 # ============================================
 
-
-
 func _on_score_manager_changed(new_score: int, old_score: int) -> void:
 	_player_data["score"] = new_score
 	score_changed.emit(new_score)
-
 
 func _on_weapon_manager_changed(weapon_type: WeaponsType.WeaponType, level: int) -> void:
 	_player_data["weapon"]["type"] = weapon_type
 	_player_data["weapon"]["level"] = level
 	weapon_changed.emit(weapon_type, level)
 
-
 func _on_inventory_updated(slot_index: int) -> void:
 	save_inventory_to_data()
 
-
 func _game_over() -> void:
-	print("Game Over!")
-	# Здесь можно добавить логику окончания игры
-	# Например, показать экран Game Over
+	level.game_over()
