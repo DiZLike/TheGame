@@ -1,4 +1,5 @@
 extends MovingEnemy
+class_name Schoolboy
 
 # ============================================
 # ШКОЛЬНИК - ДВИЖУЩИЙСЯ ВРАГ
@@ -11,8 +12,3 @@ func _ready() -> void:
 	_movement_type = "move"       # Ходит и прыгает
 	
 	super._ready()
-	
-	# Остальные параметры
-	move_speed = 100.0
-	jump_velocity = -175.0
-	explosion_force = 50.0

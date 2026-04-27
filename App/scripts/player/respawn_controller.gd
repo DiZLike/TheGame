@@ -3,11 +3,14 @@ extends Node
 class_name RespawnController
 
 signal player_respawned(new_position: Vector2)
+signal fade_out_requested(duration: float)
+signal fade_in_requested(duration: float)
 
 const RESPAWN_DELAY: float = 1.5
 const INVINCIBILITY_DURATION: float = 2.0
 const BLINK_INTERVAL: float = 0.1
 const EXPLOSION_FORCE: float = 200.0
+const FADE_DURATION: float = 0.4
 
 var is_respawning: bool = false
 var is_invincible: bool = false
@@ -26,10 +29,17 @@ func start_respawn():
 	is_respawning = true
 	movement_controller.can_move = false
 	
+	# Взрыв
 	call_deferred("pixel_explode")
 	
+	#Пауза
 	await get_tree().create_timer(RESPAWN_DELAY).timeout
 	
+	# Затемняем экран
+	fade_out_requested.emit(FADE_DURATION)
+	await get_tree().create_timer(FADE_DURATION).timeout
+	
+	# Перемещаем к точке спавна (экран всё ещё тёмный)
 	player.global_position = _find_spawn()
 	player.velocity = Vector2.ZERO
 	movement_controller.is_jumping = false
@@ -39,6 +49,10 @@ func start_respawn():
 	player.visible = true
 	damage_collision.disabled = false
 	movement_controller.can_move = true
+	
+	# Возвращаем видимость
+	await get_tree().create_timer(FADE_DURATION).timeout
+	fade_in_requested.emit(FADE_DURATION)
 	
 	_activate_blink()
 	

@@ -1,0 +1,143 @@
+{
+  "Dialogues": [
+	{
+	  "Id": "d1",
+	  "Speaker": "Алекс",
+	  "Text": "Чем ниже — тем веселее. Где голубая вода из оригинала?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": "acid_underground_startrd",
+	  "OnEndMethods": null,
+	  "Next": "d2",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d2",
+	  "Speaker": "Null",
+	  "Text": "Кончилась. Началась порча. Смотри под ноги.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d3",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d3",
+	  "Speaker": "Алекс",
+	  "Text": "Это... кислота? Вместо воды — кислота?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d4",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d4",
+	  "Speaker": "Null",
+	  "Text": "Глитч решил, что оригинал был слишком гостеприимным. Я бы не советовал проверять её на касание. Даже дышать здесь — сомнительное удовольствие.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d5",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d5",
+	  "Speaker": "Алекс",
+	  "Text": "Трубы... Они качают эту дрянь куда-то вглубь уровня. Зачем?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d6",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d6",
+	  "Speaker": "Null",
+	  "Text": "Вопрос \"зачем\" меня беспокоит больше, чем \"куда\". Глитч не делает ничего без причины. Кислота — это не оружие. Это ресурс.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d7",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d7",
+	  "Speaker": "Алекс",
+	  "Text": "Ресурс? Для чего?",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d8",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d8",
+	  "Speaker": "Null",
+	  "Text": "Помнишь \"вечные страдания\"? Там, в глубине, что-то питается этой кислотой. Или растёт. Или просыпается. У меня плохое предчувствие.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d9",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d9",
+	  "Speaker": "Алекс",
+	  "Text": "У тебя есть предчувствия? Ты же пустота.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d10",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d10",
+	  "Speaker": "Null",
+	  "Text": "У пустоты есть гравитация. Иногда она притягивает плохие новости. Трубы видны — значит, их можно сломать. Или сломать то, куда они ведут.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d11",
+	  "GlitchEnabled": true
+	},
+	{
+	  "Id": "d11",
+	  "Speaker": "Алекс",
+	  "Text": "Ты становишься философом, Null.",
+	  "Portrait": "res://sprites/portraits/hero/hero_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": null,
+	  "Next": "d12",
+	  "GlitchEnabled": false
+	},
+	{
+	  "Id": "d12",
+	  "Speaker": "Null",
+	  "Text": "Я становлюсь наблюдателем. А наблюдатель в этом мире долго не живёт. Двигайся. Кислота не ждёт. И Глитч — тоже.",
+	  "Portrait": "res://sprites/portraits/null/null_01.png",
+	  "Sound": "",
+	  "OnStartMethods": null,
+	  "OnEndMethods": "acid_underground_completed",
+	  "Next": "end",
+	  "GlitchEnabled": true
+	}
+  ],
+  "Metadata": {
+	"Chapter": 1,
+	"Level": "1",
+	"Title": "Corrupted Jungle — Lower Level",
+	"Background": "res://assets/backgrounds/corrupted_jungle_lower.png",
+	"Music": "res://assets/music/corrupted_ambient.ogg"
+  }
+}

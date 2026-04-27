@@ -13,7 +13,7 @@ var ambient_music: AudioStream
 @onready var game_menu: CanvasLayer = $UI/GameMenu
 @onready var player: Player = $Player
 @onready var lives_panel: CanvasLayer = $UI/LivesPanel
-@onready var fade_overlay: ColorRect = $UI/FadeOverlay  # Добавляем FadeOverlay
+@onready var fade_overlay: ColorRect = $UI/FadeOverlay
 #endregion
 
 #region Жизненный цикл
@@ -64,6 +64,10 @@ func _setup_player_signals() -> void:
 	if player:
 		player.weapon_picked_up.connect(_on_weapon_picked_up)
 		player.coin_picked_up.connect(_on_coin_picked_up)
+		# Подключаемся напрямую к RespawnController через player
+		if player.respawn_controller:
+			player.respawn_controller.fade_out_requested.connect(_on_respawn_fade_out)
+			player.respawn_controller.fade_in_requested.connect(_on_respawn_fade_in)
 #endregion
 
 #region Управление игрой (пауза)
@@ -105,6 +109,13 @@ func fade_in(duration: float = 0.5) -> void:
 	tween.tween_property(fade_overlay, "modulate:a", 0.0, duration)
 	await tween.finished
 	fade_overlay.visible = false
+
+# Обработчики сигналов от игрока
+func _on_respawn_fade_out(duration: float) -> void:
+	await fade_out(duration)
+
+func _on_respawn_fade_in(duration: float) -> void:
+	await fade_in(duration)
 
 # Обработчики сигналов от порталов
 func _on_portal_fade_out(duration: float) -> void:

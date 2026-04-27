@@ -3,6 +3,6 @@ class_name BulletSpread
 
 func _ready() -> void:
 	auto_delete_on_exit = false
-	life_time = 2
+	life_time = -1
 	bullet_type = "spread"
 	super()

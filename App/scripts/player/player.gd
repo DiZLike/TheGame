@@ -22,6 +22,8 @@ signal coin_picked_up()
 @onready var shield_effect: ShieldEffect = $ShieldEffect
 @onready var skin_manager: SkinManager = $SkinManager
 
+@export var shield: bool = false
+
 var sound_death = preload("res://data/audio/sounds/player/death.wav")
 
 # Флаги
@@ -35,6 +37,9 @@ func _ready():
 	
 	# Подключение сигналов
 	respawn_controller.player_respawned.connect(_on_respawn_complete)
+	if shield:
+		is_invincible = true
+		shield_effect.create_shield()
 
 func _physics_process(delta: float) -> void:
 	if GameManager.is_paused:

@@ -10,10 +10,10 @@ class_name StaticEnemy
 # ============================================
 
 # === НАСТРОЙКИ АТАКИ ===
-@export_range(0, 10) var attack_interval: float = 2.5      # Интервал между атаками
-@export_range(0, 10) var attack_delay: float = 0.4         # Задержка между выстрелами в серии
-@export_range(0, 10) var attacks_per_cycle: int = 1        # Количество атак за цикл
-@export var attack_on_first_appearance: bool = true  # Атаковать сразу при появлении
+@export_range(0, 10) var attack_interval: float = 2.5      	# Интервал между атаками
+@export_range(0, 10) var attack_delay: float = 0.4         	# Задержка между выстрелами в серии
+@export_range(0, 10) var attacks_per_cycle: int = 1        	# Количество атак за цикл
+@export var attack_on_first_appearance: bool = true  		# Атаковать сразу при появлении
 
 # === СОСТОЯНИЯ АТАКИ ===
 var _is_attacking: bool = false               # Активен ли режим атаки

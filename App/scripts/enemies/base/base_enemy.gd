@@ -226,7 +226,8 @@ func _on_death(bullet_type: String) -> void:
 	Обработка смерти врага.
 	Начисляет очки и запускает взрыв.
 	"""
-	ScoreManager.add_score(score)
+	if not bullet_type == "terrain_deadly":
+		ScoreManager.add_score(score)
 	_is_exploding = true
 	AudioManager.play_sfx(death_sound, 1, 1, global_position)
 	# Даем дочернему классу возможность выполнить действия перед взрывом

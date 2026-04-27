@@ -1,28 +1,20 @@
 @tool
-extends Node2D
+extends BaseSpawner
 
-enum SpawnDirection { ALL, LEFT, RIGHT, TOP, BOTTOM }
-
-@export var on_shot: bool = false
-@export var spawn_delay: float = 0
+@export var move_speed: float = 100.0
+@export var jump_velocity: float = -175.0
 @export var max_enemies: int = 1
 @export var invert: bool = false:
 	set(value):
 		invert = value
 		if is_inside_tree() or Engine.is_editor_hint():
 			update_arrow_direction()
-@export var allowed_direction: SpawnDirection = SpawnDirection.ALL:
-	set(value):
-		allowed_direction = value
-		if is_inside_tree() or Engine.is_editor_hint():
-			update_arrow_direction()
+@export var invert_x: bool = false
+@export var invert_y: bool = false
 
-@onready var arrow: AnimatedSprite2D = $Arrow
-@onready var sprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var enemy_scene = preload("res://scenes/enemy/schoolboy.tscn")
 @onready var visibility_notifier: VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-var is_on_screen: bool = false
 var is_spawned: bool = false
 var can_spawn: bool = true
 var spawned_enemies: Array = []
@@ -30,64 +22,26 @@ var current_enemy_count: int:
 	get:
 		return spawned_enemies.filter(func(e): return is_instance_valid(e)).size()
 
+
 func _ready():
+	super._ready()
 	if not Engine.is_editor_hint():
-		if arrow: arrow.visible = false
-		if sprite: sprite.visible = false
-		update_arrow_direction()
-		
 		if visibility_notifier:
 			if not visibility_notifier.screen_entered.is_connected(_on_visible_on_screen_notifier_2d_screen_entered):
 				visibility_notifier.screen_entered.connect(_on_visible_on_screen_notifier_2d_screen_entered)
 			if not visibility_notifier.screen_exited.is_connected(_on_visible_on_screen_notifier_2d_screen_exited):
 				visibility_notifier.screen_exited.connect(_on_visible_on_screen_notifier_2d_screen_exited)
-	else:
-		await get_tree().process_frame
-		update_arrow_direction()
+
 
 func update_arrow_direction():
+	super.update_arrow_direction()
 	if not arrow: return
-	
-	arrow.visible = Engine.is_editor_hint()
-	arrow.rotation = 0
-	arrow.scale = Vector2(1, 1)
 	
 	if invert:
 		arrow.modulate = Color.RED
 	else:
 		arrow.modulate = Color.WHITE
-	
-	match allowed_direction:
-		SpawnDirection.LEFT:   arrow.scale = Vector2(-1, 1)
-		SpawnDirection.TOP:    arrow.rotation = deg_to_rad(-90)
-		SpawnDirection.BOTTOM: arrow.rotation = deg_to_rad(90)
 
-func get_spawn_side_from_camera() -> String:
-	var camera = get_viewport().get_camera_2d()
-	if not camera: return "unknown"
-	
-	var diff = global_position - camera.global_position
-	
-	match allowed_direction:
-		SpawnDirection.LEFT, SpawnDirection.RIGHT:
-			return "left" if diff.x < 0 else "right"
-		SpawnDirection.TOP, SpawnDirection.BOTTOM:
-			return "top" if diff.y < 0 else "bottom"
-		SpawnDirection.ALL:
-			if abs(diff.x) > abs(diff.y):
-				return "left" if diff.x < 0 else "right"
-			return "top" if diff.y < 0 else "bottom"
-	return "unknown"
-
-func check_spawn_allowed() -> bool:
-	var side = get_spawn_side_from_camera()
-	match allowed_direction:
-		SpawnDirection.LEFT:   return side == "left"
-		SpawnDirection.RIGHT:  return side == "right"
-		SpawnDirection.TOP:    return side == "top"
-		SpawnDirection.BOTTOM: return side == "bottom"
-		SpawnDirection.ALL:    return true
-	return false
 
 func get_enemy_direction_to_player() -> String:
 	var player = get_tree().get_first_node_in_group("player")
@@ -99,17 +53,13 @@ func get_enemy_direction_to_player() -> String:
 		return "right"
 	
 	var diff_to_player = player.global_position - global_position
-	
-	if diff_to_player.x > 0:
-		return "right"
-	else:
-		return "left"
+	return "right" if diff_to_player.x > 0 else "left"
+
 
 func get_inverted_spawn_position() -> Vector2:
 	var camera = get_viewport().get_camera_2d()
 	if not camera: return global_position
 	
-	# Зеркально отражаем позицию относительно камеры
 	var offset = global_position - camera.global_position
 	
 	match allowed_direction:
@@ -118,9 +68,13 @@ func get_inverted_spawn_position() -> Vector2:
 		SpawnDirection.TOP, SpawnDirection.BOTTOM:
 			offset.y = -offset.y
 		SpawnDirection.ALL:
-			offset = -offset
+			if invert_x:
+				offset.x = -offset.x
+			if invert_y:
+				offset.y = -offset.y
 	
 	return camera.global_position + offset
+
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	if not check_spawn_allowed():
@@ -129,12 +83,8 @@ func _on_visible_on_screen_notifier_2d_screen_entered():
 	is_on_screen = true
 	
 	if can_spawn and not is_spawned and current_enemy_count < max_enemies:
-		if spawn_delay > 0:
-			await get_tree().create_timer(spawn_delay).timeout
-			if not is_on_screen:
-				return
-		
 		spawn_enemy()
+
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	is_on_screen = false
@@ -143,9 +93,13 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 		is_spawned = false
 		can_spawn = true
 		cleanup_invalid_enemies()
+	
+	super._on_visible_on_screen_notifier_2d_screen_exited()
+
 
 func cleanup_invalid_enemies():
 	spawned_enemies = spawned_enemies.filter(func(e): return is_instance_valid(e))
+
 
 func spawn_enemy():
 	if not is_on_screen or is_spawned or current_enemy_count >= max_enemies:
@@ -154,9 +108,10 @@ func spawn_enemy():
 	is_spawned = true
 	can_spawn = false
 	
-	var enemy = enemy_scene.instantiate()
+	var enemy = enemy_scene.instantiate() as Schoolboy
+	enemy.move_speed = move_speed
+	enemy.jump_velocity = jump_velocity
 	
-	# Инверсия применяется только здесь
 	if invert:
 		enemy.global_position = get_inverted_spawn_position()
 	else:
@@ -168,11 +123,14 @@ func spawn_enemy():
 	enemy.tree_exited.connect(_on_enemy_destroyed.bind(enemy))
 	
 	var direction = get_enemy_direction_to_player()
+	if invert:
+		direction = "left" if direction == "right" else "right"
 	enemy.set_move_direction(direction)
 	
 	cleanup_invalid_enemies()
 	if on_shot:
 		queue_free()
+
 
 func _on_enemy_destroyed(enemy):
 	spawned_enemies.erase(enemy)
