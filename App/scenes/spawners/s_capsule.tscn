@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://ddvxjlutkaj8f"]
 
-[ext_resource type="Script" uid="uid://jjmogqt38y7v" path="res://scenes/spawners/capsule_spawner.gd" id="1_4vgw3"]
+[ext_resource type="Script" uid="uid://jjmogqt38y7v" path="res://scripts/spawners/s_capsule.gd" id="1_4vgw3"]
 [ext_resource type="Texture2D" uid="uid://cqot6x50rh3te" path="res://sprites/capsule/spritesheet.png" id="2_4vgw3"]
 [ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_qrbxw"]
 

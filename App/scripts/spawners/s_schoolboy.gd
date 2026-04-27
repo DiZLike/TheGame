@@ -6,6 +6,11 @@ enum SpawnDirection { ALL, LEFT, RIGHT, TOP, BOTTOM }
 @export var on_shot: bool = false
 @export var spawn_delay: float = 0
 @export var max_enemies: int = 1
+@export var invert: bool = false:
+	set(value):
+		invert = value
+		if is_inside_tree() or Engine.is_editor_hint():
+			update_arrow_direction()
 @export var allowed_direction: SpawnDirection = SpawnDirection.ALL:
 	set(value):
 		allowed_direction = value
@@ -47,6 +52,11 @@ func update_arrow_direction():
 	arrow.rotation = 0
 	arrow.scale = Vector2(1, 1)
 	
+	if invert:
+		arrow.modulate = Color.RED
+	else:
+		arrow.modulate = Color.WHITE
+	
 	match allowed_direction:
 		SpawnDirection.LEFT:   arrow.scale = Vector2(-1, 1)
 		SpawnDirection.TOP:    arrow.rotation = deg_to_rad(-90)
@@ -80,25 +90,37 @@ func check_spawn_allowed() -> bool:
 	return false
 
 func get_enemy_direction_to_player() -> String:
-	# Находим игрока
 	var player = get_tree().get_first_node_in_group("player")
 	if not player:
-		# Если игрок не найден, используем камеру как точку отсчета
 		var camera = get_viewport().get_camera_2d()
 		if camera:
 			var diff_to_camera = global_position - camera.global_position
 			return "right" if diff_to_camera.x < 0 else "left"
 		return "right"
 	
-	# Определяем направление от врага к игроку
 	var diff_to_player = player.global_position - global_position
 	
-	# Возвращаем направление, куда должен смотреть враг
-	# Учитываем, что стандартно враг смотрит влево
 	if diff_to_player.x > 0:
-		return "right"  # Игрок справа -> враг должен смотреть вправо
+		return "right"
 	else:
-		return "left"   # Игрок слева -> враг должен смотреть влево
+		return "left"
+
+func get_inverted_spawn_position() -> Vector2:
+	var camera = get_viewport().get_camera_2d()
+	if not camera: return global_position
+	
+	# Зеркально отражаем позицию относительно камеры
+	var offset = global_position - camera.global_position
+	
+	match allowed_direction:
+		SpawnDirection.LEFT, SpawnDirection.RIGHT:
+			offset.x = -offset.x
+		SpawnDirection.TOP, SpawnDirection.BOTTOM:
+			offset.y = -offset.y
+		SpawnDirection.ALL:
+			offset = -offset
+	
+	return camera.global_position + offset
 
 func _on_visible_on_screen_notifier_2d_screen_entered():
 	if not check_spawn_allowed():
@@ -133,13 +155,18 @@ func spawn_enemy():
 	can_spawn = false
 	
 	var enemy = enemy_scene.instantiate()
-	enemy.global_position = global_position
+	
+	# Инверсия применяется только здесь
+	if invert:
+		enemy.global_position = get_inverted_spawn_position()
+	else:
+		enemy.global_position = global_position
+	
 	get_tree().current_scene.add_child(enemy)
 	
 	spawned_enemies.append(enemy)
 	enemy.tree_exited.connect(_on_enemy_destroyed.bind(enemy))
 	
-	# Устанавливаем направление лицом к игроку
 	var direction = get_enemy_direction_to_player()
 	enemy.set_move_direction(direction)
 	
