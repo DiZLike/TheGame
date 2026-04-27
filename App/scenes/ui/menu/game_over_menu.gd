@@ -76,10 +76,7 @@ func _setup_focus_modes() -> void:
 
 func _load_scores() -> void:
 	# Текущие очки
-	if GameManager.has_method("get_current_score"):
-		current_score = GameManager.get_current_score()
-	else:
-		current_score = 0
+	current_score = GameManager.get_score()
 	
 	# Рекорд
 	best_score = ScoreManager.record
@@ -163,6 +160,7 @@ func _close_menu() -> void:
 
 
 func _process(delta: float) -> void:
+	_load_scores()
 	# Резкое мигание GAME OVER (яркий/затемнённый)
 	flash_timer += delta
 	if flash_timer >= 0.4:

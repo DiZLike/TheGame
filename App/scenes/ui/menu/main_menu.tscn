@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://bywi2eo8g1grj"]
 
 [ext_resource type="Script" uid="uid://d0c6gyf1r601m" path="res://scenes/ui/menu/main_menu.gd" id="1_5ssjm"]
-[ext_resource type="AudioStream" uid="uid://gx4ujr58ehg2" path="res://data/audio/music/temp/Track 41.mp3" id="2_boguu"]
+[ext_resource type="AudioStream" uid="uid://hhoio6uucsxi" path="res://data/audio/music/temp/Main Theme.mp3" id="2_boguu"]
 [ext_resource type="FontFile" uid="uid://ccdmmdxcg2l7g" path="res://data/fonts/PressStart2P-Regular.ttf" id="2_eip10"]
 [ext_resource type="PackedScene" uid="uid://47bfov555uuo" path="res://scenes/effects/glitch/glitch_effect.tscn" id="3_araup"]
 [ext_resource type="Texture2D" uid="uid://cxyvokmb6iyd5" path="res://backgrounds/image-9.png" id="3_eip10"]

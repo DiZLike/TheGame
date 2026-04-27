@@ -64,7 +64,9 @@ func _execute_attack() -> void:
 	if bullet.has_method("set_shooter"):
 		bullet.set_shooter(self)
 	
-	AudioManager.play_sfx(shot_sound, 1, 1, global_position)
+	var pitch: float = randf_range(0.7, 1)
+	
+	AudioManager.play_sfx(shot_sound, 1, pitch, global_position)
 	bullet.set("direction", direction)
 	bullet.set("speed", bullet_speed)
 

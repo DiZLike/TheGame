@@ -35,6 +35,7 @@ var level: BaseLevel = null
 var _player_data: Dictionary = {
 	"lives": DEFAULT_LIVES,
 	"score": 0,
+	"record": 0,
 	"weapon": {
 		"type": WeaponsType.WeaponType.DEFAULT,
 		"level": 0
@@ -62,6 +63,7 @@ func reset_game() -> void:
 	_player_data = {
 		"lives": DEFAULT_LIVES,
 		"score": 0,
+		"record": 0,
 		"weapon": {
 			"type": WeaponsType.WeaponType.DEFAULT,
 			"level": 0
@@ -86,10 +88,13 @@ func reset_game() -> void:
 	ScoreManager.set_score(_player_data["score"])
 
 func save_cont_player_data() -> void:
-	_player_data_cont = _player_data.duplicate()
+	_player_data["score"] = ScoreManager.get_score()
+	_player_data["record"] = ScoreManager.record
+	save_inventory_to_data()
+	_player_data_cont = _player_data.duplicate(true)
 	
 func load_cont_player_dala() -> void:
-	_player_data = _player_data_cont.duplicate()
+	_player_data = _player_data_cont.duplicate(true)
 	# Восстанавливаем состояние менеджеров
 	ScoreManager.set_score(_player_data["score"])
 	_load_inventory_from_data()
@@ -161,10 +166,10 @@ func get_lives() -> int:
 
 func set_lives(value: int) -> void:
 	var old_lives = _player_data["lives"]
-	_player_data["lives"] = max(0, value)
+	_player_data["lives"] = max(-1, value)
 	lives_changed.emit(_player_data["lives"], old_lives)
 	
-	if _player_data["lives"] <= 0:
+	if _player_data["lives"] < 0:
 		_game_over()
 
 
@@ -297,6 +302,7 @@ const SAVE_PATH = "user://savegame.save"
 func save_game() -> void:
 	# Обновляем данные перед сохранением
 	_player_data["score"] = ScoreManager.get_score()
+	_player_data["record"] = ScoreManager.record
 	save_inventory_to_data()
 	
 	var file = FileAccess.open(SAVE_PATH, FileAccess.WRITE)

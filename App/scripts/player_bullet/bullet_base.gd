@@ -83,7 +83,7 @@ func _on_body_entered(body: Node2D) -> void:
 # ВЫХОД ЗА ЭКРАН
 # ============================================
 func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
-	if auto_delete_on_exit and not _is_queued_for_deletion:
+	if auto_delete_on_exit or life_time < 0 and not _is_queued_for_deletion:
 		_queue_free()
 
 # ============================================

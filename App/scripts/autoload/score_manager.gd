@@ -17,11 +17,10 @@ var _lives_awarded: int = 0
 func add_score(add: int) -> int:
 	if add <= 0:
 		return score
-	if score > record:
-		record = score
-	
 	var old_score = score
 	score += add
+	if score > record:
+		record = score
 	
 	# Проверяем, не превысили ли мы новый порог для жизни
 	_check_life_threshold(old_score, score)

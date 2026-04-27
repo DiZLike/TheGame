@@ -17,6 +17,7 @@ var ambient_music: AudioStream
 @onready var fade_overlay: ColorRect = $UI/FadeOverlay
 #endregion
 
+var music_game_over = preload("res://data/audio/music/temp/Main Theme.mp3")
 var level_destroy: bool = false
 
 #region Жизненный цикл
@@ -87,6 +88,7 @@ func game_over() -> void:
 	GameManager.is_paused = true
 	if game_over_menu:
 		game_over_menu.visible = true
+		AudioManager._crossfade_music(music_game_over, 0.3)
 #endregion
 
 #region Визуальные эффекты
