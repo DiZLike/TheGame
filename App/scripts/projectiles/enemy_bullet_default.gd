@@ -7,10 +7,7 @@ extends BaseEnemyProjectile
 # Не подвержена гравитации.
 # ============================================
 
-func _ready() -> void:
-	super._ready()
-	
-	# Устанавливаем значения по умолчанию
+func _configure() -> void:
 	speed = 300.0
 	damage = 1
 	bullet_type = "enemy_bullet"

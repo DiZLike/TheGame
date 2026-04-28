@@ -105,9 +105,7 @@ func take_damage():
 	if is_invincible or respawn_controller.is_invincible:
 		return
 	AudioManager.play_sfx(sound_death, 1, 1, global_position)
-	GameManager.remove_lives(1)
-	if GameManager.get_lives() >= 0:
-		respawn_controller.start_respawn()
+	respawn_controller.start_respawn()
 
 func _on_respawn_complete(new_position: Vector2):
 	player_respawned.emit(new_position)

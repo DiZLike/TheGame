@@ -10,6 +10,7 @@ class_name AcidDrop
 # ============================================
 
 # === ПАРАМЕТРЫ ФИЗИКИ ===
+@export var splash_sound: AudioStream = preload("res://data/audio/sounds/enemy/acid.wav")
 @export var acid_gravity: float = 500.0                # Гравитация, действующая на каплю
 @export var explosion_force: float = 30.0          # Сила пиксельного взрыва
 
@@ -18,17 +19,13 @@ var _velocity: Vector2 = Vector2.ZERO             # Текущая скорос�
 
 # === РЕСУРСЫ ===
 var pixel_explosion_scene: PackedScene = preload("res://scenes/effects/pixel_explosion.tscn")
-var splash_sound: AudioStream = preload("res://data/audio/sounds/enemy/acid.wav")
 
 
 # ============================================
 # ИНИЦИАЛИЗАЦИЯ
 # ============================================
 
-func _initialize() -> void:
-	"""
-	Настройка параметров капли кислоты.
-	"""
+func _configure() -> void:
 	bullet_type = "acid"
 	life_time = 10.0
 	auto_delete_on_exit = true
@@ -42,7 +39,7 @@ func _move(delta: float) -> void:
 	"""
 	Движение капли с учётом гравитации.
 	"""
-	_velocity.y += gravity * delta
+	_velocity.y += acid_gravity * delta
 	global_position += _velocity * delta
 
 
@@ -98,6 +95,7 @@ func _explode() -> void:
 			explosion.explode_from_animated_sprite(animated_sprite, global_position, explosion_force)
 		else:
 			explosion.explode_from_animated_sprite(null, global_position, explosion_force)
+		AudioManager.play_sfx(splash_sound, 0.5, 1, global_position)
 	
 	queue_free()
 
@@ -121,7 +119,7 @@ func set_velocity(vel: Vector2) -> void:
 	_velocity = vel
 
 func set_acid_gravity(grav: float) -> void:
-	gravity = grav
+	acid_gravity = grav
 
 func set_explosion_force(force: float) -> void:
 	explosion_force = force

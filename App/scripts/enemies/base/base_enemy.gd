@@ -63,7 +63,9 @@ var shot_sound: AudioStream = preload("res://data/audio/sounds/enemy/shot1.wav")
 # ============================================
 # ЖИЗНЕННЫЙ ЦИКЛ
 # ============================================
+
 func _ready() -> void:
+	_configure_stats()
 	_initialize()
 	_setup_components()
 	_connect_signals()
@@ -75,6 +77,14 @@ func _ready() -> void:
 	
 	# Отложенный расчёт, чтобы дочерние классы успели установить параметры
 	call_deferred("_calculate_and_set_score")
+
+func _configure_stats() -> void:
+	"""
+	Установка параметров для расчёта очков.
+	Переопределяется в дочерних классах.
+	Вызывается ДО _initialize.
+	"""
+	pass
 
 func _initialize() -> void:
 	"""
@@ -298,3 +308,14 @@ func is_player_valid() -> bool:
 	Проверяет, существует ли еще игрок.
 	"""
 	return _player != null and is_instance_valid(_player)
+
+func _face_player() -> void:
+	"""
+	Поворачивает спрайт лицом к игроку.
+	Спрайт изначально смотрит ВЛЕВО.
+	"""
+	if not animated_sprite or not is_player_valid():
+		return
+	
+	var direction_to_player = _player.global_position.x - global_position.x
+	animated_sprite.flip_h = direction_to_player > 0

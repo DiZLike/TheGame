@@ -173,20 +173,3 @@ func _update_shooting_points_positions() -> void:
 	for point in shooting_points:
 		if point and point.has_method("set_flipped"):
 			point.set_flipped(is_flipped)
-
-
-# ============================================
-# ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ
-# ============================================
-
-func _face_player() -> void:
-	"""
-	Поворачивает спрайт лицом к игроку.
-	Спрайт изначально смотрит НАЛЕВО.
-	"""
-	if not animated_sprite or not is_player_valid():
-		return
-	
-	var direction_to_player = (_player.global_position.x - global_position.x)
-	# flip_h = true когда игрок справа (спрайт смотрит направо)
-	animated_sprite.flip_h = direction_to_player > 0

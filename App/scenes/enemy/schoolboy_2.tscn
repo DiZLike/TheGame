@@ -1,0 +1,112 @@
+[gd_scene format=3 uid="uid://cyymqqhy0x50"]
+
+[ext_resource type="Script" uid="uid://y355vwr2p1cn" path="res://scripts/enemies/schoolboy_2.gd" id="1_lw2od"]
+[ext_resource type="Texture2D" uid="uid://q0opryxorcm0" path="res://sprites/enemy/contra/schoolboy/spritesheet.png" id="2_aeelb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bux5x"]
+size = Vector2(11, 30)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lw2od"]
+atlas = ExtResource("2_aeelb")
+region = Rect2(2, 36, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aeelb"]
+atlas = ExtResource("2_aeelb")
+region = Rect2(28, 36, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_25cmb"]
+atlas = ExtResource("2_aeelb")
+region = Rect2(54, 36, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_t4bbm"]
+atlas = ExtResource("2_aeelb")
+region = Rect2(2, 2, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jcfjb"]
+atlas = ExtResource("2_aeelb")
+region = Rect2(28, 2, 24, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_n3p2v"]
+atlas = ExtResource("2_aeelb")
+region = Rect2(54, 2, 24, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_u4ju2"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lw2od")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aeelb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_25cmb")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_t4bbm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jcfjb")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_n3p2v")
+}],
+"loop": true,
+"name": &"move",
+"speed": 8.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4pbkp"]
+size = Vector2(20, 17.286184)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cel5s"]
+size = Vector2(11, 32)
+
+[node name="Schoolboy 2" type="CharacterBody2D" unique_id=408180171 groups=["enemy"]]
+z_index = 10
+collision_layer = 4
+script = ExtResource("1_lw2od")
+health = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2136999294]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_bux5x")
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=592048465]
+sprite_frames = SubResource("SpriteFrames_u4ju2")
+animation = &"attack"
+autoplay = "move"
+frame_progress = 0.03262327
+
+[node name="GroundCheck" type="RayCast2D" parent="." unique_id=874451421]
+target_position = Vector2(0, 20.74)
+hit_from_inside = true
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1934170393]
+rect = Rect2(-6, -16, 11, 30)
+
+[node name="WallCheckArea" type="Area2D" parent="." unique_id=1456272904]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallCheckArea" unique_id=1520695969]
+position = Vector2(0, -3.1375003)
+scale = Vector2(0.7, 1.52)
+shape = SubResource("RectangleShape2D_4pbkp")
+
+[node name="Detector" type="Area2D" parent="." unique_id=1112744980]
+collision_layer = 0
+collision_mask = 512
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detector" unique_id=350063203]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_cel5s")
+
+[node name="ShootingPoint" type="Marker2D" parent="." unique_id=816644271]
+position = Vector2(-13, -9)
+
+[connection signal="body_entered" from="Detector" to="." method="_on_detector_body_entered"]

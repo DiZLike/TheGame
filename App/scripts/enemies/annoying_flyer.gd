@@ -49,15 +49,13 @@ var _buzz_interval: float = 3.0
 # НАСТРОЙКА
 # ============================================
 
-func _ready() -> void:
-	# Устанавливаем параметры ДО вызова родительского _ready()
+func _configure_stats() -> void:
 	_attack_pattern = "none"
 	_movement_type = "fly"
 	explosion_force = 30.0
-	
-	super._ready()
-	
-	# Настройка зон обнаружения
+
+func _setup_components() -> void:
+	super._setup_components()
 	_setup_areas()
 	
 	# Запускаем idle анимацию если есть
@@ -68,7 +66,6 @@ func _ready() -> void:
 	
 	# Генерируем начальную цель смещения
 	_generate_new_offset()
-
 
 func _setup_areas() -> void:
 	"""
@@ -303,17 +300,6 @@ func is_player_valid() -> bool:
 	Расширенная проверка существования игрока.
 	"""
 	return super.is_player_valid() and _player != null
-
-func _face_player() -> void:
-	"""
-	Смотрит в сторону игрока.
-	"""
-	if not animated_sprite or not is_player_valid():
-		return
-	
-	var direction_to_player = (_player.global_position.x - global_position.x)
-	animated_sprite.flip_h = direction_to_player > 0
-
 
 func _before_explode() -> void:
 	"""

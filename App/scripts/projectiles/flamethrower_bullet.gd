@@ -10,10 +10,7 @@ class_name FlamethrowerBullet
 # СПРАЙТ ПУЛИ ИЗНАЧАЛЬНО СМОТРИТ ВЛЕВО.
 # ============================================
 
-func _ready() -> void:
-	super._ready()
-	
-	# Устанавливаем значения по умолчанию
+func _configure() -> void:
 	speed = 200.0
 	damage = 1
 	bullet_type = "fire"
@@ -22,10 +19,10 @@ func _ready() -> void:
 	can_hit_shooter = false
 	can_hit_player = true
 	can_hit_enemies = false
-	
-	# Запускаем анимацию и получаем её длительность
-	_setup_animation_lifetime()
 
+func _setup_visuals() -> void:
+	super._setup_visuals()
+	_setup_animation_lifetime()
 
 func _setup_animation_lifetime() -> void:
 	"""

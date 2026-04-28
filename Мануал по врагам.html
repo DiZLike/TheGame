@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инструкция: Создание врагов в Godot (Enemy System)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background-color: #1e1e2e;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            color: #cba6f7;
+            border-bottom: 2px solid #6c7086;
+            padding-bottom: 10px;
+        }
+        h2 {
+            color: #89b4fa;
+            margin-top: 30px;
+            border-left: 4px solid #89b4fa;
+            padding-left: 15px;
+        }
+        h3 {
+            color: #a6e3a1;
+            margin-top: 20px;
+        }
+        code {
+            background-color: #313244;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Courier New', monospace;
+            color: #fab387;
+        }
+        pre {
+            background-color: #181825;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #45475a;
+            overflow-x: auto;
+        }
+        pre code {
+            background-color: transparent;
+            padding: 0;
+            color: #cdd6f4;
+        }
+        .warning {
+            background-color: #351b1b;
+            border-left: 4px solid #f38ba8;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        .tip {
+            background-color: #1b3526;
+            border-left: 4px solid #a6e3a1;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 8px 8px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            border: 1px solid #45475a;
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #313244;
+        }
+        .class-tree {
+            font-family: monospace;
+            line-height: 2.5;
+            background: #181825;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+
+<h1>🛠️ Система врагов: Архитектура и Создание</h1>
+<p>Это руководство описывает иерархию классов врагов и способы создания новых типов или дополнительных узлов на основе предоставленного кода.</p>
+
+<h2>🏗️ Иерархия классов</h2>
+<div class="class-tree">
+    <strong>CharacterBody2D</strong><br>
+    ├── <strong>BaseEnemy</strong> <em>(base_enemy.gd)</em><br>
+    │   ├── Здоровье, очки, взрыв<br>
+    │   ├── ── <strong>StaticEnemy</strong> <em>(static_enemy.gd)</em><br>
+    │   │   ├── Интервальная атака<br>
+    │   │   ├── ── <strong>Blazeman</strong> <em>(бросает фаерболы)</em><br>
+    │   │   ├── ── <strong>Flamethrower</strong> <em>(огнемётчик)</em><br>
+    │   │   ├── ── <strong>Turret_1</strong> <em>(турель с поворотом)</em><br>
+    │   │   ├── ── <strong>SpitterEnemy</strong> <em>(spitter_enemy.gd)</em><br>
+    │   │   │   └── ── <strong>AcidSpitter</strong> <em>(кислотный плеватель)</em><br>
+    │   │   ├── ── <strong>AcidDripper</strong> <em>(капает кислотой)</em><br>
+    │   │   ├── ── <strong>DirectionalStaticEnemy</strong> <em>(directional_static_enemy.gd)</em><br>
+    │   │   │   ├── ── <strong>Camper</strong> <em>(стреляет прямо, неуязвим в idle)</em><br>
+    │   │   │   └── ── <strong>Trident</strong> <em>(стрельба в 3 направлениях)</em><br>
+    │   ├── ── <strong>MovingEnemy</strong> <em>(moving_enemy.gd)</em><br>
+    │   │   └── ── <strong>Schoolboy</strong> <em>(ходит по платформам)</em><br>
+    │   └── ── <strong>AnnoyingFlyer</strong> <em>(annoying_flyer.gd, летает)</em><br>
+    <br>
+    <strong>Area2D</strong><br>
+    └── <strong>BaseEnemyProjectile</strong> <em>(base_enemy_projectile.gd)</em><br>
+        ├── ── <strong>EnemyBulletDefault</strong> <em>(прямолинейная пуля)</em><br>
+        ├── ── <strong>Fireball1</strong> <em>(фаербол с физикой)</em><br>
+        ├── ── <strong>FlamethrowerBullet</strong> <em>(огненная струя)</em><br>
+        └── ── <strong>AcidDrop</strong> <em>(acid_drop.gd, капля с гравитацией)</em><br>
+        &nbsp;&nbsp;&nbsp;&nbsp;└── ── <strong>AcidDrip</strong> <em>(acid_drip.gd, вертикальная капля)</em>
+</div>
+
+<h2>📋 Как создать нового врага</h2>
+
+<h3>Шаг 1: Выбор родительского класса</h3>
+<table>
+    <tr><th>Класс</th><th>Поведение</th><th>Пример использования</th></tr>
+    <tr><td><code>BaseEnemy</code></td><td>Только здоровье и смерть</td><td>Редко используется напрямую</td></tr>
+    <tr><td><code>StaticEnemy</code></td><td>Стоит на месте, атакует по таймеру</td><td>Турели, метатели</td></tr>
+    <tr><td><code>SpitterEnemy</code></td><td>Подбрасывает снаряды вверх (дугой)</td><td>Кислотные плеватели</td></tr>
+    <tr><td><code>DirectionalStaticEnemy</code></td><td>Стреляет в фиксированных направлениях</td><td>Трехнаправленная пушка</td></tr>
+    <tr><td><code>MovingEnemy</code></td><td>Ходит по платформам, прыгает</td><td>Наземные мобы</td></tr>
+    <tr><td><code>AnnoyingFlyer</code></td><td>Летает за игроком, уклоняется</td><td>Специфичный летающий враг</td></tr>
+</table>
+
+<div class="tip">
+    <strong>💡 Совет:</strong> Создавайте нового врага, наследуясь от наиболее подходящего класса. 
+    Не рекомендуется напрямую наследоваться от <code>BaseEnemy</code>, если только вам не нужно полностью уникальное поведение.
+</div>
+
+<h3>Шаг 2: Создание сцены (Scene)</h3>
+<ol>
+    <li>Создайте новую сцену с корневым узлом <code>CharacterBody2D</code>.</li>
+    <li>Прикрепите скрипт вашего нового класса (например, <code>my_new_enemy.gd</code>).</li>
+    <li>Добавьте необходимые дочерние узлы:
+        <ul>
+            <li><strong>Спрайт:</strong> <code>AnimatedSprite2D</code> с именем <code>MainSprite2D</code>.</li>
+            <li><strong>Коллизия:</strong> <code>CollisionShape2D</code> (обязательно).</li>
+            <li><strong>Детектор экрана:</strong> <code>VisibleOnScreenNotifier2D</code> (обязательно, нужен для активации).</li>
+            <li><strong>Для статичных врагов:</strong> Маркеры точек спавна снарядов (<code>Marker2D</code>), например <code>ShootingPoint</code>.</li>
+            <li><strong>Для движущихся врагов:</strong> <code>RayCast2D</code> для проверки земли (<code>GroundCheck</code>) и <code>Area2D</code> для обнаружения стен (<code>WallCheckArea</code>).</li>
+        </ul>
+    </li>
+</ol>
+
+<h3>Шаг 3: Написание скрипта</h3>
+<p>Ваш новый скрипт должен переопределить ключевые методы. Вот минимальный шаблон для <strong>нового статичного врага</strong> (похожего на турель):</p>
+<pre><code>extends StaticEnemy
+class_name MyNewTurret
+
+# 1. Настройки (свои уникальные переменные)
+@export var bullet_scene: PackedScene = preload("res://path/to/my_bullet.tscn")
+@export var custom_power: float = 1.5
+
+# 2. Настройка характеристик (очки, тип атаки)
+func _configure_stats() -> void:
+    # Обязательно вызвать, если переопределяете
+    super._configure_stats() 
+    
+    # Указываем паттерн для расчета очков
+    _attack_pattern = "single" 
+    _movement_type = "rotate"
+    
+    # Если нужен особый расчет здоровья
+    health = 150
+
+# 3. Настройка компонентов (точки спавна, таймеры)
+func _setup_components() -> void:
+    super._setup_components()
+    # Найти свои уникальные узлы
+    # my_node = $MySpecialNode
+
+# 4. Переопределение атаки (ГЛАВНЫЙ МЕТОД)
+func _execute_attack() -> void:
+    if not bullet_scene:
+        return
+        
+    var bullet = bullet_scene.instantiate()
+    get_tree().root.add_child(bullet)
+    bullet.global_position = $ShootingPoint.global_position
+    
+    # Установить направление, скорость и т.д.
+    if bullet.has_method("set_shooter"):
+        bullet.set_shooter(self)
+</code></pre>
+
+<h2>🎯 Создание дополнительных классов снарядов</h2>
+<p>Если вам нужен новый тип пули, наследуйтесь от <code>BaseEnemyProjectile</code>.</p>
+
+<h3>Обязательные методы для переопределения:</h3>
+<ul>
+    <li><code>_configure()</code> — установка параметров по умолчанию (<code>speed</code>, <code>damage</code>, <code>bullet_type</code>).</li>
+    <li><code>_move(delta)</code> — если снаряд движется не по прямой (как фаербол).</li>
+    <li><code>_update_visuals(delta)</code> — поворот спрайта или анимации.</li>
+    <li><code>_play_hit_effect(target)</code> — эффект при попадании.</li>
+</ul>
+
+<pre><code>extends BaseEnemyProjectile
+class_name MyLaserBolt
+
+func _configure() -> void:
+    speed = 500.0
+    damage = 2
+    bullet_type = "laser" # важно для обработки урона
+    life_time = 2.0
+    # can_hit_player = true (уже по умолчанию)
+
+func _update_visuals(delta: float) -> void:
+    # Лазер всегда смотрит в направлении полета
+    rotation = direction.angle()
+    
+    if animated_sprite:
+        animated_sprite.play("move")
+</code></pre>
+
+<div class="warning">
+    <strong>⚠️ Важно:</strong> Тип снаряда (<code>bullet_type</code>) используется в методе <code>BaseEnemy._calculate_explosion_force()</code> для определения силы взрыва врага. Убедитесь, что вы добавили обработку нового типа в этот метод, если хотите особый эффект при смерти врага.
+</div>
+
+<h2>⚙️ Ключевые методы для переопределения</h2>
+
+<table>
+    <tr><th>Метод</th><th>Где находится</th><th>Назначение</th></tr>
+    <tr><td><code>_configure_stats()</code></td><td>BaseEnemy</td><td>Установка <code>_attack_pattern</code>, <code>_movement_type</code> и health</td></tr>
+    <tr><td><code>_initialize()</code></td><td>BaseEnemy</td><td>Поиск игрока, начальные действия</td></tr>
+    <tr><td><code>_setup_components()</code></td><td>BaseEnemy</td><td>Создание таймеров, привязка узлов</td></tr>
+    <tr><td><code>_execute_attack()</code></td><td>StaticEnemy / DirectionalStaticEnemy</td><td>Создание снаряда/пули</td></tr>
+    <tr><td><code>_physics_process(delta)</code></td><td>Разные классы</td><td>Движение, гравитация, поворот к игроку</td></tr>
+    <tr><td><code>_on_activate() / _on_deactivate()</code></td><td>BaseEnemy</td><td>Действия при появлении/исчезновении с экрана</td></tr>
+</table>
+
+<h2>💰 Система начисления очков</h2>
+<p>Очки рассчитываются автоматически на основе параметров, если переменная <code>score</code> равна <strong>0</strong>.</p>
+<pre><code>SCORE = SCORE_BASE (50) 
+      + (health * 1.0) 
+      + ATTACK_BONUS (зависит от _attack_pattern) 
+      + MOVEMENT_BONUS (зависит от _movement_type)</code></pre>
+
+<p>Вы можете задать <code>score</code> вручную в инспекторе сцены, тогда авто-расчет не сработает.</p>
+
+<h2>🏁 Полный пример: Враг "Стрелок"</h2>
+<p>Создадим врага, который стоит на месте и стреляет одиночными самонаводящимися пулями.</p>
+
+<p><strong>Скрипт (homer_shooter.gd):</strong></p>
+<pre><code>extends StaticEnemy
+class_name HomerShooter
+
+@export var homing_bullet_scene: PackedScene
+
+func _configure_stats() -> void:
+    _attack_pattern = "homing"  # Даст бонус к очкам
+    _movement_type = "none"
+    health = 80
+
+func _execute_attack() -> void:
+    var bullet = homing_bullet_scene.instantiate()
+    get_tree().root.add_child(bullet)
+    bullet.global_position = global_position
+    
+    # Установить цель для самонаведения (если такой метод есть у пули)
+    if bullet.has_method("set_target"):
+        bullet.set_target(_player)
+    
+    if bullet.has_method("set_shooter"):
+        bullet.set_shooter(self)
+</code></pre>
+
+<p><strong>Структура сцены:</strong></p>
+<ul>
+    <li><code>HomerShooter</code> (CharacterBody2D)
+        <ul>
+            <li><code>MainSprite2D</code> (AnimatedSprite2D)</li>
+            <li><code>CollisionShape2D</code></li>
+            <li><code>VisibleOnScreenNotifier2D</code></li>
+        </ul>
+    </li>
+</ul>
+
+<div class="tip">
+    <strong>💡 Ресурсы по умолчанию:</strong> Обратите внимание, что <code>hit_sound</code>, <code>death_sound</code> и <code>shot_sound</code> уже предзагружены в <code>BaseEnemy</code>. Вы можете переопределить их в <code>_ready()</code> дочернего класса, если нужны уникальные звуки.
+</div>
+
+<p>Следуя этому руководству, вы сможете легко расширять арсенал врагов, сохраняя консистентность кодовой базы и правильно интегрируя их в систему очков и эффектов.</p>
+
+</body>
+</html>

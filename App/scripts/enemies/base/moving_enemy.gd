@@ -36,6 +36,9 @@ var wall_ahead: bool = false                 # Есть ли стена впер
 # НАСТРОЙКА
 # ============================================
 
+func _configure_stats() -> void:
+	_movement_type = "move"
+
 func _setup_components() -> void:
 	"""
 	Настройка компонентов движущегося врага.

@@ -33,6 +33,7 @@ horizontal_spread = 45.0
 min_drops_per_attack = 1
 max_drops_per_attack = 3
 attack_interval = 1.0
+score = 300
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=391684355]
 sprite_frames = SubResource("SpriteFrames_yp4il")

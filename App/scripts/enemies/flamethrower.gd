@@ -15,12 +15,11 @@ class_name Flamethrower
 # === ТОЧКА СПАВНА ПУЛЬ ===
 @onready var shooting_point: Marker2D = $ShootingPoint
 
-
-func _ready() -> void:
-	# Настраиваем параметры для расчёта очков
+func _configure_stats() -> void:
 	_attack_pattern = "burst"
 	_movement_type = "rotate"
-	
+
+func _ready() -> void:
 	super._ready()
 	
 	# Загружаем стандартную пулю, если не указана другая

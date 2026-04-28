@@ -164,7 +164,14 @@ namespace SpritePacker
             Console.WriteLine($"Колонок: {columns}");
             Console.WriteLine($"Отступ: {_config.Padding}px");
             Console.WriteLine($"Максимальная длина анимации: {maxAnimationLength} кадров");
-            Console.WriteLine($"Вертикальное выравнивание: {(_config.VerticalAlignment == "bottom" ? "по нижнему краю" : "по центру")}");
+
+            string alignmentText = _config.VerticalAlignment?.ToLower() switch
+            {
+                "top" => "по верхнему краю",
+                "bottom" => "по нижнему краю",
+                _ => "по центру"
+            };
+            Console.WriteLine($"Вертикальное выравнивание: {alignmentText}");
 
             // Рассчитываем количество строк для каждой анимации
             int totalRows = 0;
@@ -402,15 +409,20 @@ namespace SpritePacker
 
             // Вертикальное выравнивание
             int drawY;
-            if (verticalAlignment == "bottom")
+            switch (verticalAlignment?.ToLower())
             {
-                // Привязка к нижнему краю
-                drawY = cellY + (cellHeight - spriteHeight);
-            }
-            else // "center" по умолчанию
-            {
-                // Центрирование
-                drawY = cellY + (cellHeight - spriteHeight) / 2;
+                case "top":
+                    // Привязка к верхнему краю
+                    drawY = cellY;
+                    break;
+                case "bottom":
+                    // Привязка к нижнему краю
+                    drawY = cellY + (cellHeight - spriteHeight);
+                    break;
+                default: // "center" по умолчанию
+                    // Центрирование
+                    drawY = cellY + (cellHeight - spriteHeight) / 2;
+                    break;
             }
 
             // Применяем смещение анимации
@@ -458,6 +470,13 @@ namespace SpritePacker
 
         private static void PrintConfig()
         {
+            string alignmentText = _config.VerticalAlignment?.ToLower() switch
+            {
+                "top" => "по верхнему краю",
+                "bottom" => "по нижнему краю",
+                _ => "по центру"
+            };
+
             Console.WriteLine("=== Текущие настройки ===");
             Console.WriteLine($"Входная папка: {_config.InputFolder}");
             Console.WriteLine($"Выходная папка: {_config.OutputFolder}");
@@ -467,7 +486,7 @@ namespace SpritePacker
             Console.WriteLine($"Режим пиксель-арта: {_config.PixelArtMode}");
             Console.WriteLine($"Квадратные ячейки: {_config.UseSquareCells}");
             Console.WriteLine($"Авто-колонки: {_config.AutoColumns}");
-            Console.WriteLine($"Вертикальное выравнивание: {(_config.VerticalAlignment == "bottom" ? "по нижнему краю" : "по центру")}");
+            Console.WriteLine($"Вертикальное выравнивание: {alignmentText}");
             Console.WriteLine($"⚠️  ВНИМАНИЕ: спрайты сохраняются в ОРИГИНАЛЬНОМ размере (без масштабирования)");
             Console.WriteLine("===========================");
         }
@@ -477,6 +496,13 @@ namespace SpritePacker
                                         int totalRows, int sheetWidth, int sheetHeight, int maxAnimationLength)
         {
             string reportPath = Path.Combine(_config.OutputFolder, "packer_report.txt");
+
+            string alignmentText = _config.VerticalAlignment?.ToLower() switch
+            {
+                "top" => "по верхнему краю",
+                "bottom" => "по нижнему краю",
+                _ => "по центру"
+            };
 
             using (var writer = new StreamWriter(reportPath))
             {
@@ -498,7 +524,7 @@ namespace SpritePacker
                 writer.WriteLine($"Режим пиксель-арта: {(_config.PixelArtMode ? "Да" : "Нет")}");
                 writer.WriteLine($"Квадратные ячейки: {(_config.UseSquareCells ? "Да" : "Нет")}");
                 writer.WriteLine($"Автоопределение колонок: {(_config.AutoColumns ? $"Да (по макс. длине анимации = {maxAnimationLength})" : "Нет")}");
-                writer.WriteLine($"Вертикальное выравнивание: {(_config.VerticalAlignment == "bottom" ? "по нижнему краю" : "по центру")}");
+                writer.WriteLine($"Вертикальное выравнивание: {alignmentText}");
                 writer.WriteLine();
 
                 writer.WriteLine("=== СТАТИСТИКА ===");
@@ -564,7 +590,7 @@ namespace SpritePacker
                 writer.WriteLine("2. Для извлечения спрайтов используйте координаты из раздела выше");
                 writer.WriteLine("3. Ячейки сетки имеют размер максимального спрайта в упаковке");
                 writer.WriteLine("4. Спрайты выровнены по центру горизонтали");
-                writer.WriteLine($"5. Вертикальное выравнивание: {(_config.VerticalAlignment == "bottom" ? "по нижнему краю" : "по центру")}");
+                writer.WriteLine($"5. Вертикальное выравнивание: {alignmentText}");
                 writer.WriteLine("6. При работе с пиксель-артом обязательно отключите сглаживание в движке");
                 writer.WriteLine("7. Смещения из offset.txt применены к позиции каждого кадра анимации");
                 writer.WriteLine("8. Координаты в отчете уже включают примененные смещения");

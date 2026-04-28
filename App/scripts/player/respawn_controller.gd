@@ -34,6 +34,9 @@ func start_respawn():
 	
 	#Пауза
 	await get_tree().create_timer(RESPAWN_DELAY).timeout
+	GameManager.remove_lives(1)
+	if GameManager.get_lives() < 0:
+		return
 	
 	# Затемняем экран
 	fade_out_requested.emit(FADE_DURATION)

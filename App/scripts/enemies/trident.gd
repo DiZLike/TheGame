@@ -23,14 +23,10 @@ class_name Trident
 # НАСТРОЙКА
 # ============================================
 
-func _ready() -> void:
-	# Устанавливаем параметры ДО вызова родительского _ready()
+func _configure_stats() -> void:
 	_attack_pattern = "single"
-	
-	# Пороги углов для выбора направления (оба положительные)
-	up_angle_threshold = 30.0
-	down_angle_threshold = 30.0
-	
+
+func _ready() -> void:
 	super._ready()
 
 

@@ -1,0 +1,57 @@
+[gd_scene format=3 uid="uid://cgcfpoej4x5io"]
+
+[ext_resource type="Script" uid="uid://bgjmot1asnd2l" path="res://scripts/spawners/s_schoolboy_shooting.gd" id="1_kbksn"]
+[ext_resource type="Texture2D" uid="uid://q0opryxorcm0" path="res://sprites/enemy/contra/schoolboy/spritesheet.png" id="2_bj301"]
+[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="3_ihkb2"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbksn"]
+atlas = ExtResource("2_bj301")
+region = Rect2(28, 36, 24, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rs7wp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbksn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkwvi"]
+atlas = ExtResource("3_ihkb2")
+region = Rect2(2, 2, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x28r6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkwvi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="SchoolboyShootingSpawner" type="Node2D" unique_id=146069070]
+script = ExtResource("1_kbksn")
+move_speed = 120.0
+jump_velocity = -250.0
+attack_interval = 2.0
+attacks_per_cycle = 2
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]
+z_index = 10
+sprite_frames = SubResource("SpriteFrames_rs7wp")
+autoplay = "default"
+frame_progress = 0.8387944
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=741628321]
+
+[node name="Arrow" type="AnimatedSprite2D" parent="." unique_id=438452896]
+z_index = 9
+sprite_frames = SubResource("SpriteFrames_x28r6")
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

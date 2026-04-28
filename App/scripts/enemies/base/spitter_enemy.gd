@@ -49,9 +49,8 @@ class_name SpitterEnemy
 # НАСТРОЙКА
 # ============================================
 
-func _ready() -> void:
+func _configure_stats() -> void:
 	_attack_pattern = "spread"
-	super._ready()
 
 
 # ============================================
@@ -144,7 +143,7 @@ func _create_projectile(velocity: Vector2, spawn_position: Vector2) -> void:
 	
 	if projectile.has_method("set_velocity"):
 		projectile.set_velocity(velocity)
-	if projectile.has_method("set_gravity"):
+	if projectile.has_method("set_acid_gravity"):
 		projectile.set_gravity(projectile_gravity)
 	if projectile.has_method("set_explosion_force"):
 		projectile.set_explosion_force(explosion_force)

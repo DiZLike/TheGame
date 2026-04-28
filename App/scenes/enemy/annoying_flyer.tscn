@@ -5,7 +5,7 @@
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ge1qn"]
 atlas = ExtResource("1_qumvg")
-region = Rect2(12, 12, 8, 8)
+region = Rect2(36, 16, 18, 16)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_hc5vo"]
 animations = [{
@@ -45,6 +45,7 @@ health = 1
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=443474681]
 sprite_frames = SubResource("SpriteFrames_hc5vo")
 animation = &"idle"
+autoplay = "idle"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1209791273]
 shape = SubResource("CircleShape2D_kehhl")

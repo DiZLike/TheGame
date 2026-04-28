@@ -13,14 +13,13 @@ extends StaticEnemy
 
 var bullet_scene: PackedScene = preload("res://scenes/bullets/enemy/enemy_bullet_default.tscn")
 
-func _ready() -> void:
-	# Устанавливаем спрайт ДО super._ready()
-	animated_sprite = $Turret/TurretSprite
-
-	# Устанавливаем параметры для расчёта score
+func _configure_stats() -> void:
 	_attack_pattern = "burst"     # Серия из 2 выстрелов
 	_movement_type = "rotate"     # Поворачивается, но стоит на месте
 
+func _ready() -> void:
+	# Устанавливаем спрайт ДО super._ready()
+	animated_sprite = $Turret/TurretSprite
 	super._ready()
 
 func _physics_process(delta: float) -> void:

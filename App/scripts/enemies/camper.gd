@@ -28,17 +28,17 @@ var shot_timer: Timer                         # Таймер для задерж
 # НАСТРОЙКА
 # ============================================
 
-func _ready() -> void:
-	# Устанавливаем параметры ДО вызова родительского _ready()
+func _configure_stats() -> void:
 	_movement_type = "none"
-	
-	super._ready()
+	_attack_pattern = "burst"
+
+func _setup_components() -> void:
+	super._setup_components()
 	
 	# Изначально неуязвим (в idle)
 	_is_vulnerable = false
 	
 	# Настраиваем таймеры
-	_setup_attack_timer()
 	_setup_shot_timer()
 	
 	# Подключаемся к сигналам анимации
@@ -48,17 +48,6 @@ func _ready() -> void:
 	if animated_sprite and animated_sprite.sprite_frames.has_animation("idle"):
 		animated_sprite.play("idle")
 		_set_vulnerable(false)
-
-func _setup_attack_timer() -> void:
-	"""
-	Создает и настраивает таймер для интервалов атаки.
-	"""
-	attack_timer = Timer.new()
-	attack_timer.wait_time = attack_interval
-	attack_timer.one_shot = false
-	attack_timer.autostart = false
-	attack_timer.timeout.connect(_on_attack_timer_timeout)
-	add_child(attack_timer)
 
 func _setup_shot_timer() -> void:
 	"""
@@ -488,12 +477,6 @@ func on_hit(damage: int, bullet_type: String) -> void:
 # ============================================
 # ПЕРЕОПРЕДЕЛЕНИЕ ПОВОРОТА К ИГРОКУ
 # ============================================
-
-func _face_player() -> void:
-	"""
-	Поворачивает спрайт лицом к игроку.
-	"""
-	super._face_player()
 
 func _before_explode() -> void:
 	"""

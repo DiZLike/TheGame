@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cffek6wk5ciyf"]
+
+[ext_resource type="Texture2D" uid="uid://cw1j2vhlaysjn" path="res://sprites/bullets/enemy/spritesheet.png" id="1_6p7rt"]
+[ext_resource type="Script" uid="uid://bdbrunkkchd0j" path="res://scripts/projectiles/acid_drip.gd" id="1_7tuns"]
+[ext_resource type="AudioStream" uid="uid://5l7ut1oowl6i" path="res://data/audio/sounds/enemy/acid_drip_death.wav" id="2_kj1af"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6p7rt"]
+atlas = ExtResource("1_6p7rt")
+region = Rect2(2, 50, 16, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_iopx8"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6p7rt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7tuns"]
+size = Vector2(2.666667, 9.333334)
+
+[node name="Acid Drip" type="Area2D" unique_id=1318997729 groups=["enemy_bullet"]]
+z_index = 10
+scale = Vector2(0.75, 0.75)
+collision_layer = 4
+script = ExtResource("1_7tuns")
+splash_sound = ExtResource("2_kj1af")
+
+[node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=835613379]
+position = Vector2(0.52, 0.44)
+sprite_frames = SubResource("SpriteFrames_iopx8")
+autoplay = "default"
+frame_progress = 0.48726463
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=324349400]
+position = Vector2(3.1789145e-07, 2.0000005)
+shape = SubResource("RectangleShape2D_7tuns")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=58992279]
+rect = Rect2(-2.6666667, -4, 5.333334, 12)

@@ -25,16 +25,13 @@ var attack_timer: Timer                       # Таймер для интерв
 # ============================================
 # НАСТРОЙКА
 # ============================================
-func _ready() -> void:
-	# Устанавливаем параметры ДО вызова родительского _ready()
-	_movement_type = "rotate"     # Поворачивается к игроку
+func _configure_stats() -> void:
+	_movement_type = "rotate"
 	if attacks_per_cycle > 1:
 		_attack_pattern = "burst"
 		burst_bonus = attacks_per_cycle * 10
 	else:
 		_attack_pattern = "single"
-	super._ready()
-
 
 func _setup_components() -> void:
 	"""
@@ -176,16 +173,6 @@ func _execute_attack() -> void:
 # ============================================
 # ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ
 # ============================================
-
-func _face_player() -> void:
-	"""
-	Поворачивает спрайт лицом к игроку.
-	"""
-	if not animated_sprite or not is_player_valid():
-		return
-	
-	var direction_to_player = (_player.global_position.x - global_position.x)
-	animated_sprite.flip_h = direction_to_player > 0
 
 func _before_explode() -> void:
 	"""

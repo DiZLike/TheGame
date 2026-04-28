@@ -1,0 +1,99 @@
+[gd_scene format=3 uid="uid://buwialn7n0kp3"]
+
+[ext_resource type="Script" uid="uid://dmcqsvgrj30n1" path="res://scripts/enemies/acid_dripper.gd" id="1_p7n70"]
+[ext_resource type="Texture2D" uid="uid://buiqobcg51djx" path="res://sprites/enemy/batman/acid_dripper/spritesheet.png" id="2_p7n70"]
+[ext_resource type="PackedScene" uid="uid://cffek6wk5ciyf" path="res://scenes/bullets/enemy/acid_drip.tscn" id="2_ti285"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ti285"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(2, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6jc11"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(11, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qo32q"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(20, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ayyy8"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(29, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3fo02"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(38, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wwoos"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(47, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hbslv"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(56, 2, 7, 14)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yg0qx"]
+atlas = ExtResource("2_p7n70")
+region = Rect2(11, 2, 7, 14)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yp4il"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ti285")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6jc11")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qo32q")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ayyy8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3fo02")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wwoos")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hbslv")
+}],
+"loop": false,
+"name": &"drop",
+"speed": 7.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_yg0qx")
+}],
+"loop": false,
+"name": &"idle",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_nkt5i"]
+radius = 4.0
+
+[node name="Acid Dripper" type="CharacterBody2D" unique_id=1293667178]
+z_index = 10
+collision_layer = 0
+collision_mask = 0
+script = ExtResource("1_p7n70")
+drop_scene = ExtResource("2_ti285")
+score = 300
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=391684355]
+sprite_frames = SubResource("SpriteFrames_yp4il")
+animation = &"idle"
+autoplay = "idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=25456893]
+shape = SubResource("CircleShape2D_nkt5i")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1572419721]
+rect = Rect2(-4, -4, 8, 8)
+
+[node name="SpawnPoint" type="Marker2D" parent="." unique_id=34786708]
+position = Vector2(0, 3)
