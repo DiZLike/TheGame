@@ -1,0 +1,55 @@
+[gd_scene format=3 uid="uid://bs6jejtkxcc31"]
+
+[ext_resource type="Script" uid="uid://cef16ubml4j2s" path="res://scripts/spawners/flamethrower_spawner.gd" id="1_elq5x"]
+[ext_resource type="Texture2D" uid="uid://bm6u7hi3w27yx" path="res://sprites/arrow/spritesheet.png" id="2_elq5x"]
+[ext_resource type="Texture2D" uid="uid://bfono6ewjmy7w" path="res://sprites/enemy/batman/flamethrower/spritesheet.png" id="2_vha8w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_slg4l"]
+atlas = ExtResource("2_vha8w")
+region = Rect2(2, 2, 19, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_rs7wp"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_slg4l")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mkwvi"]
+atlas = ExtResource("2_elq5x")
+region = Rect2(2, 2, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_x28r6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_mkwvi")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Flamethrower Spawner" type="Node2D" unique_id=146069070]
+script = ExtResource("1_elq5x")
+attack_delay = 0.1
+attacks_per_cycle = 6
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1724563034]
+z_index = 10
+sprite_frames = SubResource("SpriteFrames_rs7wp")
+autoplay = "default"
+frame_progress = 0.8387944
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=741628321]
+
+[node name="Arrow" type="AnimatedSprite2D" parent="." unique_id=438452896]
+z_index = 9
+sprite_frames = SubResource("SpriteFrames_x28r6")
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]
