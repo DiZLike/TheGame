@@ -154,9 +154,6 @@ func _finish_attack_cycle() -> void:
 
 
 func _spawn_drop() -> void:
-	"""
-	Создаёт каплю кислоты под врагом.
-	"""
 	if not drop_scene:
 		return
 	
