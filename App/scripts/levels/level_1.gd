@@ -38,7 +38,7 @@ func barrier_1_puzzle_activate() -> void:
 	$"Environment/BarrierSources/Barrier Source 1".set_enable()
 	$"Environment/BarrierSources/Barrier Source 2".set_enable()
 	$"Environment/BarrierSources/Barrier Source 3".set_enable()
-	$Environment/SpawnersCapsule/CapsuleSpawner6.enable = true
+	$"Spawners/SpawnCapsule/CapsuleSpawner6".enable = true
 
 func _01_2_activate() -> void:
 	var trig: DialogueTrigger = $Environment/DialogueTriggers/DTrig2
@@ -80,7 +80,7 @@ func barrier_1_group_destroyed(group_name: String) -> void:
 		return
 	if group_name == "b1":
 		var bug = $Environment/Bags/Bug
-		var capsule = $Environment/SpawnersCapsule/CapsuleSpawner6
+		var capsule = $"Spawners/SpawnCapsule/CapsuleSpawner6"
 		show_dialogue("/level_01/null_hint_barrier_01_destroy", "d1", false)
 		if capsule:
 			capsule.queue_free()

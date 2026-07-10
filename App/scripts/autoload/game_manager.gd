@@ -9,7 +9,7 @@ signal game_saved()
 signal game_loaded()
 signal inventory_loaded()
 
-const DEFAULT_LIVES = 2
+const DEFAULT_LIVES = 30
 const WeaponsType = preload("res://scripts/weapon_types.gd")
 
 var sound_life = preload("res://data/audio/sounds/life/life.wav")

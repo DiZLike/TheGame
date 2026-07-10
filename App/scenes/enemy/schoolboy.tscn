@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dg81v7urr1ne8" path="res://scripts/enemies/schoolboy.gd" id="1_4pbkp"]
 [ext_resource type="Texture2D" uid="uid://q0opryxorcm0" path="res://sprites/enemy/contra/schoolboy/spritesheet.png" id="2_cel5s"]
+[ext_resource type="Resource" uid="uid://ph3eitm8lf4n" path="res://items/loot_table.tres" id="2_rvt5r"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bux5x"]
 size = Vector2(11, 30)
@@ -47,6 +48,7 @@ collision_layer = 4
 script = ExtResource("1_4pbkp")
 health = 1
 auto_remove = true
+loot_table = ExtResource("2_rvt5r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2136999294]
 position = Vector2(-0.5, -1)

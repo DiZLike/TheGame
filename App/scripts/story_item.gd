@@ -24,8 +24,6 @@ func pick_up() -> void:
 	if success:
 		_play_pickup_effect()
 		queue_free()
-	else:
-		push_error("Failed to add item to inventory: ", id)
 
 func _play_pickup_effect() -> void:
 	AudioManager.play_sfx(sound, 1, 1, global_position)

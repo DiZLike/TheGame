@@ -10,6 +10,7 @@ class_name BaseEnemy
 # - Взрыв при смерти (с разной силой от разных пуль)
 # - Отслеживание игрока
 # - Активация/деактивация при входе/выходе с экрана
+# - Система лута (выпадение предметов)
 # ============================================
 
 # === БАЗОВЫЕ ХАРАКТЕРИСТИКИ ===
@@ -17,6 +18,10 @@ class_name BaseEnemy
 @export var score: int = 0                 # Очки за уничтожение (0 = авто-расчёт)
 @export var explosion_force: float = 50.0  # Базовая сила взрыва (может меняться от типа пули)
 @export var auto_remove: bool = false
+
+# === СИСТЕМА ЛУТА ===
+@export var loot_table: LootTable           # Таблица лута
+@export var drop_chance: float = 0.3        # Шанс дропа (0.0 - 1.0)
 
 # === НАСТРОЙКИ БАЛАНСА ===
 const SCORE_BASE: int = 50                     # Базовая награда
@@ -37,6 +42,10 @@ const SCORE_MOVEMENT_BONUS: Dictionary = {
 }
 const SCORE_ROUND_STEP: int = 10              # Шаг округления
 var burst_bonus: int = 0
+
+# === НАСТРОЙКИ ПОДБРАСЫВАНИЯ ПРЕДМЕТА ===
+const LOOT_BOUNCE_HEIGHT: float = 20.0      # Высота подскока
+const LOOT_SPREAD_RADIUS: float = 30.0      # Разброс в стороны
 
 # === ХАРАКТЕРИСТИКИ ДЛЯ РАСЧЁТА (переопределяются в дочерних классах) ===
 var _attack_pattern: String = "none"           # "none", "single", "burst", "spread", "homing"
@@ -228,12 +237,16 @@ func _on_damaged(bullet_type: String) -> void:
 func _on_death(bullet_type: String) -> void:
 	"""
 	Обработка смерти врага.
-	Начисляет очки и запускает взрыв.
+	Начисляет очки, спавнит лут и запускает взрыв.
 	"""
 	if not bullet_type == "terrain_deadly":
+		# Пробуем заспавнить лут перед взрывом
+		_try_spawn_loot()
 		ScoreManager.add_score(score)
+	
 	_is_exploding = true
 	AudioManager.play_sfx(death_sound, 1, 1, global_position)
+	
 	# Даем дочернему классу возможность выполнить действия перед взрывом
 	_before_explode()
 	
@@ -283,6 +296,94 @@ func _calculate_explosion_force() -> float:
 			return 500.0
 		_:
 			return explosion_force
+
+
+# ============================================
+# СИСТЕМА ЛУТА
+# ============================================
+
+func _try_spawn_loot() -> void:
+	"""
+	Пытается заспавнить случайный предмет из таблицы лута.
+	Учитывает общий шанс дропа и веса предметов.
+	"""
+	# Проверяем, есть ли таблица и предметы в ней
+	if not loot_table or loot_table.items.is_empty():
+		return
+	
+	# Проверяем общий шанс дропа
+	if randf() > drop_chance:
+		return  # Ничего не выпало
+	
+	# Выбираем случайный предмет с учетом весов
+	var selected_entry = _pick_random_loot_entry()
+	if not selected_entry:
+		return
+	
+	# Спавним предмет
+	call_deferred("_spawn_loot_item", selected_entry)
+
+func _pick_random_loot_entry() -> LootEntry:
+	"""
+	Выбирает случайный предмет из таблицы лута с учетом весов.
+	Возвращает выбранный LootEntry или null.
+	"""
+	# Считаем общий вес всех предметов
+	var total_weight: float = 0.0
+	for entry in loot_table.items:
+		total_weight += entry.weight
+	
+	if total_weight <= 0:
+		return null
+	
+	# Случайный бросок от 0 до общего веса
+	var roll = randf() * total_weight
+	var current_weight: float = 0.0
+	
+	# Находим выпавший предмет
+	for entry in loot_table.items:
+		current_weight += entry.weight
+		if roll <= current_weight:
+			return entry
+	
+	# На всякий случай возвращаем последний (не должно достигаться)
+	return loot_table.items[-1]
+
+func _spawn_loot_item(entry: LootEntry) -> void:
+	"""
+	Спавнит предмет с физическим подбрасыванием вверх.
+	
+	Параметры:
+	- entry: запись из таблицы лута с информацией о предмете
+	"""
+	if not entry.item_scene:
+		push_warning("LootEntry has no item_scene assigned")
+		return
+	
+	# Создаем экземпляр предмета
+	var item = entry.item_scene.instantiate()
+	
+	# Определяем позицию спавна с небольшим разбросом в стороны
+	var spawn_pos = global_position + Vector2(
+		randf_range(-LOOT_SPREAD_RADIUS, LOOT_SPREAD_RADIUS),
+		0
+	)
+	item.global_position = spawn_pos
+	
+	# Устанавливаем случайное количество (если предмет поддерживает)
+	if item.has_method("set_amount"):
+		var amount = randi_range(entry.min_amount, entry.max_amount)
+		item.set_amount(amount)
+	
+	# Применяем физический бросок вверх
+	if item is CharacterBody2D:
+		item.velocity.y = -200
+		# Небольшой случайный разброс по горизонтали
+		item.velocity.x = randf_range(-50.0, 50.0)
+	
+	# Добавляем предмет на текущую сцену
+	get_tree().current_scene.add_child(item)
+
 
 
 # ============================================
