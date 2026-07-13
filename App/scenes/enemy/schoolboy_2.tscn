@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://y355vwr2p1cn" path="res://scripts/enemies/schoolboy_2.gd" id="1_lw2od"]
 [ext_resource type="Texture2D" uid="uid://q0opryxorcm0" path="res://sprites/enemy/contra/schoolboy/spritesheet.png" id="2_aeelb"]
+[ext_resource type="Resource" uid="uid://ph3eitm8lf4n" path="res://items/loot_table.tres" id="2_t4bbm"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bux5x"]
 size = Vector2(11, 30)
@@ -72,6 +73,7 @@ z_index = 10
 collision_layer = 4
 script = ExtResource("1_lw2od")
 health = 1
+loot_table = ExtResource("2_t4bbm")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2136999294]
 position = Vector2(-0.5, -1)

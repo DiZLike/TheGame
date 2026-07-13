@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bb2abstkhafe2" path="res://scripts/enemies/annoying_flyer.gd" id="1_ge1qn"]
 [ext_resource type="Texture2D" uid="uid://cw1j2vhlaysjn" path="res://sprites/bullets/enemy/spritesheet.png" id="1_qumvg"]
+[ext_resource type="Resource" uid="uid://ph3eitm8lf4n" path="res://items/loot_table.tres" id="2_hc5vo"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ge1qn"]
 atlas = ExtResource("1_qumvg")
@@ -41,6 +42,8 @@ avoidance_strength = 500.0
 vertical_offset_range = Vector2(0, 0)
 horizontal_offset_range = Vector2(0, 0)
 health = 1
+loot_table = ExtResource("2_hc5vo")
+drop_chance = 0.5
 
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=443474681]
 sprite_frames = SubResource("SpriteFrames_hc5vo")

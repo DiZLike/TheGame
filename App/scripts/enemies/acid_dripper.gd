@@ -9,12 +9,14 @@ class_name AcidDripper
 # - attack_interval, attack_delay, attacks_per_cycle
 # - attack_on_first_appearance
 # Капля спавнится после полного проигрывания анимации "drop"
+# Атака работает всегда, независимо от нахождения на экране
 # ============================================
 
 # === НАСТРОЙКИ КАПЕЛЬ ===
 @export var drop_scene: PackedScene              # Сцена капли кислоты
 @export var drop_gravity: float = 300.0          # Гравитация капли
 @export var drop_speed: float = 1.0              # Скорость анимации
+@export var start_delay: float = 0.0             # Задержка перед первой атакой (для синхронизации)
 
 # === КОМПОНЕНТЫ ===
 @onready var spawn_point = $SpawnPoint
@@ -22,6 +24,7 @@ class_name AcidDripper
 # === СОСТОЯНИЯ ===
 var _waiting_for_drop_animation: bool = false    # Ожидаем окончания анимации drop
 var _current_attack_cycle: int = 0               # Текущий номер атаки в цикле
+var _started: bool = false                       # Был ли запущен цикл атак
 
 
 # ============================================
@@ -44,6 +47,59 @@ func _setup_components() -> void:
 	else:
 		push_error("AcidDripper: AnimatedSprite2D не найден!")
 
+func _ready() -> void:
+	super._ready()
+	
+	# Не запускаем атаки в редакторе
+	if Engine.is_editor_hint():
+		return
+	
+	_initialize_always_active()
+
+
+func _initialize_always_active() -> void:
+	"""
+	Запускает атаку всегда, независимо от экрана.
+	Использует start_delay для синхронизации нескольких дрипперов.
+	"""
+	if _started or Engine.is_editor_hint():
+		return
+	
+	_started = true
+	_is_active = true
+	
+	# Ждём задержку перед запуском
+	if start_delay > 0:
+		await get_tree().create_timer(start_delay).timeout
+	
+	# Запускаем атаку, если ещё не умираем
+	if not _is_exploding:
+		_start_attacking()
+
+
+# ============================================
+# ПЕРЕОПРЕДЕЛЯЕМ АКТИВАЦИЮ (НЕ ОСТАНАВЛИВАЕМ АТАКУ)
+# ============================================
+
+func _on_activate() -> void:
+	"""
+	Вызывается когда враг появляется на экране.
+	Не влияет на атаку — она уже работает.
+	"""
+	_is_active = true
+	if animated_sprite and not _is_exploding:
+		animated_sprite.visible = true
+
+func _on_deactivate() -> void:
+	"""
+	Вызывается когда враг покидает экран.
+	Атака продолжается, но можно скрыть визуал для оптимизации.
+	"""
+	_is_active = false
+	# Опционально: скрываем спрайт для экономии
+	# if animated_sprite:
+	# 	animated_sprite.visible = false
+
 
 # ============================================
 # ПОЛНОСТЬЮ ПЕРЕОПРЕДЕЛЯЕМ ЛОГИКУ АТАКИ
@@ -54,6 +110,8 @@ func _perform_attack() -> void:
 	Полностью переопределяем метод атаки.
 	Вместо мгновенного цикла — управляем через анимации.
 	"""
+	if not _is_visible:
+		return
 	if not is_player_valid() or _is_currently_attacking or _is_exploding:
 		return
 	
@@ -155,6 +213,10 @@ func _finish_attack_cycle() -> void:
 
 func _spawn_drop() -> void:
 	if not drop_scene:
+		return
+	
+	# Не спавним капли в редакторе
+	if Engine.is_editor_hint():
 		return
 	
 	var drop = drop_scene.instantiate()

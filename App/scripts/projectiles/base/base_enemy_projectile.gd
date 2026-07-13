@@ -26,6 +26,8 @@ var direction: Vector2 = Vector2.RIGHT        # Направление поле�
 var shooter: Node2D = null                    # Кто выпустил снаряд
 var _is_queued_for_deletion: bool = false     # Помечен ли на удаление
 
+var _is_visible: bool = false
+
 # === КОМПОНЕНТЫ ===
 @onready var animated_sprite: AnimatedSprite2D = $MainSprite2D
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
@@ -296,3 +298,10 @@ func set_bullet_type(new_type: String) -> void:
 	Устанавливает тип снаряда.
 	"""
 	bullet_type = new_type
+	
+func _on_visible_on_screen_notifier_2d_screen_entered() -> void:
+	_is_visible = true
+
+
+func _on_visible_on_screen_notifier_2d_screen_exited() -> void:
+	_is_visible = false

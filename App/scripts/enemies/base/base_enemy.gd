@@ -58,6 +58,7 @@ var animated_sprite: AnimatedSprite2D
 
 # === СОСТОЯНИЯ ===
 var _is_active: bool = false               # Активен ли враг (на экране)
+var _is_visible: bool = false
 var _is_exploding: bool = false            # В процессе взрыва
 var _player: Node2D = null                 # Ссылка на игрока
 var _last_bullet_type: String = ""         # Тип пули, которой убили (для расчета силы взрыва)
@@ -165,6 +166,7 @@ func _on_screen_entered() -> void:
 	Активирует врага и запускает его поведение.
 	"""
 	_is_active = true
+	_is_visible = true
 	_on_activate()
 
 func _on_screen_exited() -> void:
@@ -173,6 +175,7 @@ func _on_screen_exited() -> void:
 	Деактивирует врага для экономии ресурсов.
 	"""
 	_is_active = false
+	_is_visible = false
 	_on_deactivate()
 
 func _on_activate() -> void:

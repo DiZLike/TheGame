@@ -41,6 +41,7 @@ scale = Vector2(0.75, 0.75)
 collision_layer = 4
 collision_mask = 513
 script = ExtResource("1_f7yt3")
+play_sound = false
 
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=835613379]
 sprite_frames = SubResource("SpriteFrames_iopx8")
@@ -53,3 +54,6 @@ shape = SubResource("CircleShape2D_fva11")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=58992279]
 rect = Rect2(-2.6666667, -2.6666667, 5.333334, 5.333334)
+
+[connection signal="screen_entered" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_entered"]
+[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

@@ -2,6 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dtltwvj453u0p" path="res://scripts/enemies/blazeman.gd" id="1_hh53n"]
 [ext_resource type="Texture2D" uid="uid://djiroujf76ojx" path="res://sprites/enemy/megaman 2/blazeman/spritesheet.png" id="1_xn6gf"]
+[ext_resource type="Script" uid="uid://b28y3d2x378gm" path="res://scripts/loot_entry.gd" id="2_6ka8v"]
+[ext_resource type="Script" uid="uid://hoa8bwgbkjms" path="res://scripts/loot_table.gd" id="3_tt4fl"]
+
+[sub_resource type="Resource" id="Resource_n1mtf"]
+script = ExtResource("3_tt4fl")
+metadata/_custom_type_script = "uid://hoa8bwgbkjms"
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hh53n"]
 atlas = ExtResource("1_xn6gf")
@@ -52,6 +58,8 @@ z_index = 10
 collision_layer = 4
 script = ExtResource("1_hh53n")
 max_throw_force = 350.0
+loot_table = SubResource("Resource_n1mtf")
+drop_chance = 0.5
 
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=20130838]
 sprite_frames = SubResource("SpriteFrames_sms7k")

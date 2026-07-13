@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://7paei1v1x3fw" path="res://scripts/enemies/flamethrower.gd" id="1_v6rw7"]
 [ext_resource type="PackedScene" uid="uid://s61qrmify58q" path="res://scenes/bullets/enemy/flamethrower_bullet.tscn" id="2_02a0x"]
 [ext_resource type="Texture2D" uid="uid://bfono6ewjmy7w" path="res://sprites/enemy/batman/flamethrower/spritesheet.png" id="2_pgkmj"]
+[ext_resource type="Resource" uid="uid://ph3eitm8lf4n" path="res://items/loot_table.tres" id="3_02a0x"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_02a0x"]
 atlas = ExtResource("2_pgkmj")
@@ -51,6 +52,8 @@ attack_delay = 0.1
 attacks_per_cycle = 6
 health = 80
 score = 150
+loot_table = ExtResource("3_02a0x")
+drop_chance = 0.4
 
 [node name="MainSprite2D" type="AnimatedSprite2D" parent="." unique_id=1394046241]
 sprite_frames = SubResource("SpriteFrames_eiq7f")

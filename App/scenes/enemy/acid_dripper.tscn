@@ -88,6 +88,7 @@ score = 300
 sprite_frames = SubResource("SpriteFrames_yp4il")
 animation = &"idle"
 autoplay = "idle"
+frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=25456893]
 shape = SubResource("CircleShape2D_nkt5i")

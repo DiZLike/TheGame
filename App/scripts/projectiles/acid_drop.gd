@@ -13,6 +13,7 @@ class_name AcidDrop
 @export var splash_sound: AudioStream = preload("res://data/audio/sounds/enemy/acid.wav")
 @export var acid_gravity: float = 500.0                # Гравитация, действующая на каплю
 @export var explosion_force: float = 30.0          # Сила пиксельного взрыва
+@export var play_sound: bool = true
 
 # === ВНУТРЕННИЕ ПЕРЕМЕННЫЕ ===
 var _velocity: Vector2 = Vector2.ZERO             # Текущая скорость капли
@@ -79,6 +80,8 @@ func _explode() -> void:
 	"""
 	Создаёт пиксельный взрыв и уничтожает каплю.
 	"""
+	#if not _is_visible:
+	#	return
 	if _is_queued_for_deletion:
 		return
 	
@@ -95,7 +98,8 @@ func _explode() -> void:
 			explosion.explode_from_animated_sprite(animated_sprite, global_position, explosion_force)
 		else:
 			explosion.explode_from_animated_sprite(null, global_position, explosion_force)
-		AudioManager.play_sfx(splash_sound, 0.5, 1, global_position)
+		if play_sound:
+			AudioManager.play_sfx(splash_sound, 0.5, 1, global_position)
 	
 	queue_free()
 
